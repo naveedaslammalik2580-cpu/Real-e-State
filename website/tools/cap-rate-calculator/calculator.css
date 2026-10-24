@@ -1,0 +1,9 @@
+/* Cap Rate Calculator — scoped styles. Shared layout tokens live in theme.css. */
+/* The calculator lives inside the first (hero) section, right under the title. */
+.page-hero { padding: 22px 0 30px; }
+.page-hero h1 { font-size: clamp(2rem, 4.5vw, 2.9rem); line-height: 1.12; margin: 12px 0 10px; }
+.page-hero .calculator-layout { margin-top: 22px; }
+.section { padding: 26px 0 40px; }
+.calculator-layout { align-items: start; gap: 24px; }
+.result .result-row { padding: 6px 0; }
+.result > div:last-child { margin-top: 16px !important; }

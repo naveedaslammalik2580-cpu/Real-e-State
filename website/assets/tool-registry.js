@@ -36,5 +36,14 @@ window.realEstateTools = Object.freeze([
     status: 'published',
     publicUrl: 'rent-vs-buy-calculator/',
     icon: '⇄'
+  }),
+  Object.freeze({
+    slug: 'cap-rate-calculator',
+    title: 'Cap Rate Calculator',
+    category: 'Finance & numbers',
+    description: 'Estimate a rental property cap rate from rent, vacancy and operating expenses.',
+    status: 'published',
+    publicUrl: 'cap-rate-calculator/',
+    icon: '÷'
   })
 ]);
