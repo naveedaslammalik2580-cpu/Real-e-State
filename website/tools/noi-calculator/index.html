@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#102131">
+<meta name="description" content="Work out a rental property's net operating income from rent, vacancy and operating expenses.">
+<title>NOI Calculator | Real Estate Tools</title>
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="stylesheet" href="../../assets/theme.css">
+<link rel="stylesheet" href="calculator.css">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="NOI Calculator | Real Estate Tools">
+<meta property="og:description" content="Work out a rental property's net operating income from rent, vacancy and operating expenses.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NOI Calculator | Real Estate Tools">
+<meta name="twitter:description" content="Work out a rental property's net operating income from rent, vacancy and operating expenses.">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="header"><div class="wrap head-inner">
+<a class="brand" href="../../" aria-label="Real Estate Tools, homepage"><span class="brand-mark" aria-hidden="true">⌂</span><span class="brand-name"><span data-brand-name>Real Estate Tools</span><em>Tools · Software · Guides</em></span></a>
+<nav class="nav" id="site-menu" aria-label="Main navigation"><a href="../../tools/" class="current" aria-current="page">All Tools</a><a href="../../realtoros/" class="">RealtorOS</a><a href="../../resources/" class="">Resources</a><a href="../../about/">About</a><a href="../../contact/" class="">Contact</a><a class="btn btn-primary mobile-nav-cta" href="../../realtoros/">Discover RealtorOS <span aria-hidden="true">↗</span></a></nav>
+<div class="nav-buttons"><a class="btn btn-primary btn-small" href="../../realtoros/">Discover RealtorOS <span aria-hidden="true">↗</span></a></div>
+<button class="menu-toggle" type="button" aria-controls="site-menu" aria-expanded="false" aria-label="Open navigation"><span aria-hidden="true">☰</span></button>
+</div></header>
+<main id="main"><div class="noi-sticky" id="sticky-result"><span>Annual NOI</span><b id="sticky-value">—</b></div>
+<section class="page-hero"><div class="wrap"><div class="crumb"><a href="../../">Home</a> / Tools / NOI calculator</div><span class="eyebrow">Real estate, simplified</span><h1>NOI Calculator</h1><p>What does this property actually earn? Enter the rent, vacancy and running costs — we'll work out the net operating income, before any mortgage, depreciation or income tax.</p></div>
+<div class="wrap calculator-layout">
+<div class="panel">
+<h2 style="font-size:1.7rem">Enter your figures</h2>
+<p class="muted">Adjust the sample values below to calculate an estimate instantly.</p>
+<form id="noi-form" onsubmit="return false"><fieldset class="form-group"><legend>Rental income</legend><div class="form-grid"><div class="form-field"><label for="monthly-rent">Monthly rent (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="monthly-rent" type="number" min="0" max="1000000000000" step="10" value="2200"><span class="unit-affix" aria-hidden="true">/ month</span></span><input class="field-slider" id="monthly-rent-slider" type="range" min="0" max="10000" step="10" value="2200" aria-label="Monthly rent (USD) slider"></div><div class="form-field"><label for="vacancy-rate">Vacancy rate (%)</label><span class="input-unit"><input class="field" id="vacancy-rate" type="number" min="0" max="100" step="0.5" value="5"><span class="unit-affix" aria-hidden="true">%</span></span><input class="field-slider" id="vacancy-rate-slider" type="range" min="0" max="50" step="1" value="5" aria-label="Vacancy rate (%) slider"></div><div class="form-field form-field-full"><label for="other-income">Other income (USD per year)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="other-income" type="number" min="0" max="1000000000000" step="100" value="0"><span class="unit-affix" aria-hidden="true">/ year</span></span></div></div></fieldset><fieldset class="form-group"><legend>Operating expenses</legend><div class="form-grid"><div class="form-field"><label for="property-tax">Property tax (USD per year)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="property-tax" type="number" min="0" max="1000000000000" step="100" value="4200"><span class="unit-affix" aria-hidden="true">/ year</span></span></div><div class="form-field"><label for="home-insurance">Home insurance (USD per year)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="home-insurance" type="number" min="0" max="1000000000000" step="100" value="1800"><span class="unit-affix" aria-hidden="true">/ year</span></span></div><div class="form-field"><label for="maintenance-cost">Maintenance &amp; repairs (USD per year)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="maintenance-cost" type="number" min="0" max="1000000000000" step="100" value="1500"><span class="unit-affix" aria-hidden="true">/ year</span></span></div><div class="form-field"><label for="management-rate">Management fee (% of effective income)</label><span class="input-unit"><input class="field" id="management-rate" type="number" min="0" max="100" step="0.5" value="8"><span class="unit-affix" aria-hidden="true">%</span></span></div><div class="form-field form-field-full"><label for="hoa-other">HOA &amp; other costs (USD per year)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="hoa-other" type="number" min="0" max="1000000000000" step="100" value="0"><span class="unit-affix" aria-hidden="true">/ year</span></span></div></div></fieldset></form>
+<p class="validation-note" id="validation-note" role="alert"></p>
+</div>
+<aside class="noi-results" aria-live="polite">
+<div class="noi-verdict">
+<p class="noi-verdict-label">Net operating income (annual)</p>
+<p class="noi-verdict-value" id="noi-annual">—</p>
+<p class="noi-verdict-sub">Monthly NOI <b id="noi-monthly">—</b></p>
+</div>
+<p class="noi-validation" id="noi-validation" role="alert"></p>
+<p class="noi-empty" id="result-empty" hidden>Enter your details to see your estimate.</p>
+<div id="result-body">
+<div class="noi-tiles">
+<div class="noi-tile"><span class="noi-tile-label">Monthly NOI</span><b class="noi-tile-value" id="tile-monthly">—</b></div>
+<div class="noi-tile"><span class="noi-tile-label">Effective income</span><b class="noi-tile-value" id="tile-effective">—</b></div>
+<div class="noi-tile"><span class="noi-tile-label">Total expenses</span><b class="noi-tile-value" id="tile-expenses">—</b></div>
+<div class="noi-tile"><span class="noi-tile-label">Expense ratio</span><b class="noi-tile-value" id="tile-ratio">—</b></div>
+</div>
+<h3 class="noi-group">Income</h3>
+<div class="noi-row"><span>Gross annual rent</span><b id="row-gross-rent">—</b></div>
+<div class="noi-row"><span>Less: vacancy loss</span><b id="row-vacancy-loss">—</b></div>
+<div class="noi-row"><span>Other income</span><b id="row-other-income">—</b></div>
+<div class="noi-row noi-row-total"><span>Effective gross income</span><b id="row-effective">—</b></div>
+<h3 class="noi-group">Operating expenses</h3>
+<div class="noi-row"><span>Property tax</span><b id="row-tax">—</b></div>
+<div class="noi-row"><span>Home insurance</span><b id="row-insurance">—</b></div>
+<div class="noi-row"><span>Maintenance &amp; repairs</span><b id="row-maintenance">—</b></div>
+<div class="noi-row"><span>Management fee</span><b id="row-management">—</b></div>
+<div class="noi-row"><span>HOA &amp; other costs</span><b id="row-hoa">—</b></div>
+<div class="noi-row noi-row-total"><span>Total operating expenses</span><b id="row-total-expenses">—</b></div>
+<div class="noi-row noi-row-total"><span>Net operating income</span><b id="row-noi">—</b></div>
+<div class="noi-track" aria-hidden="true"><div id="bar-tax" class="noi-seg-tax"></div><div id="bar-ins" class="noi-seg-ins"></div><div id="bar-maintenance" class="noi-seg-maintenance"></div><div id="bar-management" class="noi-seg-management"></div><div id="bar-hoa" class="noi-seg-hoa"></div></div>
+<ul class="noi-legend"><li><span class="swatch noi-seg-tax"></span> Property tax <b id="lg-tax">—</b></li><li><span class="swatch noi-seg-ins"></span> Insurance <b id="lg-ins">—</b></li><li><span class="swatch noi-seg-maintenance"></span> Maintenance <b id="lg-maintenance">—</b></li><li><span class="swatch noi-seg-management"></span> Management <b id="lg-management">—</b></li><li><span class="swatch noi-seg-hoa"></span> HOA &amp; other <b id="lg-hoa">—</b></li></ul>
+<div class="noi-copy-row"><button class="noi-btn noi-btn-primary" id="copy-results" type="button">Copy results</button><button class="noi-btn noi-btn-outline" id="print-results" type="button">Print</button></div>
+<p class="noi-copy-note" id="copy-note"></p></div>
+<div style="margin-top:26px"><a class="btn btn-outline" href="../../realtoros/" style="white-space:normal">Manage client follow-ups in RealtorOS ↗</a></div>
+</aside>
+</div><div class="wrap calculator-disclaimers"><p class="disclaimer">NOI excludes the mortgage payment, depreciation and income tax — it measures the property as an asset on its own, which is why cap rate and DSCR both start from it.</p><p class="disclaimer">Estimates only. Not a loan offer or financial advice.</p></div></section>
+<section class="section"><div class="wrap content">
+<h2>How NOI is calculated</h2>
+<p>Start with the annual rent, subtract a vacancy allowance and add other income to get effective gross income. Subtract every operating expense — property tax, insurance, maintenance and repairs, the management fee and HOA and other costs — and what remains is the net operating income. The management fee is a percentage of effective income, so it moves with the rent you actually collect, not the rent you hope for.</p>
+<h2>Why lenders and investors use it</h2>
+<p>NOI is the one number that lets you compare two properties on the asset alone, no matter how each deal is funded — financing never appears in it. Divide NOI by the price and you get the cap rate; divide it by annual debt service and you get DSCR, where most lenders look for 1.25 or better. The expense ratio (expenses divided by effective income) shows how much of every collected dollar the property eats before it pays you anything.</p>
+<h2>Important note</h2>
+<p>This is an informational estimate, not investment advice. It ignores appreciation, tax, principal paydown and resale costs, and a single year of rent and expenses is not a guarantee of the next. Verify rents, occupancy and costs with local records before making any buying decision.</p>
+</div></section>
+</main>
+<footer class="footer"><div class="wrap"><div class="footer-top"><div><a class="brand" href="../../" style="color:white;display:inline-flex;margin-bottom:18px"><span class="brand-mark" style="background:#254761">⌂</span><span class="brand-name"><span data-brand-name>Real Estate Tools</span><em style="color:#adc6c8">Tools · Software · Guides</em></span></a><p>Useful real estate tools for everyday decisions, with RealtorOS as the flagship CRM. Brand and company details will be finalized before public launch.</p></div><div><h2 class="footer-heading">Platform</h2><a href="../../tools/">All tools</a><a href="../../tools/commission-calculator/">Commission calculator</a><a href="../../tools/mortgage-calculator/">Mortgage calculator</a><a href="../../tools/home-affordability-calculator/">Home affordability calculator</a><a href="../../tools/rent-vs-buy-calculator/">Rent vs buy calculator</a><a href="../../tools/cap-rate-calculator/">Cap rate calculator</a><a href="../../tools/bridge-loan-calculator/">Bridge loan calculator</a><a href="../../tools/property-investment-calculator/">Property investment calculator</a><a href="../../tools/capital-gains-tax-calculator/">Capital gains tax calculator</a><a href="../../tools/roi-calculator/">ROI calculator</a><a href="../../tools/noi-calculator/">NOI calculator</a></div><div><h2 class="footer-heading">Product</h2><a href="../../realtoros/">RealtorOS CRM</a><a href="../../resources/">Resources</a><a href="../../about/">About</a><a href="../../contact/">Contact</a></div><div><h2 class="footer-heading">Before launch</h2><p>Connect support email, app login, pricing and approved legal policies.</p></div></div><div class="foot-bottom"><span>© 2026 <span data-brand-name>Real Estate Tools</span> · Working name, brand pending.</span><span>Static demonstration · No customer information collected</span></div></div></footer>
+<script src="../../assets/site-config.js" defer></script>
+<script src="../../assets/site.js" defer></script>
+<script src="calculator.js" defer></script>
+</body>
+</html>

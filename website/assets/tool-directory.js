@@ -25,7 +25,8 @@
     'bridge-loan-calculator': { category: 'Selling', youGet: 'Max loan · Cash left after sale', minutes: '3 min', isNew: false },
     'property-investment-calculator': { category: 'Investing', youGet: 'Cash flow · Cash-on-cash', minutes: '3 min', isNew: false },
     'capital-gains-tax-calculator': { category: 'Tax', youGet: 'Tax due · Net proceeds', minutes: '3 min', isNew: true },
-    'roi-calculator': { category: 'Investing', youGet: 'Annualized ROI · Total return', minutes: '3 min', isNew: true }
+    'roi-calculator': { category: 'Investing', youGet: 'Annualized ROI · Total return', minutes: '3 min', isNew: true },
+    'noi-calculator': { category: 'Investing', youGet: 'Annual NOI · Monthly NOI', minutes: '2 min', isNew: true }
   };
   const KNOWN_ORDER = ['Buying', 'Investing', 'Selling', 'Tax', 'For agents'];
   function displayCategory(tool) { return (DISPLAY[tool.slug] && DISPLAY[tool.slug].category) || tool.category; }

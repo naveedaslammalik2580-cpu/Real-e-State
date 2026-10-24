@@ -50,25 +50,25 @@ function directory(data) {
   };
 }
 let d = directory(registry);
-assert.equal(d.visible().length, 9);
-assert.deepEqual(d.visible().map(c => c.href), ['commission-calculator/', 'mortgage-calculator/', 'home-affordability-calculator/', 'rent-vs-buy-calculator/', 'cap-rate-calculator/', 'bridge-loan-calculator/', 'property-investment-calculator/', 'capital-gains-tax-calculator/', 'roi-calculator/']);
+assert.equal(d.visible().length, 10);
+assert.deepEqual(d.visible().map(c => c.href), ['commission-calculator/', 'mortgage-calculator/', 'home-affordability-calculator/', 'rent-vs-buy-calculator/', 'cap-rate-calculator/', 'bridge-loan-calculator/', 'property-investment-calculator/', 'capital-gains-tax-calculator/', 'roi-calculator/', 'noi-calculator/']);
 d.search('  MORTGAGE  '); assert.equal(d.visible().length, 1);
 d.search('transaction fees'); assert.equal(d.visible()[0].href, 'commission-calculator/');
 d.search('not-a-tool'); assert.equal(d.visible().length, 0); assert.equal(d.ids['no-results'].style.display, 'block');
-d.search(''); assert.equal(d.visible().length, 9);
-assert.deepEqual(d.ids['tool-filters'].children.map(b => b.textContent), ['All tools · 9', 'Buying · 3', 'Investing · 3', 'Selling · 1', 'Tax · 1', 'For agents · 1']);
-assert.equal(d.ids['tool-count'].textContent, '9 tools found · Sort: Newest first');
+d.search(''); assert.equal(d.visible().length, 10);
+assert.deepEqual(d.ids['tool-filters'].children.map(b => b.textContent), ['All tools · 10', 'Buying · 3', 'Investing · 4', 'Selling · 1', 'Tax · 1', 'For agents · 1']);
+assert.equal(d.ids['tool-count'].textContent, '10 tools found · Sort: Newest first');
 // Synthetic records exist only in memory, never as fake published pages.
 d = directory([...registry, { slug: 'test', title: 'Test', category: 'Planning', description: 'Schedule', status: 'published', publicUrl: 'test/' },
   { slug: 'draft', title: 'Secret draft', category: 'Draft category', description: '', status: 'draft', publicUrl: 'draft/' }]);
-assert.equal(d.visible().length, 10); assert.equal(d.ids['tool-filters'].children.length, 7);
-assert.deepEqual(d.ids['tool-filters'].children.map(b => b.textContent), ['All tools · 10', 'Buying · 3', 'Investing · 3', 'Selling · 1', 'Tax · 1', 'For agents · 1', 'Planning · 1']);
-assert.equal(d.ids['tool-count'].textContent, '10 tools found · Sort: Newest first');
+assert.equal(d.visible().length, 11); assert.equal(d.ids['tool-filters'].children.length, 7);
+assert.deepEqual(d.ids['tool-filters'].children.map(b => b.textContent), ['All tools · 11', 'Buying · 3', 'Investing · 4', 'Selling · 1', 'Tax · 1', 'For agents · 1', 'Planning · 1']);
+assert.equal(d.ids['tool-count'].textContent, '11 tools found · Sort: Newest first');
 d.filter('Planning · 1'); assert.equal(d.visible().length, 1);
 assert.equal(d.ids['tool-filters'].children.find(b => b.textContent === 'Planning · 1').attributes['aria-pressed'], 'true');
 assert.equal(d.ids['tool-count'].textContent, '1 tool found · Sort: Newest first');
 d.search('mortgage'); assert.equal(d.visible().length, 0);
-d.filter('All tools · 10'); assert.equal(d.visible().length, 1);
+d.filter('All tools · 11'); assert.equal(d.visible().length, 1);
 d.search('draft'); assert.equal(d.visible().length, 0);
 assert.equal(directory([]).ids['no-results'].textContent, 'No tools are published yet.');
 assert.equal(directory(undefined).ids['tool-search'].disabled, true);
@@ -81,7 +81,7 @@ function calculator(name) {
   const form = `${name}-form`;
   const inputs = [...html.matchAll(/<input[^>]*\bid="([^"]+)"[^>]*>/g)].map(m => elements[m[1]]);
   // Each tool runs its own scoped script; the shared script keeps only the menu.
-  const script = name === 'mortgage' ? read('tools/mortgage-calculator/calculator.js') : name === 'commission' ? read('tools/commission-calculator/calculator.js') : name === 'home-affordability' ? read('tools/home-affordability-calculator/calculator.js') : name === 'rent-vs-buy' ? read('tools/rent-vs-buy-calculator/calculator.js') : name === 'cap-rate' ? read('tools/cap-rate-calculator/calculator.js') : name === 'bridge-loan' ? read('tools/bridge-loan-calculator/calculator.js') : name === 'property-investment' ? read('tools/property-investment-calculator/calculator.js') : name === 'capital-gains-tax' ? read('tools/capital-gains-tax-calculator/calculator.js') : name === 'roi' ? read('tools/roi-calculator/calculator.js') : shared;
+  const script = name === 'mortgage' ? read('tools/mortgage-calculator/calculator.js') : name === 'commission' ? read('tools/commission-calculator/calculator.js') : name === 'home-affordability' ? read('tools/home-affordability-calculator/calculator.js') : name === 'rent-vs-buy' ? read('tools/rent-vs-buy-calculator/calculator.js') : name === 'cap-rate' ? read('tools/cap-rate-calculator/calculator.js') : name === 'bridge-loan' ? read('tools/bridge-loan-calculator/calculator.js') : name === 'property-investment' ? read('tools/property-investment-calculator/calculator.js') : name === 'capital-gains-tax' ? read('tools/capital-gains-tax-calculator/calculator.js') : name === 'roi' ? read('tools/roi-calculator/calculator.js') : name === 'noi' ? read('tools/noi-calculator/calculator.js') : shared;
   vm.runInNewContext(script, { Intl, document: {
     querySelector: s => s === '#' + form ? elements[form] : null,
     querySelectorAll: s => s === '#' + form + ' input' ? inputs : [], getElementById: id => elements[id]
@@ -191,6 +191,17 @@ roiCalc.set('hold-years', 10); roiCalc.set('appreciation-rate', 0); assert.equal
 assert.equal(roiCalc.get('total-roi'), '61.02%'); assert.equal(roiCalc.get('hero-annual'), '4.88%');
 roiCalc.set('purchase-price', ''); assert.equal(roiCalc.get('total-roi'), 'Check inputs');
 assert.equal(roiCalc.get('roi-validation'), 'Purchase price is empty.');
+const n = calculator('noi');
+assert.equal(n.get('noi-annual'), '$15,573.60'); assert.equal(n.get('noi-monthly'), '$1,297.80');
+assert.equal(n.get('tile-effective'), '$25,080.00'); assert.equal(n.get('tile-expenses'), '$9,506.40');
+assert.equal(n.get('tile-ratio'), '37.90%');
+assert.equal(n.get('row-gross-rent'), '$26,400.00'); assert.equal(n.get('row-vacancy-loss'), '−$1,320.00');
+assert.equal(n.get('row-effective'), '$25,080.00'); assert.equal(n.get('row-total-expenses'), '$9,506.40');
+n.set('monthly-rent', 3000); assert.equal(n.get('noi-annual'), '$23,964.00'); assert.equal(n.get('noi-monthly'), '$1,997.00');
+n.set('monthly-rent', ''); assert.equal(n.get('noi-annual'), 'Monthly rent is empty.');
+assert.equal(n.get('noi-validation'), 'Monthly rent is empty.');
+n.set('monthly-rent', 2200); n.set('vacancy-rate', -1); assert.equal(n.get('noi-annual'), 'Vacancy rate must be between 0% and 100%.');
+n.set('monthly-rent', ''); assert.equal(n.get('noi-validation'), 'Monthly rent is empty. Vacancy rate must be between 0% and 100%.');
 const toggle = new Element(), nav = new Element(), events = {};
 nav.contains = () => true;
 toggle.focus = () => { toggle.focused = true; };
@@ -224,5 +235,5 @@ for (const file of walk(root).filter(f => /\.(html|css|js)$/.test(f))) {
 const directoryHtml = read('tools/index.html');
 assert(directoryHtml.indexOf('tool-registry.js') < directoryHtml.indexOf('tool-directory.js'));
 assert(read('assets/tool-listing.css').includes('#tool-grid .listing-card[hidden] {display:none;}'));
-console.log(`PASS: registry, published-only rendering, search/category combinations, empty/error states, navigation, 127 calculator assertions, JS syntax, ${references} internal references across ${pages} pages.`);
+console.log(`PASS: registry, published-only rendering, search/category combinations, empty/error states, navigation, 143 calculator assertions, JS syntax, ${references} internal references across ${pages} pages.`);
 console.log('DOM behavior uses stubs; browser responsive/visual verification remains manual.');

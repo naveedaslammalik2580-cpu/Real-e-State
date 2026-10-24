@@ -81,5 +81,14 @@ window.realEstateTools = Object.freeze([
     status: 'published',
     publicUrl: 'roi-calculator/',
     icon: '▲'
+  }),
+  Object.freeze({
+    slug: 'noi-calculator',
+    title: 'NOI Calculator',
+    category: 'Finance & numbers',
+    description: 'Work out a rental property\'s net operating income from rent, vacancy and operating expenses.',
+    status: 'published',
+    publicUrl: 'noi-calculator/',
+    icon: '∑'
   })
 ]);

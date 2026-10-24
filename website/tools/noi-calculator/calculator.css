@@ -1,0 +1,112 @@
+/* NOI Calculator — new-system layout (light results area, verdict banner,
+   metric tiles), self-contained: this page does not load the shared tools.css.
+   Every colour is a formal site token: navy #102131, teal #0F766E / #095E58,
+   paper #F6F5F0, line #E5E2DB, muted #5E6C79, chart colours #2DD4BF / #F2C14E /
+   #8AB4F8 / #C9D6E0 / #F2A08C. Display numbers use the site's Source Serif 4.
+   Verdict and validation selectors are qualified with their parent class:
+   the shared .page-hero p rule (0,1,1) would otherwise beat a bare class
+   selector (0,1,0) on colour and size, as it does on the investment tool. */
+body { background: #F6F5F0; color: #0B1F33; }
+.page-hero { padding: 22px 0 28px; }
+.page-hero h1 { font-family: 'Source Serif 4', Georgia, serif; font-size: clamp(2rem, 4vw, 2.5rem); line-height: 1.05; margin: 12px 0 10px; color: #0B1F33; }
+.page-hero > .wrap:first-of-type > p { font-size: 20px; line-height: 32px; }
+.page-hero .calculator-layout { margin-top: 12px; }
+.section { padding: 20px 0 32px; }
+.content h2 { margin-top: 28px; }
+.content h2:first-child { margin-top: 0; }
+.calculator-layout { align-items: start; gap: 24px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+
+/* Input panel: the site's own card treatment */
+.panel { background: #fff; border: 1px solid #E5E2DB; border-radius: 17px; box-shadow: 0 6px 22px rgba(26, 58, 70, .035); padding: 28px; }
+.panel h2 { color: #0B1F33; }
+/* Visible form groups */
+.form-group { border: 0; padding: 0; margin: 24px 0 0; min-width: 0; }
+.form-group:first-of-type { margin-top: 8px; }
+.form-group legend { font-weight: 800; color: #102131; font-size: 0.95rem; padding: 0 0 8px; margin-bottom: 16px; width: 100%; border-bottom: 1px solid #E2DED5; }
+.form-field-full { grid-column: 1 / -1; }
+/* Row alignment: fixed two-line label height, so row inputs start level even
+   where labels wrap to two lines. */
+.form-field label, .form-field .seg-label { min-height: 3.2em; }
+.form-field label { font-size: 14px; font-weight: 700; color: #0B1F33; }
+.form-field small, .field-helper { font-size: .82rem; color: #5E6C79; }
+.field { min-height: 48px; border-radius: 11px; border-color: #d6e1e0; color: #0B1F33; background: #fff; }
+.field:focus { outline: 3px solid #0F766E; outline-offset: 2px; border-color: #0F766E; }
+.input-unit { display: flex; align-items: stretch; border: 1px solid #d6e1e0; border-radius: 11px; background: #fff; transition: border-color .15s ease, box-shadow .15s ease; }
+.input-unit .field { border: 0; flex: 1; min-width: 0; border-radius: 11px; }
+.input-unit .field:focus { outline: none; border-color: transparent; }
+.input-unit:focus-within { border-color: #0F766E; box-shadow: 0 0 0 3px rgba(15, 118, 110, .18); }
+.unit-affix { display: flex; align-items: center; padding: 0 12px; color: #5E6C79; font-weight: 600; font-size: .92rem; white-space: nowrap; }
+.unit-affix:first-child { padding-right: 0; }
+.unit-affix:last-child { padding-left: 8px; }
+/* Sliders stay full input width; shorter box so the next row sits close under. */
+.field-slider { width: 100%; accent-color: #0F766E; margin-top: 10px; min-height: 32px; }
+.panel .validation-note { color: #8A5A00; font-weight: 600; font-size: .9rem; }
+.panel .validation-note:empty { display: none; }
+.disclaimer { color: #5E6C79; }
+/* Full-width note below both columns (moved out from under the form). */
+.calculator-disclaimers { margin-top: 4px; }
+.calculator-disclaimers p:last-child { margin-bottom: 0; }
+
+/* Results: light area, navy verdict banner, paper metric tiles */
+.noi-results { background: #fff; color: #0B1F33; border: 1px solid #E5E2DB; border-radius: 17px; box-shadow: 0 6px 22px rgba(26, 58, 70, .035); padding: 28px; position: sticky; top: 105px; }
+.noi-verdict { background: #102131; color: #fff; border-radius: 15px; padding: 22px 24px; }
+.noi-verdict .noi-verdict-label { color: #9FB3C4; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 8px; }
+.noi-verdict .noi-verdict-value { font-family: 'Source Serif 4', Georgia, serif; font-size: clamp(2.4rem, 4vw, 3.2rem); font-weight: 600; line-height: 1.05; color: #fff; margin: 0; overflow-wrap: anywhere; }
+.noi-verdict .noi-verdict-sub { color: #C9D6E0; margin: 10px 0 0; font-size: .95rem; }
+.noi-verdict .noi-verdict-sub b { color: #fff; }
+.noi-results .noi-validation { background: #F6F5F0; border-left: 3px solid #0F766E; border-radius: 0 12px 12px 0; padding: 14px 16px; color: #0B1F33; font-size: .9rem; margin: 16px 0 0; }
+.noi-results .noi-validation:empty { display: none; }
+.noi-results .noi-empty { color: #5E6C79; margin: 20px 0 0; font-size: 1rem; line-height: 1.5; }
+.noi-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+.noi-tile { background: #F6F5F0; border: 1px solid #E5E2DB; border-radius: 14px; padding: 14px 16px; }
+.noi-tile-label { display: block; font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: #5E6C79; margin-bottom: 4px; }
+.noi-tile-value { display: block; font-size: 1.35rem; font-weight: 700; color: #0B1F33; overflow-wrap: anywhere; }
+.noi-group { color: #0F766E; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin: 22px 0 4px; }
+.noi-row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 10px 0; border-top: 1px solid #E5E2DB; }
+.noi-row span { color: #5E6C79; }
+.noi-row b { color: #0B1F33; font-weight: 600; white-space: nowrap; }
+.noi-row-total { border-top: 2px solid #E5E2DB; }
+.noi-track { display: flex; height: 12px; border-radius: 999px; overflow: hidden; background: #EDE9E0; margin-top: 14px; }
+.noi-track > div { height: 100%; }
+.noi-seg-tax { background: #2DD4BF; }
+.noi-seg-ins { background: #F2C14E; }
+.noi-seg-maintenance { background: #8AB4F8; }
+.noi-seg-management { background: #C9D6E0; }
+.noi-seg-hoa { background: #F2A08C; }
+.noi-legend { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 6px; font-size: .9rem; color: #5E6C79; }
+@media (min-width: 700px) { .noi-legend { grid-template-columns: 1fr 1fr; } }
+.noi-legend .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; }
+.noi-legend b { color: #0B1F33; font-weight: 600; }
+
+/* Buttons: the site's own button treatment */
+.noi-copy-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
+.noi-btn { min-height: 48px; border-radius: 11px; font-weight: 700; padding: 10px 18px; transition: background .15s ease, border-color .15s ease; }
+.noi-btn-primary { background: #0F766E; border: 1px solid #0F766E; color: #fff; }
+.noi-btn-primary:hover { background: #095E58; border-color: #095E58; }
+.noi-btn-outline { background: transparent; border: 1px solid #0F766E; color: #102131; }
+.noi-btn-outline:hover { background: #EAF2EF; border-color: #0F766E; color: #102131; }
+.noi-btn:focus-visible { outline: 2px solid #0F766E; outline-offset: 2px; }
+.noi-results .noi-copy-note { color: #5E6C79; font-size: .85rem; min-height: 1.2em; }
+.noi-results .noi-copy-note:empty { display: none; }
+.noi-results .btn { min-height: 48px; max-width: 100%; white-space: normal; text-align: center; }
+.noi-results .btn-outline { background: transparent; border-color: #0F766E; color: #102131; }
+.noi-results .btn-outline:hover { background: #EAF2EF; border-color: #0F766E; color: #102131; }
+.noi-results .btn:focus-visible { outline: 2px solid #0F766E; outline-offset: 2px; }
+
+/* Sticky result summary: mobile only */
+.noi-sticky { display: none; }
+@media (max-width: 760px) {
+  .noi-sticky { display: flex; justify-content: space-between; align-items: center; gap: 12px; position: sticky; top: 68px; z-index: 15; background: #102131; color: #fff; border-radius: 12px; padding: 12px 16px; margin: 0 0 16px; box-shadow: 0 8px 24px rgba(16, 33, 49, .25); }
+  .noi-sticky span { color: #9FB3C4; font-size: .82rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+  .noi-sticky b { font-family: 'Source Serif 4', Georgia, serif; font-size: 1.3rem; white-space: nowrap; }
+  .panel { padding: 24px; }
+  .noi-results { padding: 24px; position: static; }
+  .calculator-layout { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .form-grid { grid-template-columns: 1fr; }
+}
+
+@media print {
+  .header, .footer, .noi-sticky, .noi-copy-row { display: none !important; }
+}
