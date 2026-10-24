@@ -34,10 +34,8 @@
   function valid(v, min, max) {
     return Number.isFinite(v) && v >= min && v <= max;
   }
-  var OUTPUTS = ['cap-rate', 'noi-annual', 'gross-rent', 'vacancy-loss', 'other-income-out',
-    'effective-income', 'tax-out', 'insurance-out', 'maintenance-out', 'management-out',
-    'hoa-other-out', 'total-expenses', 'noi-monthly', 'grm', 'expense-ratio',
-    'cap-low', 'cap-base', 'cap-high', 'value-at-target', 'lg-noi', 'lg-expenses'];
+  var OUTPUTS = ['cap-rate', 'noi-annual', 'effective-income', 'total-expenses',
+    'noi-monthly', 'grm', 'expense-ratio', 'cap-low', 'cap-high', 'value-at-target'];
   function run() {
     var price = num('property-price');
     var rent = num('monthly-rent');
@@ -66,9 +64,7 @@
       OUTPUTS.forEach(function (id) { if (id !== 'cap-rate') set(id, '—'); });
       set('validation-note', 'Check the values: price above $0, rates 0–100%, target cap rate above 0%, amounts 0 or more, and no field left empty.');
       set('sticky-value', '—');
-      set('hidden-rows-note', '');
       hideRow('result-body', true); hideRow('result-empty', false);
-      setWidth('bar-noi', 0); setWidth('bar-expenses', 0);
       return;
     }
     set('validation-note', '');
@@ -82,36 +78,15 @@
     var cap = noi / price * 100;
     set('cap-rate', pct(cap));
     set('noi-annual', usd(noi));
-    set('gross-rent', usd(gross));
-    set('vacancy-loss', usd(vacancyLoss));
-    set('other-income-out', usd(other));
     set('effective-income', usd(effective));
-    set('tax-out', usd(tax));
-    set('insurance-out', usd(ins));
-    set('maintenance-out', usd(maint));
-    set('management-out', usd(mgmt));
-    set('hoa-other-out', usd(hoa));
     set('total-expenses', usd(expenses));
     set('noi-monthly', usd(noi / 12));
     set('grm', gross > 0 ? (price / gross).toFixed(2) + 'x' : '—');
     set('expense-ratio', effective > 0 ? pct(expenses / effective * 100) : '—');
     set('cap-low', pct(noi / (price * 0.9) * 100));
-    set('cap-base', pct(cap));
     set('cap-high', pct(noi / (price * 1.1) * 100));
     set('value-at-target', noi > 0 ? usd(noi / (target / 100)) : '—');
-    set('lg-noi', usd(noi));
-    set('lg-expenses', usd(expenses));
-    var noiShare = effective > 0 ? Math.max(0, Math.min(100, noi / effective * 100)) : 0;
-    setWidth('bar-noi', noiShare);
-    setWidth('bar-expenses', effective > 0 ? 100 - noiShare : 0);
     set('sticky-value', pct(cap));
-    // Hide $0 rows; everything else stays visible.
-    hideRow('row-other-income', other === 0);
-    hideRow('row-hoa-other', hoa === 0);
-    var hidden = [];
-    if (other === 0) hidden.push('Other income');
-    if (hoa === 0) hidden.push('HOA & other costs');
-    set('hidden-rows-note', hidden.length ? 'Not shown because $0: ' + hidden.join(', ') + '.' : '');
   }
   document.querySelectorAll('#cap-rate-form input').forEach(function (input) {
     input.addEventListener('input', run);
