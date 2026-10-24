@@ -155,7 +155,11 @@ assert.equal(v.get('tile-breakeven'), '$2,171.32'); assert.equal(v.get('tile-inv
 assert.equal(v.get('row-pi'), '$1,330.60');
 v.set('monthly-rent', 2000); assert.equal(v.get('monthly-cash-flow'), '−$132.60');
 assert.equal(v.get('tile-coc'), '−2.77%');
+v.set('property-price', 394000); v.set('down-payment', '');
+assert.equal(v.get('monthly-cash-flow'), '−$1,090.39');
+v.set('monthly-rent', ''); assert.equal(v.get('inv-validation'), 'Monthly rent is empty.');
 v.set('property-price', ''); assert.equal(v.get('monthly-cash-flow'), 'Check inputs');
+assert.equal(v.get('validation-note'), 'Purchase price is empty. Monthly rent is empty.');
 const toggle = new Element(), nav = new Element(), events = {};
 nav.contains = () => true;
 toggle.focus = () => { toggle.focused = true; };
@@ -189,5 +193,5 @@ for (const file of walk(root).filter(f => /\.(html|css|js)$/.test(f))) {
 const directoryHtml = read('tools/index.html');
 assert(directoryHtml.indexOf('tool-registry.js') < directoryHtml.indexOf('tool-directory.js'));
 assert(read('assets/theme.css').includes('#tool-grid .tool-card[hidden] {display:none;}'));
-console.log(`PASS: registry, published-only rendering, search/category combinations, empty/error states, navigation, 90 calculator assertions, JS syntax, ${references} internal references across ${pages} pages.`);
+console.log(`PASS: registry, published-only rendering, search/category combinations, empty/error states, navigation, 93 calculator assertions, JS syntax, ${references} internal references across ${pages} pages.`);
 console.log('DOM behavior uses stubs; browser responsive/visual verification remains manual.');

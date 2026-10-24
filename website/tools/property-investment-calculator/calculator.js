@@ -26,10 +26,6 @@
     var el = document.getElementById(id);
     if (el) el.hidden = hide;
   }
-  function setNeg(id, base, isNeg) {
-    var el = document.getElementById(id);
-    if (el) el.className = base + (isNeg ? ' neg' : '');
-  }
   function fmt(n) {
     return Number.isFinite(n) ? n.toLocaleString('en-US', { maximumFractionDigits: 2 }) : '';
   }
@@ -51,7 +47,33 @@
     'row-insurance', 'row-hoa-out', 'row-maintenance', 'row-capex', 'row-management',
     'row-cash-flow', 'lg-vacancy', 'lg-pi', 'lg-opex', 'lg-cf', 'row-gross-yield',
     'row-rent-ratio'];
+  var LABELS = { 'property-price': 'Purchase price', 'down-payment': 'Down payment (USD)',
+    'down-percent-input': 'Down payment (%)', 'interest-rate': 'Mortgage rate',
+    'loan-years': 'Loan term', 'monthly-rent': 'Monthly rent', 'vacancy-rate': 'Vacancy rate',
+    'other-income': 'Other income', 'property-tax': 'Property tax', 'home-insurance': 'Insurance',
+    'hoa-fee': 'HOA dues', 'maintenance-rate': 'Maintenance', 'capex-rate': 'CapEx reserve',
+    'management-rate': 'Management fee', 'closing-costs': 'Closing costs' };
+  // Fill an empty down payment from the other down-payment field, so clearing
+  // one value to retype it never blocks the whole result. Never overwrites a
+  // value the user typed, and never refills the field they are typing in.
+  function deriveDown() {
+    var priceEl = document.getElementById('property-price');
+    var downEl = document.getElementById('down-payment');
+    var pctEl = document.getElementById('down-percent-input');
+    if (!priceEl || !downEl || !pctEl) return;
+    var price = Number(String(priceEl.value).replace(/,/g, ''));
+    if (!Number.isFinite(price) || price <= 0) return;
+    var active = (typeof document !== 'undefined') ? document.activeElement : null;
+    if (downEl.value === '' && pctEl.value !== '' && active !== downEl) {
+      var pct = Number(String(pctEl.value).replace(/,/g, ''));
+      if (Number.isFinite(pct)) downEl.value = String(Math.round(pct / 100 * price));
+    } else if (pctEl.value === '' && downEl.value !== '' && active !== pctEl) {
+      var down = Number(String(downEl.value).replace(/,/g, ''));
+      if (Number.isFinite(down)) pctEl.value = (down / price * 100).toFixed(1);
+    }
+  }
   function run() {
+    deriveDown();
     var price = num('property-price');
     var down = num('down-payment');
     var rate = num('interest-rate');
@@ -83,16 +105,41 @@
     if (!ok) {
       set('monthly-cash-flow', 'Check inputs');
       OUTPUTS.forEach(function (id) { if (id !== 'monthly-cash-flow') set(id, '—'); });
-      set('validation-note', 'Check the values: price above $0, down payment within the price, rates 0–100%, term 1–50 years, amounts 0 or more, and no field left empty.');
+      // Name exactly what is wrong, so the panel itself explains the refusal
+      // instead of leaving the reason below the form.
+      var problems = [];
+      var checks = [
+        ['property-price', price], ['down-payment', down],
+        ['down-percent-input', num('down-percent-input')], ['interest-rate', rate],
+        ['loan-years', years], ['monthly-rent', rent], ['vacancy-rate', vacancy],
+        ['other-income', other], ['property-tax', tax], ['home-insurance', ins],
+        ['hoa-fee', hoa], ['maintenance-rate', maintPct], ['capex-rate', capexPct],
+        ['management-rate', mgmtPct], ['closing-costs', closing]
+      ];
+      checks.forEach(function (c) {
+        var el = document.getElementById(c[0]);
+        if (!el || el.value === '') { problems.push(LABELS[c[0]] + ' is empty.'); return; }
+        if (c[0] === 'property-price' && !(c[1] > 0 && c[1] <= 1e12)) { problems.push('Purchase price must be above $0.'); return; }
+        if (c[0] === 'down-payment') {
+          if (price > 0 && c[1] > price) problems.push('Down payment (USD) exceeds the purchase price.');
+          else if (price > 0 && c[1] < 0) problems.push('Down payment (USD) is out of range.');
+          return;
+        }
+        var lo = (c[0] === 'loan-years') ? 1 : 0;
+        var hi = (c[0] === 'interest-rate' || c[0] === 'vacancy-rate' || c[0] === 'maintenance-rate' || c[0] === 'capex-rate' || c[0] === 'management-rate' || c[0] === 'down-percent-input') ? 100 : (c[0] === 'loan-years' ? 50 : 1e12);
+        if (!(c[1] >= lo && c[1] <= hi)) problems.push(LABELS[c[0]] + ' is out of range.');
+      });
+      var message = problems.length ? problems.join(' ') : 'Check the values: price above $0, down payment within the price, rates 0–100%, term 1–50 years, amounts 0 or more, and no field left empty.';
+      set('validation-note', message);
+      set('inv-validation', message);
       set('sticky-value', '—');
       set('hidden-rows-note', '');
       hideRow('result-body', true); hideRow('result-empty', false);
-      setNeg('monthly-cash-flow', 'inv-verdict-value', false);
-      setNeg('tile-coc', 'inv-tile-value', false);
       setWidth('bar-vacancy', 0); setWidth('bar-pi', 0); setWidth('bar-opex', 0); setWidth('bar-cf', 0);
       return;
     }
     set('validation-note', '');
+    set('inv-validation', '');
     hideRow('result-body', false); hideRow('result-empty', true);
     var loan = price - down;
     var r = rate / 100 / 12;
@@ -157,8 +204,6 @@
     setWidth('bar-opex', share(opex));
     setWidth('bar-cf', share(cf));
     set('sticky-value', negUsd(cf));
-    setNeg('monthly-cash-flow', 'inv-verdict-value', cf < 0);
-    setNeg('tile-coc', 'inv-tile-value', coc !== null && coc < 0);
     // Hide $0 rows; everything else stays visible.
     hideRow('row-vacancy', vacancyLoss === 0);
     hideRow('row-other', other === 0);
