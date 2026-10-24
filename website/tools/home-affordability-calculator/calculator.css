@@ -1,13 +1,30 @@
 /* Home affordability calculator — scoped styles. Shared layout tokens live in theme.css. */
 /* The calculator lives inside the first (hero) section, right under the title. */
-.page-hero { padding: 22px 0 30px; }
-.page-hero h1 { font-size: clamp(2rem, 4.5vw, 2.9rem); line-height: 1.12; margin: 12px 0 10px; }
-.page-hero .calculator-layout { margin-top: 22px; }
-.section { padding: 26px 0 40px; }
-.calculator-layout { align-items: start; gap: 24px; }
+.page-hero { padding: 22px 0 28px; }
+.page-hero h1 { font-size: clamp(2rem, 4vw, 2.5rem); line-height: 1.05; margin: 12px 0 10px; }
+.page-hero .calculator-layout { margin-top: 12px; }
+.section { padding: 20px 0 32px; }
+.content h2 { margin-top: 28px; }
+.content h2:first-child { margin-top: 0; }
+/* Equal halves on desktop; own collapse (calculator.css loads after site.css). */
+.calculator-layout { align-items: start; gap: 24px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+@media (max-width: 760px) { .calculator-layout { grid-template-columns: 1fr; } }
+/* Visible form groups (replacing the old collapsed Advanced section). */
+.form-group { border: 0; padding: 0; margin: 24px 0 0; min-width: 0; }
+.form-group:first-of-type { margin-top: 8px; }
+.form-group legend { font-weight: 800; color: #102131; font-size: 0.95rem; padding: 0 0 8px; margin-bottom: 16px; width: 100%; border-bottom: 1px solid #E2DED5; }
+.form-field-full { grid-column: 1 / -1; }
+/* Row alignment: fixed two-line label height, so row inputs start level even
+   where one field carries helper text under its control (flex bottom-alignment
+   breaks on those rows, as found on the capital gains tax tool). */
+.form-field label, .form-field .seg-label { min-height: 3.2em; }
+/* Sliders stay full input width; shorter box so the next row sits close under. */
+.field-slider { min-height: 32px; }
+/* Full-width note below both columns (moved out from under the form). */
+.calculator-disclaimers { margin-top: 4px; }
+.calculator-disclaimers p:last-child { margin-bottom: 0; }
 .result .result-row { padding: 6px 0; }
 .result > div:last-child { margin-top: 16px !important; }
-.afford-down-hint { color: var(--muted); font-size: 0.9rem; margin-top: 6px; }
 .afford-guide { border-top: 1px solid var(--line); margin-top: 20px; padding-top: 18px; }
 .afford-guide h3 { margin: 0 0 6px; font-size: 1.15rem; }
 .afford-guide .form-grid { margin-top: 12px; }
@@ -15,9 +32,3 @@
 .afford-guide-btn:hover { opacity: 0.9; }
 #guide-note:empty { display: none; }
 #guide-note { margin-top: 10px; }
-.afford-breakdown { margin-top: 14px; }
-.afford-breakdown-track { display: flex; height: 12px; border-radius: 999px; overflow: hidden; background: var(--line); }
-.afford-breakdown-track > div { height: 100%; }
-@media (min-width: 700px) { .afford-breakdown-legend { grid-template-columns: 1fr 1fr; } }
-.afford-breakdown-legend span { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; }
-.afford-total-row { border-top: 1px solid var(--line); margin-top: 12px; padding-top: 12px; }

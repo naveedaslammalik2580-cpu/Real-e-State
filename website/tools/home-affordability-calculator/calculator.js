@@ -71,28 +71,32 @@
       hoa = num('hoa-fee'), pmiRate = num('pmi-rate'),
       closing = num('closing-costs');
 
-    var ok = valid(budget, 0, 1e12) && valid(down, 0, 1e12) &&
-      valid(rate, 0, 100) && valid(years, 1, 50) &&
-      valid(taxRate, 0, 100) && valid(ins, 0, 1e12) && valid(hoa, 0, 1e12) &&
-      valid(pmiRate, 0, 100) && valid(closing, 0, 100);
-    // Empty fields are invalid, not zero.
-    var required = ['monthly-budget', 'down-payment', 'interest-rate', 'loan-years',
-      'property-tax-rate', 'home-insurance', 'hoa-fee', 'pmi-rate', 'closing-costs'];
-    for (var ri = 0; ri < required.length; ri++) {
-      var rel = document.getElementById(required[ri]);
-      if (!rel || rel.value === '') { ok = false; break; }
+    // Named validation: every problem is named; the hero shows the first,
+    // the note under the form lists them all. Empty fields are invalid, not zero.
+    var problems = [];
+    function checkField(id, name, lo, hi, rangeText) {
+      var el = document.getElementById(id);
+      if (!el || el.value === '') { problems.push(name + ' is empty.'); return; }
+      if (!valid(num(id), lo, hi)) problems.push(name + ' ' + rangeText);
     }
+    checkField('monthly-budget', 'Monthly housing payment you can afford', 0, 1e12, 'must be 0 or more.');
+    checkField('down-payment', 'Down payment', 0, 1e12, 'must be 0 or more.');
+    checkField('interest-rate', 'Annual interest rate', 0, 100, 'must be between 0% and 100%.');
+    checkField('loan-years', 'Loan term', 1, 50, 'must be between 1 and 50 years.');
+    checkField('property-tax-rate', 'Property tax rate', 0, 100, 'must be between 0% and 100%.');
+    checkField('home-insurance', 'Home insurance', 0, 1e12, 'must be 0 or more.');
+    checkField('hoa-fee', 'HOA dues', 0, 1e12, 'must be 0 or more.');
+    checkField('pmi-rate', 'PMI rate', 0, 100, 'must be between 0% and 100%.');
+    checkField('closing-costs', 'Closing costs', 0, 100, 'must be between 0% and 100%.');
 
-    if (!ok) {
-      set('afford-price', 'Check inputs');
+    if (problems.length) {
+      set('afford-price', problems[0]);
       OUTPUTS.forEach(function (id) { set(id, '—'); });
       set('down-percent', '');
-      set('validation-note', 'Check the values: amounts 0 or more, rates 0–100%, term 1–50 years, and no field left empty.');
+      set('validation-note', problems.join(' '));
       set('lg-pi', '—'); set('lg-tax', '—'); set('lg-ins', '—'); set('lg-hoa', '—'); set('lg-pmi', '—');
       set('sticky-value', '—');
       hideRow('result-body', true); hideRow('result-empty', false);
-      set('hidden-rows-note', '');
-      hideRow('row-afford-hoa', false); hideRow('row-afford-pmi', false);
       setWidth('bd-pi', 0); setWidth('bd-tax', 0); setWidth('bd-ins', 0);
       setWidth('bd-hoa', 0); setWidth('bd-pmi', 0);
       return;
@@ -125,14 +129,6 @@
     set('lg-pi', usd(pi)); set('lg-tax', usd(taxM)); set('lg-ins', usd(p.insM));
     set('lg-hoa', usd(hoa)); set('lg-pmi', usd(pmiM));
     set('sticky-value', usd(price));
-    hideRow('row-afford-hoa', hoa === 0);
-    hideRow('row-afford-pmi', pmiM === 0);
-    var hidden = [];
-    if (hoa === 0) hidden.push('HOA');
-    if (pmiM === 0) hidden.push('PMI');
-    set('hidden-rows-note', hidden.length
-      ? 'Not shown because $0: ' + hidden.join(', ') + '.'
-      : '');
     syncDownPct();
 
     if (housing > 0) {

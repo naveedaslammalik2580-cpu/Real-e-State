@@ -126,7 +126,7 @@ assert.equal(a.get('afford-tax'), '$330.12'); assert.equal(a.get('afford-pmi'), 
 assert.equal(a.get('cash-to-close'), '$69,903.55');
 a.fire('guide-budget-btn', 'click'); assert.equal(a.val('monthly-budget'), '2333.33');
 assert.equal(a.get('afford-price'), '$334,426.11');
-a.set('monthly-budget', -1); assert.equal(a.get('afford-price'), 'Check inputs');
+a.set('monthly-budget', -1); assert.equal(a.get('afford-price'), 'Monthly housing payment you can afford must be 0 or more.');
 const r = calculator('rent-vs-buy');
 assert.equal(r.get('rent-verdict'), 'Renting wins for your 7-year stay');
 assert.equal(r.get('breakeven-year'), 'Year 9');
