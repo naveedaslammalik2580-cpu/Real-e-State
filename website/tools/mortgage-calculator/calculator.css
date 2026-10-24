@@ -1,6 +1,8 @@
 /* Mortgage calculator — scoped styles. Shared layout tokens live in theme.css. */
-/* Tighten this page's vertical rhythm so the panels sit close together. */
-.page-hero { padding: 26px 0 18px; }
+/* The calculator lives inside the first (hero) section, right under the title. */
+.page-hero { padding: 22px 0 30px; }
+.page-hero h1 { font-size: clamp(2rem, 4.5vw, 2.9rem); line-height: 1.12; margin: 12px 0 10px; }
+.page-hero .calculator-layout { margin-top: 22px; }
 .section { padding: 26px 0 40px; }
 .calculator-layout { align-items: start; gap: 24px; }
 .result .result-row { padding: 6px 0; }
