@@ -39,8 +39,7 @@
   }
   var OUTPUTS = ['noi-monthly', 'tile-monthly', 'tile-effective', 'tile-expenses',
     'tile-ratio', 'row-gross-rent', 'row-vacancy-loss', 'row-other-income',
-    'row-effective', 'row-tax', 'row-insurance', 'row-maintenance',
-    'row-management', 'row-hoa', 'row-total-expenses', 'row-noi',
+    'row-effective', 'row-total-expenses', 'row-noi',
     'lg-tax', 'lg-ins', 'lg-maintenance', 'lg-management', 'lg-hoa'];
   function run() {
     var rent = num('monthly-rent'), vacancy = num('vacancy-rate'),
@@ -95,11 +94,6 @@
     set('row-vacancy-loss', vacancyLoss === 0 ? usd(0) : '−' + usd(vacancyLoss));
     set('row-other-income', usd(other));
     set('row-effective', usd(effective));
-    set('row-tax', usd(tax));
-    set('row-insurance', usd(ins));
-    set('row-maintenance', usd(maint));
-    set('row-management', usd(mgmt));
-    set('row-hoa', usd(hoa));
     set('row-total-expenses', usd(totalExp));
     set('row-noi', negUsd(noi));
     set('lg-tax', usd(tax));
