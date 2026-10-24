@@ -6,7 +6,8 @@ const ctx = { window: {} }; vm.runInNewContext(read('assets/tool-registry.js'), 
 const registry = ctx.window.realEstateTools;
 const published = registry.filter(t => t.status === 'published');
 const fallback = [...html.matchAll(/data-home-tool="([^"]+)" href="([^"]+)"/g)];
-assert.deepEqual(fallback.map(m => [m[1], m[2]]), Array.from(published, t => [t.slug, 'tools/' + t.publicUrl]));
+// Homepage panel rule: only the first two published tools appear here.
+assert.deepEqual(fallback.map(m => [m[1], m[2]]), Array.from(published.slice(0, 2), t => [t.slug, 'tools/' + t.publicUrl]));
 class Element {
   constructor() { this.children = []; this.attributes = {}; this.value = ''; this.listeners = {}; }
   append(...children) { this.children.push(...children); }
@@ -23,23 +24,23 @@ function render(tools) {
   return grid;
 }
 const cards = render([...registry, { slug: 'draft', status: 'draft', publicUrl: 'draft/' }]).ids['home-search-results'].children;
-assert.equal(cards.length, published.length);
-assert.deepEqual(cards.map(c => c.href), Array.from(published, t => 'tools/' + t.publicUrl));
+assert.equal(cards.length, 2);
+assert.deepEqual(cards.map(c => c.href), Array.from(published.slice(0, 2), t => 'tools/' + t.publicUrl));
 assert.equal(render([]).ids['home-search-results'].children[0].textContent, 'No tools are published yet.');
 assert.equal(render(undefined).children.length, 0);
 const live = render([...registry, { slug:'draft', title:'Hidden draft', status:'draft', publicUrl:'draft/' }]);
 const search = live.ids['home-search'], results = live.ids['home-search-results'], status = live.ids['home-search-status'];
-assert.equal(results.children.length, 3);
+assert.equal(results.children.length, 2);
 search.value = ' MORTGAGE '; search.listeners.input();
 assert.equal(results.children.length, 1); assert.equal(results.children[0].href, 'tools/mortgage-calculator/');
 search.value = 'transaction fees'; search.listeners.input();
 assert.equal(results.children[0].href, 'tools/commission-calculator/');
 search.value = 'draft'; search.listeners.input(); assert.equal(status.textContent, '0 tools found');
 assert(results.children[0].textContent.includes('No matching tools'));
-search.value = ''; search.listeners.input(); assert.equal(status.textContent, '3 tools found');
+search.value = ''; search.listeners.input(); assert.equal(status.textContent, '2 tools found');
 assert.equal(render([]).ids['home-search-status'].textContent, '0 tools found');
 search.value = 'Finance & numbers'; search.listeners.input();
-assert.equal(status.textContent, '3 tools found');
+assert.equal(status.textContent, '2 tools found');
 const section = html.match(/<section class="section home-how"[\s\S]*?<\/section>/)[0];
 assert(section.includes('From numbers to clarity in seconds.'));
 assert.equal((section.match(/<li>/g) || []).length, 3);
