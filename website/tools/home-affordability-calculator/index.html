@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#102131">
-<meta name="description" content="Estimate the maximum home price you can afford from income, debts, down payment, rate and term using the 28/36 rule, with taxes, insurance, HOA and PMI included.">
+<meta name="description" content="Estimate the maximum home price from the monthly housing payment you can afford, with taxes, insurance, HOA and PMI included. Optional income guideline included.">
 <title>Home Affordability Calculator | Real Estate Tools</title>
 <link rel="stylesheet" href="../../assets/site.css">
 <link rel="stylesheet" href="../../assets/theme.css">
@@ -12,10 +12,10 @@
 <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Home Affordability Calculator | Real Estate Tools">
-<meta property="og:description" content="Estimate the maximum home price you can afford from income, debts, down payment, rate and term using the 28/36 rule, with taxes, insurance, HOA and PMI included.">
+<meta property="og:description" content="Estimate the maximum home price from the monthly housing payment you can afford, with taxes, insurance, HOA and PMI included. Optional income guideline included.">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Home Affordability Calculator | Real Estate Tools">
-<meta name="twitter:description" content="Estimate the maximum home price you can afford from income, debts, down payment, rate and term using the 28/36 rule, with taxes, insurance, HOA and PMI included.">
+<meta name="twitter:description" content="Estimate the maximum home price from the monthly housing payment you can afford, with taxes, insurance, HOA and PMI included. Optional income guideline included.">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -26,15 +26,13 @@
 <button class="menu-toggle" type="button" aria-controls="site-menu" aria-expanded="false" aria-label="Open navigation"><span aria-hidden="true">☰</span></button>
 </div></header>
 <main id="main">
-<section class="page-hero"><div class="wrap"><div class="crumb"><a href="../../">Home</a> / Tools / Home affordability calculator</div><span class="eyebrow">Real estate, simplified</span><h1>Home Affordability Calculator</h1><p>Find the maximum home price that fits your income and debts, using the 28/36 rule lenders start from — with property tax, insurance, HOA and PMI counted in the payment.</p></div>
+<section class="page-hero"><div class="wrap"><div class="crumb"><a href="../../">Home</a> / Tools / Home affordability calculator</div><span class="eyebrow">Real estate, simplified</span><h1>Home Affordability Calculator</h1><p>Start with the monthly housing payment you can afford — we'll work out the maximum home price, loan and monthly breakdown, with property tax, insurance, HOA and PMI counted in.</p></div>
 <div class="wrap calculator-layout">
 <div class="panel">
 <h2 style="font-size:1.7rem">Enter your figures</h2>
 <p class="muted">Adjust the sample values below to calculate an estimate instantly.</p>
-<div class="afford-presets"><span>DTI presets:</span><button class="afford-preset" id="preset-conservative" type="button">Conservative 28/36</button><button class="afford-preset" id="preset-moderate" type="button">Moderate 31/43</button><button class="afford-preset" id="preset-aggressive" type="button">Aggressive 36/50</button></div>
 <form id="home-affordability-form" onsubmit="return false"><div class="form-grid">
-<div class="form-field"><label for="annual-income">Gross annual income (USD)</label><input class="field" id="annual-income" type="number" min="0" max="1000000000000" step="1000" value="100000"></div>
-<div class="form-field"><label for="monthly-debts">Other monthly debt payments (USD)</label><input class="field" id="monthly-debts" type="number" min="0" max="1000000000000" step="10" value="500"></div>
+<div class="form-field"><label for="monthly-budget">Monthly housing payment you can afford (USD)</label><input class="field" id="monthly-budget" type="number" min="0" max="1000000000000" step="10" value="2300"></div>
 <div class="form-field"><label for="down-payment">Down payment (USD)</label><input class="field" id="down-payment" type="number" min="0" max="1000000000000" step="1000" value="60000"><p class="afford-down-hint" id="down-percent"></p></div>
 <div class="form-field"><label for="interest-rate">Annual interest rate (%)</label><input class="field" id="interest-rate" type="number" min="0" max="100" step="0.01" value="6.5"></div>
 <div class="form-field"><label for="loan-years">Loan term (years)</label><input class="field" id="loan-years" type="number" min="1" max="50" step="1" value="30"></div>
@@ -42,11 +40,21 @@
 <div class="form-field"><label for="home-insurance">Home insurance (USD per year)</label><input class="field" id="home-insurance" type="number" min="0" max="1000000000000" step="100" value="1800"></div>
 <div class="form-field"><label for="hoa-fee">HOA dues (USD per month)</label><input class="field" id="hoa-fee" type="number" min="0" max="1000000000000" step="10" value="0"></div>
 <div class="form-field"><label for="pmi-rate">PMI rate (annual %, only below 20% down)</label><input class="field" id="pmi-rate" type="number" min="0" max="100" step="0.05" value="0.5"></div>
-<div class="form-field"><label for="front-dti">Front-end DTI limit (% of income)</label><input class="field" id="front-dti" type="number" min="0" max="100" step="1" value="28"></div>
-<div class="form-field"><label for="back-dti">Back-end DTI limit (% of income)</label><input class="field" id="back-dti" type="number" min="0" max="100" step="1" value="36"></div>
 <div class="form-field"><label for="closing-costs">Closing costs (% of price)</label><input class="field" id="closing-costs" type="number" min="0" max="100" step="0.5" value="3"></div>
 </div></form>
-<p class="disclaimer">DTI limits are guidelines, not a lender approval. Use local tax and insurance figures; rates, credit and lender rules change the real number.</p>
+<div class="afford-guide">
+<h3>Not sure what you can pay each month?</h3>
+<p class="muted">Estimate a guideline budget from your income and debts. It uses the familiar front/back guideline (defaults 28/36); other countries use different guidelines — enter yours. The button copies the result into your monthly budget above.</p>
+<div class="form-grid">
+<div class="form-field"><label for="guide-income">Gross annual income (USD)</label><input class="field" id="guide-income" type="number" min="0" max="1000000000000" step="1000" value="100000"></div>
+<div class="form-field"><label for="guide-debts">Other monthly debt payments (USD)</label><input class="field" id="guide-debts" type="number" min="0" max="1000000000000" step="10" value="500"></div>
+<div class="form-field"><label for="guide-front">Housing guideline (% of income)</label><input class="field" id="guide-front" type="number" min="0" max="100" step="1" value="28"></div>
+<div class="form-field"><label for="guide-back">Total debt guideline (% of income)</label><input class="field" id="guide-back" type="number" min="0" max="100" step="1" value="36"></div>
+</div>
+<button class="afford-guide-btn" id="guide-budget-btn" type="button">Use this guideline budget</button>
+<p class="muted" id="guide-note"></p>
+</div>
+<p class="disclaimer">Your budget is your own number — it works the same in any country. Use local tax and insurance figures; rates, credit and lender rules change the real number.</p>
 </div>
 <aside class="result" aria-live="polite">
 <small>Maximum home price you can afford</small>
@@ -68,25 +76,17 @@
 <div class="result-row"><span>Home insurance / month</span><b id="afford-insurance">—</b></div>
 <div class="result-row"><span>HOA dues / month</span><b id="afford-hoa">—</b></div>
 <div class="result-row"><span>PMI / month</span><b id="afford-pmi">—</b></div>
-<div class="result-row"><span>Front-end cap (housing only)</span><b id="front-cap">—</b></div>
-<div class="result-row"><span>Back-end cap (all debts)</span><b id="back-cap">—</b></div>
-<div class="result-row afford-total-row"><span>Binding limit</span><b id="binding-cap">—</b></div>
-<div class="result-row"><span>Loan-to-value at max price</span><b id="afford-ltv">—</b></div>
-<div class="result-row"><span>Estimated cash to close</span><b id="cash-to-close">—</b></div>
+<div class="result-row afford-total-row"><span>Estimated cash to close</span><b id="cash-to-close">—</b></div>
 <div style="margin-top:26px"><a class="btn btn-outline" href="../../tools/mortgage-calculator/" style="white-space:normal">See the payment on the mortgage calculator ↗</a></div>
 </aside>
 </div></section>
 <section class="section"><div class="wrap content">
 <h2>How affordability is calculated</h2>
-<p>Monthly income is annual income divided by 12. The front-end cap is front% of that income; the back-end cap is back% of that income minus your other monthly debts. The lower cap is your maximum monthly housing payment. Because property tax is a percentage of the price and PMI is a percentage of the loan while the down payment is below 20%, the maximum price is solved directly from that payment — not guessed. The loan is the price minus your down payment.</p>
-<h2>Compare DTI scenarios</h2>
-<p>Same income, debts and loan terms — only the DTI limits change. Your current limits are highlighted.</p>
-<table class="afford-schedule">
-<thead><tr><th>Scenario</th><th>Front / back DTI</th><th>Maximum price</th></tr></thead>
-<tbody id="scenario-body"></tbody>
-</table>
+<p>You state the monthly housing payment you can afford. The maximum price is solved directly from that payment: principal and interest on the loan, plus property tax, insurance, HOA and PMI, must add up to your budget. Because property tax is a percentage of the price and PMI is a percentage of the loan while the down payment is below 20%, the price is solved from the equation — not guessed. The loan is the price minus your down payment.</p>
+<h2>Estimating your budget from income (optional)</h2>
+<p>If you don't know your monthly budget, the guideline helper estimates one from your income and debts: the housing guideline limits housing costs to a share of gross monthly income, and the total-debt guideline limits housing plus other debts to a share of income. The lower of the two is the suggested budget. The familiar US defaults are 28% and 36%; other countries use different guidelines (for example, Canada commonly uses 32% and 44%), so enter your own if yours differ. The guideline only suggests a number — your monthly budget input always rules.</p>
 <h2>Understanding the estimate</h2>
-<p>Your actual qualification can differ due to credit score, employment history, loan program, local taxes and insurance, and lender rules — some programs allow back-end ratios up to 43–50% for well-qualified borrowers. Just because a higher price qualifies does not mean it fits your budget; leave room for maintenance, savings and lifestyle costs.</p>
+<p>Your actual qualification can differ due to credit score, employment history, loan program, local taxes and insurance, and lender rules. Just because a higher price fits a guideline does not mean it fits your budget; leave room for maintenance, savings and lifestyle costs.</p>
 <h2>Important note</h2>
 <p>This is an informational estimate, not a pre-approval, a lender quote or financial advice. Verify terms with your lender before making any buying decision.</p>
 </div></section>

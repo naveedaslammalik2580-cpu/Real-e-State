@@ -23,7 +23,7 @@ window.realEstateTools = Object.freeze([
     slug: 'home-affordability-calculator',
     title: 'Home Affordability Calculator',
     category: 'Finance & numbers',
-    description: 'Estimate the maximum home price that fits your income and debts.',
+    description: 'Estimate the maximum home price from the monthly payment you can afford.',
     status: 'published',
     publicUrl: 'home-affordability-calculator/',
     icon: '⌂'

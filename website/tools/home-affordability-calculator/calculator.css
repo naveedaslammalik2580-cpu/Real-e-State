@@ -8,9 +8,13 @@
 .result .result-row { padding: 6px 0; }
 .result > div:last-child { margin-top: 16px !important; }
 .afford-down-hint { color: var(--muted); font-size: 0.9rem; margin-top: 6px; }
-.afford-presets { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 0 0 16px; }
-.afford-presets span { font-weight: 600; }
-.afford-preset { border: 1px solid var(--line); background: #fff; color: var(--navy); border-radius: 999px; padding: 7px 14px; font: inherit; font-size: 0.9rem; cursor: pointer; }
+.afford-guide { border-top: 1px solid var(--line); margin-top: 20px; padding-top: 18px; }
+.afford-guide h3 { margin: 0 0 6px; font-size: 1.15rem; }
+.afford-guide .form-grid { margin-top: 12px; }
+.afford-guide-btn { border: 1px solid var(--navy); background: var(--navy); color: #fff; border-radius: 999px; padding: 9px 18px; font: inherit; font-size: 0.95rem; cursor: pointer; margin-top: 14px; }
+.afford-guide-btn:hover { opacity: 0.9; }
+#guide-note:empty { display: none; }
+#guide-note { margin-top: 10px; }
 .afford-breakdown { margin-top: 14px; }
 .afford-breakdown-track { display: flex; height: 12px; border-radius: 999px; overflow: hidden; background: var(--line); }
 .afford-breakdown-track > div { height: 100%; }
@@ -23,8 +27,3 @@
 @media (min-width: 700px) { .afford-breakdown-legend { grid-template-columns: 1fr 1fr; } }
 .afford-breakdown-legend span { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; }
 .afford-total-row { border-top: 1px solid var(--line); margin-top: 12px; padding-top: 12px; }
-.afford-schedule { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 0.95rem; }
-.afford-schedule th, .afford-schedule td { text-align: right; padding: 8px 10px; border-bottom: 1px solid var(--line); }
-.afford-schedule th:first-child, .afford-schedule td:first-child { text-align: left; }
-.afford-schedule th { color: var(--muted); font-weight: 600; }
-.afford-current-scenario { background: #f2f6f5; font-weight: 600; }
