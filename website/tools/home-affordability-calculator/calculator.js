@@ -93,6 +93,7 @@
       set('validation-note', 'Check the values: amounts 0 or more, rates 0–100%, term 1–50 years, and no field left empty.');
       set('lg-pi', '—'); set('lg-tax', '—'); set('lg-ins', '—'); set('lg-hoa', '—'); set('lg-pmi', '—');
       set('sticky-value', '—');
+      hideRow('result-body', true); hideRow('result-empty', false);
       set('hidden-rows-note', '');
       hideRow('row-afford-hoa', false); hideRow('row-afford-pmi', false);
       setWidth('bd-pi', 0); setWidth('bd-tax', 0); setWidth('bd-ins', 0);
@@ -100,6 +101,7 @@
       return;
     }
     set('validation-note', '');
+    hideRow('result-body', false); hideRow('result-empty', true);
 
     var p = { f: factor(rate / 1200, years * 12), t: taxRate / 1200,
       pm: pmiRate / 1200, insM: ins / 12, hoa: hoa, down: down };

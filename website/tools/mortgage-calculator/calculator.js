@@ -141,6 +141,7 @@
       hideRow('row-interest-saved', false); hideRow('row-time-saved', false);
       setHtml('balance-chart', '');
       set('chart-balance-end', '—'); set('chart-interest-end', '—');
+      hideRow('result-body', true); hideRow('result-empty', false);
       setWidth('bd-pi', 0); setWidth('bd-tax', 0); setWidth('bd-ins', 0);
       setWidth('bd-hoa', 0); setWidth('bd-pmi', 0);
       setHtml('mortgage-schedule-body', '');
@@ -148,6 +149,7 @@
       return;
     }
     set('mortgage-error', '');
+    hideRow('result-body', false); hideRow('result-empty', true);
 
     var principal = price - down;
     var baseMonths = years * 12;

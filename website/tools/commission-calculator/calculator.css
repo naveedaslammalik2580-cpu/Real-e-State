@@ -10,11 +10,6 @@
 .commission-breakdown { margin-top: 14px; }
 .commission-breakdown-track { display: flex; height: 12px; border-radius: 999px; overflow: hidden; background: var(--line); }
 .commission-breakdown-track > div { height: 100%; }
-#bd-referral { background: #c46a52; }
-#bd-franchise { background: #7a8a99; }
-#bd-yours { background: var(--teal); }
-#bd-broker { background: var(--navy); }
-.commission-breakdown-legend { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 4px; font-size: 0.92rem; color: var(--muted); }
 @media (min-width: 700px) { .commission-breakdown-legend { grid-template-columns: 1fr 1fr; } }
 .commission-breakdown-legend span { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; }
 .commission-total-row { border-top: 1px solid var(--line); margin-top: 12px; padding-top: 12px; }

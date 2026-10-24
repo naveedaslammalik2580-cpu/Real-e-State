@@ -74,6 +74,7 @@
       set('validation-note', 'Check the values: rates and shares must be 0–100%, amounts 0 or more, and no field left empty.');
       set('lg-referral', '—'); set('lg-franchise', '—'); set('lg-yours', '—'); set('lg-broker', '—');
       set('sticky-value', '—');
+      hideRow('result-body', true); hideRow('result-empty', false);
       set('hidden-rows-note', '');
       hideRow('row-referral-amount', false); hideRow('row-franchise-amount', false);
       setWidth('bd-referral', 0); setWidth('bd-franchise', 0);
@@ -81,6 +82,7 @@
       return;
     }
     set('validation-note', '');
+    hideRow('result-body', false); hideRow('result-empty', true);
 
     var total = price * rate / 100;
     var referral = total * referralPct / 100;

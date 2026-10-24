@@ -35,6 +35,10 @@
     var el = document.getElementById(id);
     if (el && el.style) el.style.width = pct + '%';
   }
+  function hideRow(id, hide) {
+    var el = document.getElementById(id);
+    if (el) el.hidden = hide;
+  }
   function setHtml(id, html) {
     var el = document.getElementById(id);
     if (el) el.innerHTML = html;
@@ -88,12 +92,14 @@
       OUTPUTS.forEach(function (id) { set(id, '—'); });
       set('validation-note', 'Check the values: amounts 0 or more, rates 0–100%, stay 1–30 years, term 1–50 years, and no field left empty.');
       set('sticky-value', '—');
+      hideRow('result-body', true); hideRow('result-empty', false);
       setHtml('breakeven-chart', '');
       set('chart-rent-end', '—'); set('chart-buy-end', '—'); set('chart-breakeven-label', '');
       setWidth('bar-rent', 0); setWidth('bar-buy', 0);
       return;
     }
     set('validation-note', '');
+    hideRow('result-body', false); hideRow('result-empty', true);
 
     var r = rate / 1200;
     var loan = price - down;

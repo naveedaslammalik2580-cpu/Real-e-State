@@ -41,7 +41,8 @@
 <p class="result-label">Total monthly payment</p>
 <div class="result-number" id="monthly-total">—</div>
 <p class="result-hero-sub">Principal &amp; interest <b id="monthly-payment">—</b> per month</p>
-<h3 class="result-group">Monthly payment</h3>
+<p class="result-empty" id="result-empty" hidden>Enter your details to see your estimate.</p>
+        <div id="result-body"><h3 class="result-group">Monthly payment</h3>
 <div class="breakdown-track" aria-hidden="true"><div id="bd-pi" class="seg-blue"></div><div id="bd-tax" class="seg-teal"></div><div id="bd-ins" class="seg-gold"></div><div id="bd-hoa" class="seg-gray"></div><div id="bd-pmi" class="seg-coral"></div></div>
 <ul class="breakdown-legend">
 <li><span class="swatch seg-blue"></span>Principal &amp; interest <b id="lg-pi">—</b></li>
@@ -66,8 +67,8 @@
 <div class="result-row" id="row-time-saved"><span>Time saved</span><b id="time-saved">—</b></div>
 <p class="muted" id="mortgage-pmi-note"></p>
 <p class="hidden-row-note" id="hidden-rows-note"></p>
-<div class="copy-row"><button class="tool-btn tool-btn-outline" id="copy-results" type="button">Copy results</button><button class="tool-btn tool-btn-outline" id="print-results" type="button">Print</button></div>
-<p class="copy-note" id="copy-note"></p>
+<div class="copy-row"><button class="tool-btn tool-btn-primary" id="copy-results" type="button">Copy results</button><button class="tool-btn tool-btn-outline" id="print-results" type="button">Print</button></div>
+<p class="copy-note" id="copy-note"></p></div>
 <div style="margin-top:26px"><a class="btn btn-outline" href="../../tools/">Explore more real estate tools ↗</a></div>
 </aside>
 </div></section>
@@ -76,10 +77,10 @@
 <p>Monthly principal and interest follow the standard amortizing formula: M = P × r(1 + r)<sup>n</sup> / ((1 + r)<sup>n</sup> − 1), where P is the loan amount, r is the monthly interest rate and n is the number of monthly payments. Property tax and insurance are spread evenly across 12 months; HOA dues are added monthly; PMI is charged only while the balance is above 80% of the price. Any extra monthly payment and one-time payment go straight to principal, which shortens the loan and reduces total interest.</p>
 <h2>Compare loan terms</h2>
 <p>Same home price, down payment and rate — only the term changes. Your current term is highlighted.</p>
-<table class="mortgage-schedule">
+<div class="table-scroll"><table class="mortgage-schedule">
 <thead><tr><th>Term</th><th>Monthly P&amp;I</th><th>Total interest</th><th>Total paid</th></tr></thead>
 <tbody id="term-compare-body"></tbody>
-</table>
+</table></div>
 <h2>Balance over time</h2>
 <p>How the remaining balance falls, and how interest adds up, year by year.</p>
 <div class="chart-wrap"><svg id="balance-chart" viewBox="0 0 600 260" role="img" aria-label="Chart of remaining loan balance and cumulative interest over the loan term"></svg>
@@ -92,10 +93,10 @@
 <button class="mortgage-toggle" id="download-schedule-btn" type="button">Download CSV</button>
 </div>
 <p class="muted" id="schedule-note"></p>
-<table class="mortgage-schedule">
+<div class="table-scroll"><table class="mortgage-schedule">
 <thead><tr><th>Year / Month</th><th>Interest</th><th>Principal</th><th>Remaining balance</th></tr></thead>
 <tbody id="mortgage-schedule-body"></tbody>
-</table>
+</table></div>
 </details>
 <h2>Understanding the estimate</h2>
 <p>Your actual monthly housing cost can differ due to tax reassessments, insurance premiums, HOA changes, PMI cancellation rules and lender fees.</p>
