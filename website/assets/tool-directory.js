@@ -13,6 +13,23 @@
     return;
   }
   const tools = window.realEstateTools.filter(tool => tool.status === 'published');
+  // Presentation data only (registry stays the source of truth for
+  // title, description, URL and order): display category, "You get" line,
+  // read time, and whether the tool carries the New badge.
+  const DISPLAY = {
+    'commission-calculator': { category: 'For agents', youGet: 'Net earnings · Split breakdown', minutes: '2 min', isNew: false },
+    'mortgage-calculator': { category: 'Buying', youGet: 'Monthly payment · Total interest', minutes: '2 min', isNew: false },
+    'home-affordability-calculator': { category: 'Buying', youGet: 'Max price · Payment breakdown', minutes: '2 min', isNew: false },
+    'rent-vs-buy-calculator': { category: 'Buying', youGet: 'Breakeven year · Total cost', minutes: '3 min', isNew: false },
+    'cap-rate-calculator': { category: 'Investing', youGet: 'Cap rate · NOI', minutes: '2 min', isNew: false },
+    'bridge-loan-calculator': { category: 'Selling', youGet: 'Max loan · Cash left after sale', minutes: '3 min', isNew: false },
+    'property-investment-calculator': { category: 'Investing', youGet: 'Cash flow · Cash-on-cash', minutes: '3 min', isNew: false },
+    'capital-gains-tax-calculator': { category: 'Tax', youGet: 'Tax due · Net proceeds', minutes: '3 min', isNew: true },
+    'roi-calculator': { category: 'Investing', youGet: 'Annualized ROI · Total return', minutes: '3 min', isNew: true }
+  };
+  const KNOWN_ORDER = ['Buying', 'Investing', 'Selling', 'Tax', 'For agents'];
+  function displayCategory(tool) { return (DISPLAY[tool.slug] && DISPLAY[tool.slug].category) || tool.category; }
+  function display(tool) { return DISPLAY[tool.slug] || { category: tool.category, youGet: '', minutes: '', isNew: false }; }
   let category = null;
   const buttons = [];
   function element(tag, className, text) {
@@ -22,22 +39,29 @@
     return node;
   }
   const cards = tools.map(tool => {
-    const card = element('a', 'panel tool-card');
+    const meta = display(tool);
+    const card = element('a', 'listing-card');
     card.href = tool.publicUrl;
-    const chips = element('div', 'chip-row');
-    const icon = element('span', 'card-ico', tool.icon || '+');
+    const top = element('div', 'card-top');
+    const icon = element('span', 'listing-ico', tool.icon || '+');
     icon.setAttribute('aria-hidden', 'true');
-    chips.append(icon, element('span', 'live-chip', 'Free tool'));
-    card.append(chips, element('h3', '', tool.title), element('p', '', tool.description),
-      element('span', 'card-arrow', 'Open tool \u2192'));
+    const tags = element('div', 'card-tags');
+    tags.append(element('span', 'tag', displayCategory(tool)));
+    if (meta.isNew) tags.append(element('span', 'tag new', 'New'));
+    top.append(icon, tags);
+    const get = element('div', 'get', 'You get: ');
+    if (meta.youGet) get.append(element('b', '', meta.youGet));
+    const foot = element('div', 'foot');
+    foot.append(element('span', 'open', 'Open tool \u2192'), element('span', 'time', meta.minutes));
+    card.append(top, element('h3', '', tool.title), element('p', '', tool.description), get, foot);
     grid.append(card);
-    return { tool, card, keywords: `${tool.title} ${tool.description} ${tool.category} ${tool.slug}`.toLowerCase() };
+    return { tool, card, keywords: `${tool.title} ${tool.description} ${displayCategory(tool)} ${meta.youGet} ${tool.slug}`.toLowerCase() };
   });
   function update() {
     const query = search.value.trim().toLowerCase();
     let count = 0;
     cards.forEach(({ tool, card, keywords }) => {
-      const visible = (category === null || tool.category === category) && keywords.includes(query);
+      const visible = (category === null || displayCategory(tool) === category) && keywords.includes(query);
       card.hidden = !visible;
       if (visible) count++;
     });
@@ -45,12 +69,17 @@
       button.classList.toggle('active', category === value);
       button.setAttribute('aria-pressed', String(category === value));
     });
-    summary.textContent = `${count} ${count === 1 ? 'tool' : 'tools'} found`;
+    summary.textContent = `${count} ${count === 1 ? 'tool' : 'tools'} found \u00b7 Sort: Newest first`;
     message.style.display = count ? 'none' : 'block';
     message.textContent = tools.length ? 'No matching tools yet. Try another search.' : 'No tools are published yet.';
   }
-  [null, ...new Set(tools.map(tool => tool.category))].forEach(value => {
-    const button = element('button', 'category-filter', value === null ? 'All tools' : value);
+  const counts = {};
+  tools.forEach(tool => { const c = displayCategory(tool); counts[c] = (counts[c] || 0) + 1; });
+  const ordered = KNOWN_ORDER.filter(c => counts[c]);
+  Object.keys(counts).forEach(c => { if (!ordered.includes(c)) ordered.push(c); });
+  [null, ...ordered].forEach(value => {
+    const label = value === null ? `All tools \u00b7 ${tools.length}` : `${value} \u00b7 ${counts[value]}`;
+    const button = element('button', 'pill', label);
     button.type = 'button';
     button.addEventListener('click', () => { category = value; update(); });
     buttons.push({ button, value });

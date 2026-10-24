@@ -1,0 +1,56 @@
+/* Tools listing page only (website/tools/index.html).
+   Formal palette only: paper #F6F5F0, navy #102131, teal #0F766E,
+   dark teal #095E58, text #0B1F33, muted #5E6C79, borders #E5E2DB/#E2DED5,
+   mist #EAF2EF, icon tile #E7F1EC/#D5E6DF, gold #C49B52 (nav underline only). */
+
+/* Tighter vertical rhythm for the listing page (v2 reference). */
+.page-hero { padding: 48px 0 8px; }
+.page-hero h1 { font-family: Fraunces, Georgia, "Times New Roman", serif; font-size: clamp(2.4rem, 4vw, 2.9rem); }
+.listing-section { padding: 20px 0 64px; }
+
+/* Hero trust chips. */
+.trust-chips { margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap; }
+.trust-chips span { background: #EAF2EF; border: 1px solid #D5E6DF; border-radius: 999px; padding: 6px 12px; font-size: 12.5px; color: #0B1F33; }
+
+/* Search + filter panel. */
+.listing-panel { background: #fff; border: 1px solid #E5E2DB; border-radius: 17px; padding: 16px; box-shadow: 0 5px 30px rgba(16, 33, 49, .025); }
+.listing-search { width: 100%; border: 1px solid #D9DEDB; border-radius: 10px; padding: 13px 16px; font-size: 15px; outline: none; color: #102131; background: #fff; }
+.listing-search:focus { border-color: #0F766E; box-shadow: 0 0 0 3px rgba(15, 118, 110, .18); }
+.listing-meta { margin-top: 14px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+#tool-filters { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.pill { border: 1px solid #D9DEDB; background: #fff; border-radius: 11px; padding: 9px 14px; font-size: 13px; color: #0B1F33; font-weight: 600; cursor: pointer; }
+.pill:hover { border-color: #0F766E; }
+.pill.active { background: #102131; color: #fff; border-color: #102131; }
+.pill:focus-visible { outline: 3px solid #0F766E; outline-offset: 2px; }
+.listing-count { margin-left: auto; font-size: 13px; color: #5E6C79; white-space: nowrap; }
+
+/* Card grid: 3 columns desktop, 2 tablet, 1 mobile. Equal-height cards.
+   ID-qualified so it beats the legacy 2-column #tool-grid rule in tools.css. */
+#tool-grid.tool-listing-grid { margin-top: 22px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+@media (max-width: 1024px) { #tool-grid.tool-listing-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { #tool-grid.tool-listing-grid { grid-template-columns: 1fr; } }
+#tool-grid .listing-card[hidden] {display:none;}
+
+/* Whole card is one link. */
+.listing-card { background: #fff; border: 1px solid #E2DED5; border-radius: 18px; padding: 22px; display: flex; flex-direction: column; min-height: 272px; box-shadow: 0 8px 28px rgba(20, 32, 43, .06); color: inherit; text-decoration: none; }
+.listing-card:hover { transform: translateY(-3px); border-color: #0F766E; box-shadow: 0 17px 35px rgba(20, 32, 43, .10); }
+.listing-card:focus-visible { outline: 3px solid #0F766E; outline-offset: 3px; }
+.card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.listing-ico { width: 56px; height: 56px; flex: 0 0 56px; background: #E7F1EC; border: 1px solid #D5E6DF; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 21px; color: #0F766E; font-weight: 900; }
+.card-tags { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.tag { font-size: 11px; font-weight: 800; color: #0F766E; background: #E7F1EC; border: 1px solid #D5E6DF; border-radius: 999px; padding: 5px 10px; letter-spacing: .02em; text-transform: uppercase; white-space: nowrap; }
+.tag.new { background: #102131; color: #fff; border-color: #102131; }
+.listing-card h3 { font-family: Fraunces, Georgia, "Times New Roman", serif; font-size: 20px; line-height: 1.25; margin-top: 16px; color: #102131; }
+.listing-card p { font-size: 14px; line-height: 1.55; color: #5E6C79; margin-top: 8px; }
+.listing-card .get { margin-top: auto; padding-top: 16px; border-top: 1px solid #E5E2DB; font-size: 12.5px; color: #5E6C79; }
+.listing-card .get b { color: #0B1F33; }
+.listing-card .foot { margin-top: 16px; display: flex; justify-content: space-between; align-items: center; }
+.listing-card .open { color: #0F766E; font-weight: 700; font-size: 14px; text-decoration: underline; text-underline-offset: 3px; }
+.listing-card .time { font-size: 12.5px; color: #5E6C79; }
+
+/* Single navy banner below the grid. */
+.listing-banner { margin-top: 26px; background: #102131; color: #fff; border-radius: 18px; padding: 22px 26px; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+.listing-banner-title { font-family: Fraunces, Georgia, "Times New Roman", serif; font-size: 20px; font-weight: 700; }
+.listing-banner-sub { font-size: 13px; color: #C9D6E0; margin-top: 4px; }
+.listing-banner .btn { white-space: nowrap; }
+@media (max-width: 640px) { .listing-banner { flex-direction: column; align-items: flex-start; } }

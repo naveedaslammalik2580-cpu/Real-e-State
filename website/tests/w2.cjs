@@ -56,14 +56,19 @@ d.search('  MORTGAGE  '); assert.equal(d.visible().length, 1);
 d.search('transaction fees'); assert.equal(d.visible()[0].href, 'commission-calculator/');
 d.search('not-a-tool'); assert.equal(d.visible().length, 0); assert.equal(d.ids['no-results'].style.display, 'block');
 d.search(''); assert.equal(d.visible().length, 9);
+assert.deepEqual(d.ids['tool-filters'].children.map(b => b.textContent), ['All tools · 9', 'Buying · 3', 'Investing · 3', 'Selling · 1', 'Tax · 1', 'For agents · 1']);
+assert.equal(d.ids['tool-count'].textContent, '9 tools found · Sort: Newest first');
 // Synthetic records exist only in memory, never as fake published pages.
 d = directory([...registry, { slug: 'test', title: 'Test', category: 'Planning', description: 'Schedule', status: 'published', publicUrl: 'test/' },
   { slug: 'draft', title: 'Secret draft', category: 'Draft category', description: '', status: 'draft', publicUrl: 'draft/' }]);
-assert.equal(d.visible().length, 10); assert.equal(d.ids['tool-filters'].children.length, 3);
-d.filter('Planning'); assert.equal(d.visible().length, 1);
-assert.equal(d.ids['tool-filters'].children.find(b => b.textContent === 'Planning').attributes['aria-pressed'], 'true');
+assert.equal(d.visible().length, 10); assert.equal(d.ids['tool-filters'].children.length, 7);
+assert.deepEqual(d.ids['tool-filters'].children.map(b => b.textContent), ['All tools · 10', 'Buying · 3', 'Investing · 3', 'Selling · 1', 'Tax · 1', 'For agents · 1', 'Planning · 1']);
+assert.equal(d.ids['tool-count'].textContent, '10 tools found · Sort: Newest first');
+d.filter('Planning · 1'); assert.equal(d.visible().length, 1);
+assert.equal(d.ids['tool-filters'].children.find(b => b.textContent === 'Planning · 1').attributes['aria-pressed'], 'true');
+assert.equal(d.ids['tool-count'].textContent, '1 tool found · Sort: Newest first');
 d.search('mortgage'); assert.equal(d.visible().length, 0);
-d.filter('All tools'); assert.equal(d.visible().length, 1);
+d.filter('All tools · 10'); assert.equal(d.visible().length, 1);
 d.search('draft'); assert.equal(d.visible().length, 0);
 assert.equal(directory([]).ids['no-results'].textContent, 'No tools are published yet.');
 assert.equal(directory(undefined).ids['tool-search'].disabled, true);
@@ -215,6 +220,6 @@ for (const file of walk(root).filter(f => /\.(html|css|js)$/.test(f))) {
 }
 const directoryHtml = read('tools/index.html');
 assert(directoryHtml.indexOf('tool-registry.js') < directoryHtml.indexOf('tool-directory.js'));
-assert(read('assets/theme.css').includes('#tool-grid .tool-card[hidden] {display:none;}'));
+assert(read('assets/tool-listing.css').includes('#tool-grid .listing-card[hidden] {display:none;}'));
 console.log(`PASS: registry, published-only rendering, search/category combinations, empty/error states, navigation, 127 calculator assertions, JS syntax, ${references} internal references across ${pages} pages.`);
 console.log('DOM behavior uses stubs; browser responsive/visual verification remains manual.');
