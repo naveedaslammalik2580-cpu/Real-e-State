@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#102131">
+<meta name="description" content="Estimate a bridge loan from your current home equity: interest-only payments, total cost, down payment coverage and cash left after your current home sells.">
+<title>Bridge Loan Calculator | Real Estate Tools</title>
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="stylesheet" href="../../assets/theme.css">
+<link rel="stylesheet" href="../../assets/tools.css">
+<link rel="stylesheet" href="calculator.css">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Bridge Loan Calculator | Real Estate Tools">
+<meta property="og:description" content="Estimate a bridge loan from your current home equity: interest-only payments, total cost, down payment coverage and cash left after your current home sells.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Bridge Loan Calculator | Real Estate Tools">
+<meta name="twitter:description" content="Estimate a bridge loan from your current home equity: interest-only payments, total cost, down payment coverage and cash left after your current home sells.">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="header"><div class="wrap head-inner">
+<a class="brand" href="../../" aria-label="Real Estate Tools, homepage"><span class="brand-mark" aria-hidden="true">⌂</span><span class="brand-name"><span data-brand-name>Real Estate Tools</span><em>Tools · Software · Guides</em></span></a>
+<nav class="nav" id="site-menu" aria-label="Main navigation"><a href="../../tools/" class="current" aria-current="page">All Tools</a><a href="../../realtoros/" class="">RealtorOS</a><a href="../../resources/" class="">Resources</a><a href="../../about/">About</a><a href="../../contact/" class="">Contact</a><a class="btn btn-primary mobile-nav-cta" href="../../realtoros/">Discover RealtorOS <span aria-hidden="true">↗</span></a></nav>
+<div class="nav-buttons"><a class="btn btn-primary btn-small" href="../../realtoros/">Discover RealtorOS <span aria-hidden="true">↗</span></a></div>
+<button class="menu-toggle" type="button" aria-controls="site-menu" aria-expanded="false" aria-label="Open navigation"><span aria-hidden="true">☰</span></button>
+</div></header>
+<main id="main"><div class="sticky-result" id="sticky-result"><span>Max bridge loan</span><b id="sticky-value">—</b></div>
+<section class="page-hero"><div class="wrap"><div class="crumb"><a href="../../">Home</a> / Tools / Bridge loan calculator</div><span class="eyebrow">Real estate, simplified</span><h1>Bridge Loan Calculator</h1><p>Buying before you sell? Enter your current home's value and mortgage, the new home's price and the bridge terms — we'll work out how much you can borrow, what it costs, and whether it covers your down payment.</p></div>
+<div class="wrap calculator-layout">
+<div class="panel">
+<h2 style="font-size:1.7rem">Enter your figures</h2>
+<p class="muted">Adjust the sample values below to calculate an estimate instantly.</p>
+<form id="bridge-loan-form" onsubmit="return false"><div class="form-grid">
+<div class="form-field"><label for="current-value">Current home value (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="current-value" type="number" min="0" max="1000000000000" step="5000" value="450000"></span><input class="field-slider" id="current-value-slider" type="range" min="0" max="2000000" step="5000" value="450000" aria-label="Current home value (USD) slider"></div>
+<div class="form-field"><label for="current-mortgage">Current mortgage balance (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="current-mortgage" type="number" min="0" max="1000000000000" step="1000" value="200000"></span><input class="field-slider" id="current-mortgage-slider" type="range" min="0" max="1000000" step="1000" value="200000" aria-label="Current mortgage balance (USD) slider"></div>
+<div class="form-field"><label for="new-price">New home price (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="new-price" type="number" min="0" max="1000000000000" step="5000" value="600000"></span><input class="field-slider" id="new-price-slider" type="range" min="0" max="2000000" step="5000" value="600000" aria-label="New home price (USD) slider"></div>
+<div class="form-field"><label for="down-percent">Down payment on new home (%)</label><span class="input-unit"><input class="field" id="down-percent" type="number" min="0" max="100" step="1" value="20"><span class="unit-affix" aria-hidden="true">%</span></span><input class="field-slider" id="down-percent-slider" type="range" min="0" max="50" step="1" value="20" aria-label="Down payment on new home (%) slider"></div>
+<div class="form-field"><label for="bridge-ltv">Bridge loan limit (% of current value)</label><span class="input-unit"><input class="field" id="bridge-ltv" type="number" min="0" max="100" step="1" value="80"><span class="unit-affix" aria-hidden="true">%</span></span><input class="field-slider" id="bridge-ltv-slider" type="range" min="50" max="90" step="5" value="80" aria-label="Bridge loan limit (%) slider"></div>
+<div class="form-field"><label for="bridge-rate">Bridge interest rate (%)</label><span class="input-unit"><input class="field" id="bridge-rate" type="number" min="0" max="100" step="0.25" value="9"><span class="unit-affix" aria-hidden="true">%</span></span><input class="field-slider" id="bridge-rate-slider" type="range" min="0" max="15" step="0.25" value="9" aria-label="Bridge interest rate (%) slider"></div>
+<div class="form-field"><label for="months-to-sale">Months until current home sells</label><span class="input-unit"><input class="field" id="months-to-sale" type="number" min="1" max="24" step="1" value="6"><span class="unit-affix" aria-hidden="true">months</span></span><input class="field-slider" id="months-to-sale-slider" type="range" min="1" max="24" step="1" value="6" aria-label="Months until current home sells slider"></div>
+</div>
+<details class="advanced">
+<summary>Advanced options</summary>
+<div class="form-grid">
+<div class="form-field"><label for="origination-rate">Origination fee (% of bridge loan)</label><span class="input-unit"><input class="field" id="origination-rate" type="number" min="0" max="100" step="0.25" value="1"><span class="unit-affix" aria-hidden="true">%</span></span></div>
+<div class="form-field"><label for="other-closing">Other closing costs (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="other-closing" type="number" min="0" max="1000000000000" step="100" value="3000"></span></div>
+<div class="form-field"><label for="selling-rate">Selling costs on current home (% of value)</label><span class="input-unit"><input class="field" id="selling-rate" type="number" min="0" max="100" step="0.5" value="6"><span class="unit-affix" aria-hidden="true">%</span></span></div>
+</div>
+</details>
+</form>
+<p class="validation-note" id="validation-note" role="alert"></p>
+<p class="disclaimer">Bridge loans are short-term and usually interest-only — the full principal comes due when your current home sells or the term ends.</p>
+<p class="disclaimer">Estimates only. Not a loan offer or financial advice.</p>
+</div>
+<aside class="result" aria-live="polite">
+<p class="result-label">Maximum bridge loan</p>
+<p class="result-number" id="bridge-amount">—</p>
+<p class="result-hero-sub">Interest-only payment <b id="bridge-monthly">—</b> per month</p>
+<p class="result-empty" id="result-empty" hidden>Enter your details to see your estimate.</p>
+<div id="result-body"><h3 class="result-group">Bridge loan</h3>
+<div class="result-row"><span>Equity in current home</span><b id="available-equity">—</b></div>
+<div class="result-row" id="row-total-interest"><span>Total interest over term</span><b id="total-interest">—</b></div>
+<div class="result-row" id="row-origination-fee"><span>Origination fee</span><b id="origination-fee">—</b></div>
+<div class="result-row" id="row-other-closing"><span>Other closing costs</span><b id="other-closing-out">—</b></div>
+<div class="result-row"><span>Total bridge cost</span><b id="total-bridge-cost">—</b></div>
+<div class="breakdown-track" aria-hidden="true"><div id="bar-interest" class="seg-teal"></div><div id="bar-fees" class="seg-gold"></div></div>
+<ul class="breakdown-legend"><li><span class="swatch seg-teal"></span> Interest <b id="lg-interest">—</b></li><li><span class="swatch seg-gold"></span> Fees &amp; closing <b id="lg-fees">—</b></li></ul>
+<h3 class="result-group">New home down payment</h3>
+<div class="result-row"><span>Down payment needed</span><b id="down-needed">—</b></div>
+<div class="result-row"><span>Covered by bridge loan</span><b id="covered-by-bridge">—</b></div>
+<div class="result-row" id="row-cash-needed"><span>Cash still needed</span><b id="cash-needed">—</b></div>
+<h3 class="result-group">When your current home sells</h3>
+<div class="result-row"><span>Sale price</span><b id="sale-price">—</b></div>
+<div class="result-row"><span>Existing mortgage repaid</span><b id="mortgage-repaid">—</b></div>
+<div class="result-row"><span>Bridge loan repaid</span><b id="bridge-repaid">—</b></div>
+<div class="result-row" id="row-selling-costs"><span>Selling costs</span><b id="selling-costs">—</b></div>
+<div class="result-row"><span>Cash left after sale</span><b id="cash-after-sale">—</b></div>
+<p class="hidden-row-note" id="hidden-rows-note"></p>
+<div class="copy-row"><button class="tool-btn tool-btn-primary" id="copy-results" type="button">Copy results</button><button class="tool-btn tool-btn-outline" id="print-results" type="button">Print</button></div>
+<p class="copy-note" id="copy-note"></p></div>
+<div style="margin-top:26px"><a class="btn btn-outline" href="../../tools/mortgage-calculator/" style="white-space:normal">See the payment on the mortgage calculator ↗</a></div>
+</aside>
+</div></section>
+<section class="section"><div class="wrap content">
+<h2>How a bridge loan works</h2>
+<p>A bridge loan lets you buy the new home before the old one sells, using the equity in your current home as security. The maximum you can borrow is your current home's value times the lender's loan limit, minus your existing mortgage balance. Payments are interest-only — you pay just the monthly interest while the loan runs, and the full principal comes due when your current home sells or the term ends, whichever comes first. Rates run higher than a conventional mortgage because the loan is short and the lender carries two properties' worth of risk at once.</p>
+<h2>What moves the answer</h2>
+<p>Two inputs decide almost everything: the loan limit and your existing mortgage. If your mortgage already sits near the limit, little or no bridge loan is available at all — the panel says so plainly instead of showing a negative loan. After that, time is the cost: every extra month until the sale adds one more interest-only payment, so a 12-month sale costs roughly twice the interest of a 6-month one while the fees stay fixed. That is why fees weigh heaviest on small, short bridge loans.</p>
+<h2>Important note</h2>
+<p>This is an informational estimate, not a loan offer or financial advice. Lender limits, rates and fees vary, and if your current home does not sell within the term you may need an extension or a refinance — both usually cost more. Confirm terms with your lender before relying on a bridge loan to close.</p>
+</div></section>
+</main>
+<footer class="footer"><div class="wrap"><div class="footer-top"><div><a class="brand" href="../../" style="color:white;display:inline-flex;margin-bottom:18px"><span class="brand-mark" style="background:#254761">⌂</span><span class="brand-name"><span data-brand-name>Real Estate Tools</span><em style="color:#adc6c8">Tools · Software · Guides</em></span></a><p>Useful real estate tools for everyday decisions, with RealtorOS as the flagship CRM. Brand and company details will be finalized before public launch.</p></div><div><h2 class="footer-heading">Platform</h2><a href="../../tools/">All tools</a><a href="../../tools/commission-calculator/">Commission calculator</a><a href="../../tools/mortgage-calculator/">Mortgage calculator</a><a href="../../tools/home-affordability-calculator/">Home affordability calculator</a><a href="../../tools/rent-vs-buy-calculator/">Rent vs buy calculator</a><a href="../../tools/cap-rate-calculator/">Cap rate calculator</a><a href="../../tools/bridge-loan-calculator/">Bridge loan calculator</a></div><div><h2 class="footer-heading">Product</h2><a href="../../realtoros/">RealtorOS CRM</a><a href="../../resources/">Resources</a><a href="../../about/">About</a><a href="../../contact/">Contact</a></div><div><h2 class="footer-heading">Before launch</h2><p>Connect support email, app login, pricing and approved legal policies.</p></div></div><div class="foot-bottom"><span>© 2026 <span data-brand-name>Real Estate Tools</span> · Working name, brand pending.</span><span>Static demonstration · No customer information collected</span></div></div></footer>
+<script src="../../assets/site-config.js" defer></script>
+<script src="../../assets/site.js" defer></script>
+<script src="calculator.js" defer></script>
+</body>
+</html>

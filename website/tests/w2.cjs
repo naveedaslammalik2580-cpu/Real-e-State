@@ -50,16 +50,16 @@ function directory(data) {
   };
 }
 let d = directory(registry);
-assert.equal(d.visible().length, 5);
-assert.deepEqual(d.visible().map(c => c.href), ['commission-calculator/', 'mortgage-calculator/', 'home-affordability-calculator/', 'rent-vs-buy-calculator/', 'cap-rate-calculator/']);
+assert.equal(d.visible().length, 6);
+assert.deepEqual(d.visible().map(c => c.href), ['commission-calculator/', 'mortgage-calculator/', 'home-affordability-calculator/', 'rent-vs-buy-calculator/', 'cap-rate-calculator/', 'bridge-loan-calculator/']);
 d.search('  MORTGAGE  '); assert.equal(d.visible().length, 1);
 d.search('transaction fees'); assert.equal(d.visible()[0].href, 'commission-calculator/');
 d.search('not-a-tool'); assert.equal(d.visible().length, 0); assert.equal(d.ids['no-results'].style.display, 'block');
-d.search(''); assert.equal(d.visible().length, 5);
+d.search(''); assert.equal(d.visible().length, 6);
 // Synthetic records exist only in memory, never as fake published pages.
 d = directory([...registry, { slug: 'test', title: 'Test', category: 'Planning', description: 'Schedule', status: 'published', publicUrl: 'test/' },
   { slug: 'draft', title: 'Secret draft', category: 'Draft category', description: '', status: 'draft', publicUrl: 'draft/' }]);
-assert.equal(d.visible().length, 6); assert.equal(d.ids['tool-filters'].children.length, 3);
+assert.equal(d.visible().length, 7); assert.equal(d.ids['tool-filters'].children.length, 3);
 d.filter('Planning'); assert.equal(d.visible().length, 1);
 assert.equal(d.ids['tool-filters'].children.find(b => b.textContent === 'Planning').attributes['aria-pressed'], 'true');
 d.search('mortgage'); assert.equal(d.visible().length, 0);
@@ -76,7 +76,7 @@ function calculator(name) {
   const form = `${name}-form`;
   const inputs = [...html.matchAll(/<input[^>]*\bid="([^"]+)"[^>]*>/g)].map(m => elements[m[1]]);
   // Each tool runs its own scoped script; the shared script keeps only the menu.
-  const script = name === 'mortgage' ? read('tools/mortgage-calculator/calculator.js') : name === 'commission' ? read('tools/commission-calculator/calculator.js') : name === 'home-affordability' ? read('tools/home-affordability-calculator/calculator.js') : name === 'rent-vs-buy' ? read('tools/rent-vs-buy-calculator/calculator.js') : name === 'cap-rate' ? read('tools/cap-rate-calculator/calculator.js') : shared;
+  const script = name === 'mortgage' ? read('tools/mortgage-calculator/calculator.js') : name === 'commission' ? read('tools/commission-calculator/calculator.js') : name === 'home-affordability' ? read('tools/home-affordability-calculator/calculator.js') : name === 'rent-vs-buy' ? read('tools/rent-vs-buy-calculator/calculator.js') : name === 'cap-rate' ? read('tools/cap-rate-calculator/calculator.js') : name === 'bridge-loan' ? read('tools/bridge-loan-calculator/calculator.js') : shared;
   vm.runInNewContext(script, { Intl, document: {
     querySelector: s => s === '#' + form ? elements[form] : null,
     querySelectorAll: s => s === '#' + form + ' input' ? inputs : [], getElementById: id => elements[id]
@@ -138,6 +138,15 @@ assert.equal(k.get('expense-ratio'), '37.90%'); assert.equal(k.get('cap-low'), '
 assert.equal(k.get('cap-high'), '4.05%'); assert.equal(k.get('value-at-target'), '$194,670.00');
 k.set('vacancy-rate', 0); assert.equal(k.get('cap-rate'), '4.80%');
 k.set('property-price', -1); assert.equal(k.get('cap-rate'), 'Check inputs');
+const b = calculator('bridge-loan');
+assert.equal(b.get('bridge-amount'), '$160,000.00'); assert.equal(b.get('bridge-monthly'), '$1,200.00');
+assert.equal(b.get('total-bridge-cost'), '$11,800.00'); assert.equal(b.get('down-needed'), '$120,000.00');
+assert.equal(b.get('cash-after-sale'), '$63,000.00'); assert.equal(b.get('available-equity'), '$250,000.00');
+assert.equal(b.get('total-interest'), '$7,200.00'); assert.equal(b.get('origination-fee'), '$1,600.00');
+b.set('months-to-sale', 12); assert.equal(b.get('total-bridge-cost'), '$19,000.00');
+b.set('down-percent', 30); assert.equal(b.get('cash-needed'), '$20,000.00');
+b.set('bridge-rate', 0); assert.equal(b.get('bridge-monthly'), '$0.00');
+b.set('current-mortgage', 400000); assert.equal(b.get('bridge-amount'), 'Check inputs');
 const toggle = new Element(), nav = new Element(), events = {};
 nav.contains = () => true;
 toggle.focus = () => { toggle.focused = true; };
@@ -171,5 +180,5 @@ for (const file of walk(root).filter(f => /\.(html|css|js)$/.test(f))) {
 const directoryHtml = read('tools/index.html');
 assert(directoryHtml.indexOf('tool-registry.js') < directoryHtml.indexOf('tool-directory.js'));
 assert(read('assets/theme.css').includes('#tool-grid .tool-card[hidden] {display:none;}'));
-console.log(`PASS: registry, published-only rendering, search/category combinations, empty/error states, navigation, 66 calculator assertions, JS syntax, ${references} internal references across ${pages} pages.`);
+console.log(`PASS: registry, published-only rendering, search/category combinations, empty/error states, navigation, 78 calculator assertions, JS syntax, ${references} internal references across ${pages} pages.`);
 console.log('DOM behavior uses stubs; browser responsive/visual verification remains manual.');

@@ -45,5 +45,14 @@ window.realEstateTools = Object.freeze([
     status: 'published',
     publicUrl: 'cap-rate-calculator/',
     icon: '÷'
+  }),
+  Object.freeze({
+    slug: 'bridge-loan-calculator',
+    title: 'Bridge Loan Calculator',
+    category: 'Finance & numbers',
+    description: 'Estimate a bridge loan from your current home equity, its interest-only cost, and the cash left after sale.',
+    status: 'published',
+    publicUrl: 'bridge-loan-calculator/',
+    icon: '⇋'
   })
 ]);
