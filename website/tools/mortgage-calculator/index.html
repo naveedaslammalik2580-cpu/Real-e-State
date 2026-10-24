@@ -8,6 +8,7 @@
 <title>Mortgage Payment Calculator | Real Estate Tools</title>
 <link rel="stylesheet" href="../../assets/site.css">
 <link rel="stylesheet" href="../../assets/theme.css">
+<link rel="stylesheet" href="../../assets/tools.css">
 <link rel="stylesheet" href="calculator.css">
 <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
 <meta property="og:type" content="website">
@@ -25,54 +26,48 @@
 <div class="nav-buttons"><a class="btn btn-primary btn-small" href="../../realtoros/">Discover RealtorOS <span aria-hidden="true">↗</span></a></div>
 <button class="menu-toggle" type="button" aria-controls="site-menu" aria-expanded="false" aria-label="Open navigation"><span aria-hidden="true">☰</span></button>
 </div></header>
-<main id="main">
+<main id="main"><div class="sticky-result" id="sticky-result"><span>Total monthly payment</span><b id="sticky-value">—</b></div>
 <section class="page-hero"><div class="wrap"><div class="crumb"><a href="../../">Home</a> / Tools / Mortgage calculator</div><span class="eyebrow">Real estate, simplified</span><h1>Mortgage Payment Calculator</h1><p>Estimate the full monthly payment on a fixed-rate home loan — principal and interest, plus property tax, insurance, HOA dues and PMI.</p></div>
 <div class="wrap calculator-layout">
 <div class="panel">
 <h2 style="font-size:1.7rem">Enter your loan details</h2>
 <p class="muted">Adjust the sample values below to calculate an estimate instantly.</p>
-<form id="mortgage-form" onsubmit="return false"><div class="form-grid">
-<div class="form-field"><label for="home-price">Home price (USD)</label><input class="field" id="home-price" type="number" min="0" max="1000000000000" step="1000" value="400000"></div>
-<div class="form-field"><label for="down-payment">Down payment (USD)</label><input class="field" id="down-payment" type="number" min="0" step="1000" value="80000"><p class="mortgage-down-hint" id="down-percent"></p></div>
-<div class="form-field"><label for="interest-rate">Annual interest rate (%)</label><input class="field" id="interest-rate" type="number" min="0" max="100" step="0.01" value="6.5"></div>
-<div class="form-field"><label for="loan-years">Loan term (years)</label><input class="field" id="loan-years" type="number" min="1" max="50" step="1" value="30"></div>
-<div class="form-field"><label for="property-tax">Property tax (USD per year)</label><input class="field" id="property-tax" type="number" min="0" step="100" value="4800"></div>
-<div class="form-field"><label for="home-insurance">Home insurance (USD per year)</label><input class="field" id="home-insurance" type="number" min="0" step="100" value="1800"></div>
-<div class="form-field"><label for="hoa-fee">HOA dues (USD per month)</label><input class="field" id="hoa-fee" type="number" min="0" step="10" value="0"></div>
-<div class="form-field"><label for="pmi-rate">PMI rate (annual %, only below 20% down)</label><input class="field" id="pmi-rate" type="number" min="0" max="100" step="0.05" value="0.5"></div>
-<div class="form-field"><label for="extra-payment">Extra payment (USD per month)</label><input class="field" id="extra-payment" type="number" min="0" step="50" value="0"></div>
-<div class="form-field"><label for="lump-sum">One-time extra payment (USD)</label><input class="field" id="lump-sum" type="number" min="0" step="1000" value="0"></div>
-</div></form>
+<form id="mortgage-form" onsubmit="return false"><div class="form-grid"><div class="form-field"><label for="home-price">Home price (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="home-price" type="number" min="0" max="1000000000000" step="1000" value="400000"></span><input class="field-slider" id="home-price-slider" type="range" min="0" max="1000000" step="1000" value="400000" aria-label="Home price (USD) slider"></div><div class="form-field"><label for="down-payment">Down payment (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="down-payment" type="number" min="0" step="1000" value="80000"></span><input class="field-slider" id="down-payment-slider" type="range" min="0" max="1000000" step="1000" value="80000" aria-label="Down payment (USD) slider"></div><div class="form-field"><label for="down-percent-input">Down payment (%)</label><span class="input-unit"><input class="field" id="down-percent-input" type="number" min="0" max="100" step="0.1" value="20"><span class="unit-affix" aria-hidden="true">%</span></span><small class="field-helper">Share of the home price. Edit either value; the other follows.</small></div><div class="form-field"><label for="interest-rate">Annual interest rate (%)</label><span class="input-unit"><input class="field" id="interest-rate" type="number" min="0" max="100" step="0.01" value="6.5"><span class="unit-affix" aria-hidden="true">%</span></span><input class="field-slider" id="interest-rate-slider" type="range" min="0" max="15" step="0.1" value="6.5" aria-label="Annual interest rate (%) slider"></div><div class="form-field"><span class="seg-label" id="loan-years-label">Loan term</span><div class="seg-control" role="group" aria-labelledby="loan-years-label"><button type="button" data-years="15" aria-pressed="false">15 years</button><button type="button" data-years="20" aria-pressed="false">20 years</button><button type="button" data-years="30" aria-pressed="true">30 years</button></div><input type="hidden" id="loan-years" value="30"></div><div class="form-field"><label for="property-tax">Property tax (USD per year)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="property-tax" type="number" min="0" step="100" value="4800"><span class="unit-affix" aria-hidden="true">/ year</span></span></div><div class="form-field"><label for="home-insurance">Home insurance (USD per year)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="home-insurance" type="number" min="0" step="100" value="1800"><span class="unit-affix" aria-hidden="true">/ year</span></span></div></div><details class="advanced"><summary>Advanced options</summary><div class="form-grid"><div class="form-field"><label for="hoa-fee">HOA dues (USD per month)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="hoa-fee" type="number" min="0" step="10" value="0"><span class="unit-affix" aria-hidden="true">/ month</span></span></div><div class="form-field"><label for="pmi-rate">PMI rate (annual %, only below 20% down)</label><span class="input-unit"><input class="field" id="pmi-rate" type="number" min="0" max="100" step="0.05" value="0.5"><span class="unit-affix" aria-hidden="true">%</span></span></div><div class="form-field"><label for="extra-payment">Extra payment (USD per month)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="extra-payment" type="number" min="0" step="50" value="0"><span class="unit-affix" aria-hidden="true">/ month</span></span></div><div class="form-field"><label for="lump-sum">One-time extra payment (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="lump-sum" type="number" min="0" step="1000" value="0"></span></div></div></form>
 <p class="mortgage-error" id="mortgage-error" role="alert"></p>
 <p class="disclaimer">Principal and interest use a standard amortizing fixed-rate formula. PMI is estimated only while the loan balance is above 80% of the price. Taxes, insurance and HOA figures are your own inputs, not quotes.</p>
+<p class="disclaimer">Estimates only. Not a loan offer or financial advice.</p>
 </div>
 <aside class="result" aria-live="polite">
-<small>Estimated monthly principal &amp; interest</small>
-<div class="result-number" id="monthly-payment">—</div>
+<p class="result-label">Total monthly payment</p>
+<div class="result-number" id="monthly-total">—</div>
+<p class="result-hero-sub">Principal &amp; interest <b id="monthly-payment">—</b> per month</p>
+<h3 class="result-group">Monthly payment</h3>
+<div class="breakdown-track" aria-hidden="true"><div id="bd-pi" class="seg-blue"></div><div id="bd-tax" class="seg-teal"></div><div id="bd-ins" class="seg-gold"></div><div id="bd-hoa" class="seg-gray"></div><div id="bd-pmi" class="seg-coral"></div></div>
+<ul class="breakdown-legend">
+<li><span class="swatch seg-blue"></span>Principal &amp; interest <b id="lg-pi">—</b></li>
+<li><span class="swatch seg-teal"></span>Property tax <b id="lg-tax">—</b></li>
+<li><span class="swatch seg-gold"></span>Home insurance <b id="lg-ins">—</b></li>
+<li><span class="swatch seg-gray"></span>HOA dues <b id="lg-hoa">—</b></li>
+<li><span class="swatch seg-coral"></span>PMI <b id="lg-pmi">—</b></li>
+</ul>
+<div class="result-row"><span>Property tax / month</span><b id="monthly-tax">—</b></div>
+<div class="result-row"><span>Home insurance / month</span><b id="monthly-insurance">—</b></div>
+<div class="result-row" id="row-monthly-hoa"><span>HOA dues / month</span><b id="monthly-hoa">—</b></div>
+<div class="result-row" id="row-monthly-pmi"><span>PMI / month</span><b id="monthly-pmi">—</b></div>
+<h3 class="result-group">Loan totals</h3>
 <div class="result-row"><span>Loan amount</span><b id="loan-amount">—</b></div>
 <div class="result-row"><span>Total interest over term</span><b id="total-interest">—</b></div>
 <div class="result-row"><span>Total principal + interest</span><b id="total-paid">—</b></div>
-<div class="mortgage-breakdown">
-<div class="mortgage-breakdown-track" aria-hidden="true"><div id="bd-pi"></div><div id="bd-tax"></div><div id="bd-ins"></div><div id="bd-hoa"></div><div id="bd-pmi"></div></div>
-<ul class="mortgage-breakdown-legend">
-<li><span style="background:var(--navy)"></span>Principal &amp; interest</li>
-<li><span style="background:var(--teal)"></span>Property tax</li>
-<li><span style="background:var(--gold)"></span>Home insurance</li>
-<li><span style="background:#7a8a99"></span>HOA dues</li>
-<li><span style="background:#c46a52"></span>PMI</li>
-</ul>
-</div>
-<div class="result-row"><span>Property tax / month</span><b id="monthly-tax">—</b></div>
-<div class="result-row"><span>Home insurance / month</span><b id="monthly-insurance">—</b></div>
-<div class="result-row"><span>HOA dues / month</span><b id="monthly-hoa">—</b></div>
-<div class="result-row"><span>PMI / month</span><b id="monthly-pmi">—</b></div>
-<div class="result-row mortgage-total-row"><span>Total monthly payment</span><b id="monthly-total">—</b></div>
-<div class="result-row"><span>Total cost over term (all-in)</span><b id="total-cost">—</b></div>
+<div class="result-row"><span>Total of monthly payments over term</span><b id="total-cost">—</b></div>
+<h3 class="result-group">Payoff</h3>
 <div class="result-row"><span>Estimated payoff date</span><b id="payoff-date">—</b></div>
 <div class="result-row"><span>Total interest with extra payments</span><b id="interest-with-extras">—</b></div>
-<div class="result-row mortgage-saved-row"><span>Interest saved</span><b id="interest-saved">—</b></div>
-<div class="result-row mortgage-saved-row"><span>Time saved</span><b id="time-saved">—</b></div>
+<div class="result-row" id="row-interest-saved"><span>Interest saved</span><b id="interest-saved">—</b></div>
+<div class="result-row" id="row-time-saved"><span>Time saved</span><b id="time-saved">—</b></div>
 <p class="muted" id="mortgage-pmi-note"></p>
+<p class="hidden-row-note" id="hidden-rows-note"></p>
+<div class="copy-row"><button class="tool-btn tool-btn-outline" id="copy-results" type="button">Copy results</button><button class="tool-btn tool-btn-outline" id="print-results" type="button">Print</button></div>
+<p class="copy-note" id="copy-note"></p>
 <div style="margin-top:26px"><a class="btn btn-outline" href="../../tools/">Explore more real estate tools ↗</a></div>
 </aside>
 </div></section>
@@ -85,6 +80,10 @@
 <thead><tr><th>Term</th><th>Monthly P&amp;I</th><th>Total interest</th><th>Total paid</th></tr></thead>
 <tbody id="term-compare-body"></tbody>
 </table>
+<h2>Balance over time</h2>
+<p>How the remaining balance falls, and how interest adds up, year by year.</p>
+<div class="chart-wrap"><svg id="balance-chart" viewBox="0 0 600 260" role="img" aria-label="Chart of remaining loan balance and cumulative interest over the loan term"></svg>
+<div class="chart-legend"><span><span class="swatch seg-teal"></span> Remaining balance <b id="chart-balance-end">—</b></span><span><span class="swatch seg-gold"></span> Interest paid so far <b id="chart-interest-end">—</b></span></div></div>
 <details open>
 <summary>Amortization schedule</summary>
 <div class="mortgage-schedule-tools">

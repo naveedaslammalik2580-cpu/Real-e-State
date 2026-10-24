@@ -17,7 +17,7 @@
   }
   function num(id) {
     var el = document.getElementById(id);
-    return el ? Number(el.value) : 0;
+    return el ? Number(String(el.value).replace(/,/g, '').trim()) : 0;
   }
   function set(id, s) {
     var el = document.getElementById(id);
@@ -26,6 +26,13 @@
   function setWidth(id, pct) {
     var el = document.getElementById(id);
     if (el && el.style) el.style.width = pct + '%';
+  }
+  function hideRow(id, hide) {
+    var el = document.getElementById(id);
+    if (el) el.hidden = hide;
+  }
+  function fmt(n) {
+    return Number.isFinite(n) ? n.toLocaleString('en-US', { maximumFractionDigits: 2 }) : '';
   }
   function valid(n, a, b) {
     return Number.isFinite(n) && n >= a && n <= b;
@@ -52,15 +59,28 @@
       valid(listingShare, 0, 100) && valid(split, 0, 100) &&
       valid(referralPct, 0, 100) && valid(franchisePct, 0, 100) &&
       valid(fee, 0, 1e12) && valid(otherPct, 0, 100) && valid(payoff, 0, 1e12);
+    // Empty fields are invalid, not zero.
+    var required = ['sale-price', 'commission-rate', 'listing-share', 'agent-split',
+      'referral-fee', 'franchise-fee', 'transaction-fee', 'other-closing-costs', 'mortgage-payoff'];
+    for (var ri = 0; ri < required.length; ri++) {
+      var rel = document.getElementById(required[ri]);
+      if (!rel || rel.value === '') { ok = false; break; }
+    }
 
     if (!ok) {
       set('commission-total', 'Check inputs');
       OUTPUTS.slice(1).forEach(function (id) { set(id, '—'); });
       set('your-side-label', 'Your side');
+      set('validation-note', 'Check the values: rates and shares must be 0–100%, amounts 0 or more, and no field left empty.');
+      set('lg-referral', '—'); set('lg-franchise', '—'); set('lg-yours', '—'); set('lg-broker', '—');
+      set('sticky-value', '—');
+      set('hidden-rows-note', '');
+      hideRow('row-referral-amount', false); hideRow('row-franchise-amount', false);
       setWidth('bd-referral', 0); setWidth('bd-franchise', 0);
       setWidth('bd-yours', 0); setWidth('bd-broker', 0);
       return;
     }
+    set('validation-note', '');
 
     var total = price * rate / 100;
     var referral = total * referralPct / 100;
@@ -92,6 +112,19 @@
     set('your-side-label', r === 'listing' ? 'Your side (listing side)'
       : r === 'buyer' ? 'Your side (buyer side)' : 'Your side (both sides)');
 
+    // Shared restyle behaviors: legend amounts, $0-row hiding, sticky value.
+    set('lg-referral', usd(referral)); set('lg-franchise', usd(franchise));
+    set('lg-yours', usd(yourShare)); set('lg-broker', usd(brokerShare));
+    set('sticky-value', usd(total));
+    hideRow('row-referral-amount', referral === 0);
+    hideRow('row-franchise-amount', franchise === 0);
+    var hidden = [];
+    if (referral === 0) hidden.push('Referral fee');
+    if (franchise === 0) hidden.push('Franchise fee');
+    set('hidden-rows-note', hidden.length
+      ? 'Not shown because $0: ' + hidden.join(', ') + '.'
+      : '');
+
     if (total > 0) {
       setWidth('bd-referral', (referral / total) * 100);
       setWidth('bd-franchise', (franchise / total) * 100);
@@ -108,5 +141,63 @@
   });
   var roleEl = document.getElementById('agent-role');
   if (roleEl) roleEl.addEventListener('change', run);
+  // Slider sync by delegation on the form (keeps the per-input listeners above intact).
+  form.addEventListener('input', function (e) {
+    var t = e && e.target;
+    if (!t || !t.id) return;
+    if (t.type === 'range') {
+      var numEl = document.getElementById(t.id.replace(/-slider$/, ''));
+      if (numEl) numEl.value = t.value;
+      run();
+    } else if (t.type === 'number') {
+      var slider = document.getElementById(t.id + '-slider');
+      if (slider) {
+        var v = Number(String(t.value).replace(/,/g, ''));
+        if (Number.isFinite(v)) {
+          var mn = Number(slider.min), mx = Number(slider.max);
+          if (Number.isFinite(mn) && v < mn) v = mn;
+          if (Number.isFinite(mx) && v > mx) v = mx;
+          slider.value = String(v);
+        }
+      }
+    }
+  });
+  // Thousand separators on blur only, so the cursor stays stable while typing.
+  document.querySelectorAll('#commission-form input[type="number"]').forEach(function (input) {
+    input.addEventListener('blur', function () {
+      var v = Number(String(input.value).replace(/,/g, '').trim());
+      if (Number.isFinite(v)) input.value = fmt(v);
+    });
+    var initial = Number(String(input.value).replace(/,/g, '').trim());
+    if (input.value !== '' && Number.isFinite(initial)) input.value = fmt(initial);
+  });
+  function copyResults(pairs, title) {
+    var lines = [title];
+    pairs.forEach(function (pair) {
+      var el = document.getElementById(pair[1]);
+      if (el) lines.push(pair[0] + ': ' + el.textContent);
+    });
+    var text = lines.join('\n');
+    var done = function (ok) {
+      set('copy-note', ok ? 'Results copied.' : 'Copy is not available in this browser — use Print instead.');
+    };
+    try {
+      if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
+        var p = navigator.clipboard.writeText(text);
+        if (p && p.then) p.then(function () { done(true); }, function () { done(false); });
+        else done(true);
+      } else done(false);
+    } catch (err) { done(false); }
+  }
+  var copyBtn = document.getElementById('copy-results');
+  if (copyBtn) copyBtn.addEventListener('click', function () {
+    copyResults([['Total commission', 'commission-total'], ['Your net', 'commission-net'],
+      ['Your share', 'commission-agent'], ['Net to seller', 'seller-net']],
+      'Real Estate Commission Calculator');
+  });
+  var printBtn = document.getElementById('print-results');
+  if (printBtn) printBtn.addEventListener('click', function () {
+    if (typeof window !== 'undefined' && window.print) window.print();
+  });
   run();
 })();

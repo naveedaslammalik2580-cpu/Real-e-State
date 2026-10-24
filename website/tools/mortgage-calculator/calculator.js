@@ -12,7 +12,7 @@
   }
   function num(id) {
     var el = document.getElementById(id);
-    return el ? Number(el.value) : 0;
+    return el ? Number(String(el.value).replace(/,/g, '').trim()) : 0;
   }
   function set(id, s) {
     var el = document.getElementById(id);
@@ -29,6 +29,16 @@
   function setPressed(id, on) {
     var el = document.getElementById(id);
     if (el && el.setAttribute) el.setAttribute('aria-pressed', on ? 'true' : 'false');
+  }
+  function setAttr(el, key, value) {
+    if (el && el.setAttribute) el.setAttribute(key, value);
+  }
+  function hideRow(id, hide) {
+    var el = document.getElementById(id);
+    if (el) el.hidden = hide;
+  }
+  function fmt(n) {
+    return Number.isFinite(n) ? n.toLocaleString('en-US', { maximumFractionDigits: 2 }) : '';
   }
   function valid(n, a, b) {
     return Number.isFinite(n) && n >= a && n <= b;
@@ -110,6 +120,13 @@
       valid(years, 1, 50) && valid(tax, 0, 1e12) && valid(ins, 0, 1e12) &&
       valid(hoa, 0, 1e12) && valid(pmiRate, 0, 100) &&
       valid(extra, 0, 1e12) && valid(lump, 0, 1e12);
+    // Empty fields are invalid, not zero.
+    var required = ['home-price', 'down-payment', 'interest-rate', 'loan-years',
+      'property-tax', 'home-insurance', 'hoa-fee', 'pmi-rate', 'extra-payment', 'lump-sum'];
+    for (var ri = 0; ri < required.length; ri++) {
+      var rel = document.getElementById(required[ri]);
+      if (!rel || rel.value === '') { ok = false; break; }
+    }
 
     if (!ok) {
       OUTPUTS.forEach(function (id) { set(id, '—'); });
@@ -117,6 +134,13 @@
       set('mortgage-pmi-note', '');
       set('schedule-note', '');
       set('mortgage-error', 'Check the highlighted values: down payment cannot exceed the price, rate must be 0–100%, and term must be 1–50 years.');
+      set('lg-pi', '—'); set('lg-tax', '—'); set('lg-ins', '—'); set('lg-hoa', '—'); set('lg-pmi', '—');
+      set('sticky-value', '—');
+      set('hidden-rows-note', '');
+      hideRow('row-monthly-hoa', false); hideRow('row-monthly-pmi', false);
+      hideRow('row-interest-saved', false); hideRow('row-time-saved', false);
+      setHtml('balance-chart', '');
+      set('chart-balance-end', '—'); set('chart-interest-end', '—');
       setWidth('bd-pi', 0); setWidth('bd-tax', 0); setWidth('bd-ins', 0);
       setWidth('bd-hoa', 0); setWidth('bd-pmi', 0);
       setHtml('mortgage-schedule-body', '');
@@ -174,6 +198,42 @@
       ? 'Schedule includes your extra payments.'
       : 'Schedule shows the standard plan without extra payments.');
 
+    // Shared restyle behaviors: legend amounts, $0-row hiding, sticky value.
+    set('lg-pi', usd(pi)); set('lg-tax', usd(taxM)); set('lg-ins', usd(insM));
+    set('lg-hoa', usd(hoaM)); set('lg-pmi', usd(pmiM));
+    set('sticky-value', usd(total));
+    var saved = Math.max(0, baseInterest - plan.totalInterest);
+    hideRow('row-monthly-hoa', hoaM === 0);
+    hideRow('row-monthly-pmi', pmiM === 0);
+    hideRow('row-interest-saved', saved < 0.005);
+    hideRow('row-time-saved', plan.months >= baseMonths);
+    var hidden = [];
+    if (hoaM === 0) hidden.push('HOA');
+    if (pmiM === 0) hidden.push('PMI');
+    if (saved < 0.005) hidden.push('interest saved');
+    if (plan.months >= baseMonths) hidden.push('time saved');
+    set('hidden-rows-note', hidden.length
+      ? 'Not shown because $0 or not applicable: ' + hidden.join(', ') + '.'
+      : '');
+    syncDownPct();
+
+    // Balance-over-time chart from the yearly schedule rows.
+    var maxYear = plan.yearly.length || 1;
+    var maxVal = Math.max(principal, plan.totalInterest, 1);
+    var cumInt = 0, balPts = '', intPts = '';
+    for (var ci = 0; ci < plan.yearly.length; ci++) {
+      var yr = plan.yearly[ci];
+      cumInt += yr[1];
+      var x = 20 + (yr[0] / maxYear) * 560;
+      balPts += (balPts ? ' ' : '') + x.toFixed(1) + ',' + (230 - (yr[3] / maxVal) * 200).toFixed(1);
+      intPts += (intPts ? ' ' : '') + x.toFixed(1) + ',' + (230 - (cumInt / maxVal) * 200).toFixed(1);
+    }
+    setHtml('balance-chart', '<line x1="20" y1="230" x2="580" y2="230" stroke="#D9DEDB" stroke-width="1"/>'
+      + '<polyline points="' + balPts + '" class="chart-line-balance"/>'
+      + '<polyline points="' + intPts + '" class="chart-line-interest"/>');
+    set('chart-balance-end', usd(plan.yearly.length ? plan.yearly[plan.yearly.length - 1][3] : 0));
+    set('chart-interest-end', usd(plan.totalInterest));
+
     if (total > 0) {
       setWidth('bd-pi', (pi / total) * 100);
       setWidth('bd-tax', (taxM / total) * 100);
@@ -221,5 +281,115 @@
   if (monthlyBtn) monthlyBtn.addEventListener('click', function () { view = 'monthly'; renderSchedule(); });
   var dlBtn = document.getElementById('download-schedule-btn');
   if (dlBtn) dlBtn.addEventListener('click', downloadCsv);
+
+  // Down payment $ and % stay in sync; the % field never overwrites itself
+  // while the user is typing in it.
+  function syncDownPct() {
+    var pctEl = document.getElementById('down-percent-input');
+    if (!pctEl) return;
+    if (typeof document !== 'undefined' && document.activeElement === pctEl) return;
+    var priceEl = document.getElementById('home-price');
+    var downEl = document.getElementById('down-payment');
+    if (!priceEl || !downEl) return;
+    var price = Number(String(priceEl.value).replace(/,/g, ''));
+    var down = Number(String(downEl.value).replace(/,/g, ''));
+    if (Number.isFinite(price) && price > 0 && Number.isFinite(down)) {
+      pctEl.value = (down / price * 100).toFixed(1);
+    }
+  }
+  // Sliders and the % field are handled by delegation on the form, so the
+  // per-input listeners above are never overwritten (the test stubs keep one
+  // listener per event per element).
+  form.addEventListener('input', function (e) {
+    var t = e && e.target;
+    if (!t || !t.id) return;
+    if (t.type === 'range') {
+      var numEl = document.getElementById(t.id.replace(/-slider$/, ''));
+      if (numEl) numEl.value = t.value;
+      run();
+    } else if (t.type === 'number') {
+      var slider = document.getElementById(t.id + '-slider');
+      if (slider) {
+        var v = Number(String(t.value).replace(/,/g, ''));
+        if (Number.isFinite(v)) {
+          var mn = Number(slider.min), mx = Number(slider.max);
+          if (Number.isFinite(mn) && v < mn) v = mn;
+          if (Number.isFinite(mx) && v > mx) v = mx;
+          slider.value = String(v);
+        }
+      }
+      if (t.id === 'down-payment') {
+        var downSlider = document.getElementById('down-payment-slider');
+        var priceEl = document.getElementById('home-price');
+        if (downSlider && priceEl) {
+          var p = Number(String(priceEl.value).replace(/,/g, ''));
+          if (Number.isFinite(p) && p > 0) downSlider.max = String(p);
+        }
+      }
+    }
+  });
+  form.addEventListener('change', function (e) {
+    var t = e && e.target;
+    if (t && t.id === 'down-percent-input') {
+      var priceEl = document.getElementById('home-price');
+      var downEl = document.getElementById('down-payment');
+      if (priceEl && downEl) {
+        var price = Number(String(priceEl.value).replace(/,/g, ''));
+        var pct = Number(String(t.value).replace(/,/g, ''));
+        if (Number.isFinite(price) && price > 0 && Number.isFinite(pct)) {
+          downEl.value = String(Math.round(pct / 100 * price));
+        }
+      }
+      run();
+    }
+  });
+  // Segmented loan term: buttons set the hidden loan-years value.
+  document.querySelectorAll('.seg-control button').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var yearsEl = document.getElementById('loan-years');
+      if (yearsEl) yearsEl.value = btn.getAttribute ? btn.getAttribute('data-years') : '';
+      document.querySelectorAll('.seg-control button').forEach(function (b) {
+        setAttr(b, 'aria-pressed', b === btn ? 'true' : 'false');
+      });
+      run();
+    });
+  });
+  // Thousand separators on blur only, so the cursor stays stable while typing.
+  document.querySelectorAll('#mortgage-form input[type="number"]').forEach(function (input) {
+    input.addEventListener('blur', function () {
+      var v = Number(String(input.value).replace(/,/g, '').trim());
+      if (Number.isFinite(v)) input.value = fmt(v);
+    });
+    var initial = Number(String(input.value).replace(/,/g, '').trim());
+    if (input.value !== '' && Number.isFinite(initial)) input.value = fmt(initial);
+  });
+  function copyResults(pairs, title) {
+    var lines = [title];
+    pairs.forEach(function (pair) {
+      var el = document.getElementById(pair[1]);
+      if (el) lines.push(pair[0] + ': ' + el.textContent);
+    });
+    var text = lines.join('\n');
+    var done = function (ok) {
+      set('copy-note', ok ? 'Results copied.' : 'Copy is not available in this browser — use Print instead.');
+    };
+    try {
+      if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
+        var p = navigator.clipboard.writeText(text);
+        if (p && p.then) p.then(function () { done(true); }, function () { done(false); });
+        else done(true);
+      } else done(false);
+    } catch (err) { done(false); }
+  }
+  var copyBtn = document.getElementById('copy-results');
+  if (copyBtn) copyBtn.addEventListener('click', function () {
+    copyResults([['Total monthly payment', 'monthly-total'], ['Principal & interest', 'monthly-payment'],
+      ['Loan amount', 'loan-amount'], ['Total interest', 'total-interest'], ['Payoff date', 'payoff-date']],
+      'Mortgage Payment Calculator');
+  });
+  var printBtn = document.getElementById('print-results');
+  if (printBtn) printBtn.addEventListener('click', function () {
+    if (typeof window !== 'undefined' && window.print) window.print();
+  });
   run();
 })();

@@ -8,6 +8,7 @@
 <title>Home Affordability Calculator | Real Estate Tools</title>
 <link rel="stylesheet" href="../../assets/site.css">
 <link rel="stylesheet" href="../../assets/theme.css">
+<link rel="stylesheet" href="../../assets/tools.css">
 <link rel="stylesheet" href="calculator.css">
 <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
 <meta property="og:type" content="website">
@@ -25,58 +26,53 @@
 <div class="nav-buttons"><a class="btn btn-primary btn-small" href="../../realtoros/">Discover RealtorOS <span aria-hidden="true">↗</span></a></div>
 <button class="menu-toggle" type="button" aria-controls="site-menu" aria-expanded="false" aria-label="Open navigation"><span aria-hidden="true">☰</span></button>
 </div></header>
-<main id="main">
+<main id="main"><div class="sticky-result" id="sticky-result"><span>Maximum price</span><b id="sticky-value">—</b></div>
 <section class="page-hero"><div class="wrap"><div class="crumb"><a href="../../">Home</a> / Tools / Home affordability calculator</div><span class="eyebrow">Real estate, simplified</span><h1>Home Affordability Calculator</h1><p>Start with the monthly housing payment you can afford — we'll work out the maximum home price, loan and monthly breakdown, with property tax, insurance, HOA and PMI counted in.</p></div>
 <div class="wrap calculator-layout">
 <div class="panel">
 <h2 style="font-size:1.7rem">Enter your figures</h2>
 <p class="muted">Adjust the sample values below to calculate an estimate instantly.</p>
-<form id="home-affordability-form" onsubmit="return false"><div class="form-grid">
-<div class="form-field"><label for="monthly-budget">Monthly housing payment you can afford (USD)</label><input class="field" id="monthly-budget" type="number" min="0" max="1000000000000" step="10" value="2300"></div>
-<div class="form-field"><label for="down-payment">Down payment (USD)</label><input class="field" id="down-payment" type="number" min="0" max="1000000000000" step="1000" value="60000"><p class="afford-down-hint" id="down-percent"></p></div>
-<div class="form-field"><label for="interest-rate">Annual interest rate (%)</label><input class="field" id="interest-rate" type="number" min="0" max="100" step="0.01" value="6.5"></div>
-<div class="form-field"><label for="loan-years">Loan term (years)</label><input class="field" id="loan-years" type="number" min="1" max="50" step="1" value="30"></div>
-<div class="form-field"><label for="property-tax-rate">Property tax rate (% of price per year)</label><input class="field" id="property-tax-rate" type="number" min="0" max="100" step="0.05" value="1.2"></div>
-<div class="form-field"><label for="home-insurance">Home insurance (USD per year)</label><input class="field" id="home-insurance" type="number" min="0" max="1000000000000" step="100" value="1800"></div>
-<div class="form-field"><label for="hoa-fee">HOA dues (USD per month)</label><input class="field" id="hoa-fee" type="number" min="0" max="1000000000000" step="10" value="0"></div>
-<div class="form-field"><label for="pmi-rate">PMI rate (annual %, only below 20% down)</label><input class="field" id="pmi-rate" type="number" min="0" max="100" step="0.05" value="0.5"></div>
-<div class="form-field"><label for="closing-costs">Closing costs (% of price)</label><input class="field" id="closing-costs" type="number" min="0" max="100" step="0.5" value="3"></div>
-</div></form>
+<form id="home-affordability-form" onsubmit="return false"><div class="form-grid"><div class="form-field"><label for="monthly-budget">Monthly housing payment you can afford (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="monthly-budget" type="number" min="0" max="1000000000000" step="10" value="2300"><span class="unit-affix" aria-hidden="true">/ month</span></span><input class="field-slider" id="monthly-budget-slider" type="range" min="0" max="10000" step="10" value="2300" aria-label="Monthly housing payment you can afford (USD) slider"></div><div class="form-field"><label for="down-payment">Down payment (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="down-payment" type="number" min="0" max="1000000000000" step="1000" value="60000"></span></div><div class="form-field"><label for="down-percent-input">Down payment (%)</label><span class="input-unit"><input class="field" id="down-percent-input" type="number" min="0" max="100" step="0.1" value="18.2"><span class="unit-affix" aria-hidden="true">%</span></span><small class="field-helper">Share of the maximum price. Edit either value; the other follows.</small></div><div class="form-field"><label for="interest-rate">Annual interest rate (%)</label><span class="input-unit"><input class="field" id="interest-rate" type="number" min="0" max="100" step="0.01" value="6.5"><span class="unit-affix" aria-hidden="true">%</span></span><input class="field-slider" id="interest-rate-slider" type="range" min="0" max="15" step="0.1" value="6.5" aria-label="Annual interest rate (%) slider"></div><div class="form-field"><span class="seg-label" id="loan-years-label">Loan term</span><div class="seg-control" role="group" aria-labelledby="loan-years-label"><button type="button" data-years="15" aria-pressed="false">15 years</button><button type="button" data-years="20" aria-pressed="false">20 years</button><button type="button" data-years="30" aria-pressed="true">30 years</button></div><input type="hidden" id="loan-years" value="30"></div></div><details class="advanced"><summary>Advanced options</summary><div class="form-grid"><div class="form-field"><label for="property-tax-rate">Property tax rate (% of price per year)</label><span class="input-unit"><input class="field" id="property-tax-rate" type="number" min="0" max="100" step="0.05" value="1.2"><span class="unit-affix" aria-hidden="true">%</span></span></div><div class="form-field"><label for="home-insurance">Home insurance (USD per year)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="home-insurance" type="number" min="0" max="1000000000000" step="100" value="1800"><span class="unit-affix" aria-hidden="true">/ year</span></span></div><div class="form-field"><label for="hoa-fee">HOA dues (USD per month)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="hoa-fee" type="number" min="0" max="1000000000000" step="10" value="0"><span class="unit-affix" aria-hidden="true">/ month</span></span></div><div class="form-field"><label for="pmi-rate">PMI rate (annual %, only below 20% down)</label><span class="input-unit"><input class="field" id="pmi-rate" type="number" min="0" max="100" step="0.05" value="0.5"><span class="unit-affix" aria-hidden="true">%</span></span></div><div class="form-field"><label for="closing-costs">Closing costs (% of price)</label><span class="input-unit"><input class="field" id="closing-costs" type="number" min="0" max="100" step="0.5" value="3"><span class="unit-affix" aria-hidden="true">%</span></span></div></div></form>
+<p class="validation-note" id="validation-note" role="alert"></p>
 <div class="afford-guide">
 <h3>Not sure what you can pay each month?</h3>
 <p class="muted">Estimate a guideline budget from your income and debts. It uses the familiar front/back guideline (defaults 28/36); other countries use different guidelines — enter yours. The button copies the result into your monthly budget above.</p>
 <div class="form-grid">
-<div class="form-field"><label for="guide-income">Gross annual income (USD)</label><input class="field" id="guide-income" type="number" min="0" max="1000000000000" step="1000" value="100000"></div>
-<div class="form-field"><label for="guide-debts">Other monthly debt payments (USD)</label><input class="field" id="guide-debts" type="number" min="0" max="1000000000000" step="10" value="500"></div>
-<div class="form-field"><label for="guide-front">Housing guideline (% of income)</label><input class="field" id="guide-front" type="number" min="0" max="100" step="1" value="28"></div>
-<div class="form-field"><label for="guide-back">Total debt guideline (% of income)</label><input class="field" id="guide-back" type="number" min="0" max="100" step="1" value="36"></div>
+<div class="form-field"><label for="guide-income">Gross annual income (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="guide-income" type="number" min="0" max="1000000000000" step="1000" value="100000"></span></div>
+<div class="form-field"><label for="guide-debts">Other monthly debt payments (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="guide-debts" type="number" min="0" max="1000000000000" step="10" value="500"><span class="unit-affix" aria-hidden="true">/ month</span></span></div>
+<div class="form-field"><label for="guide-front">Housing guideline (% of income)</label><span class="input-unit"><input class="field" id="guide-front" type="number" min="0" max="100" step="1" value="28"><span class="unit-affix" aria-hidden="true">%</span></span></div>
+<div class="form-field"><label for="guide-back">Total debt guideline (% of income)</label><span class="input-unit"><input class="field" id="guide-back" type="number" min="0" max="100" step="1" value="36"><span class="unit-affix" aria-hidden="true">%</span></span></div>
 </div>
 <button class="afford-guide-btn" id="guide-budget-btn" type="button">Use this guideline budget</button>
 <p class="muted" id="guide-note"></p>
 </div>
 <p class="disclaimer">Your budget is your own number — it works the same in any country. Use local tax and insurance figures; rates, credit and lender rules change the real number.</p>
+<p class="disclaimer">Estimates only. Not a loan offer or financial advice.</p>
 </div>
 <aside class="result" aria-live="polite">
-<small>Maximum home price you can afford</small>
+<p class="result-label">Maximum home price you can afford</p>
 <div class="result-number" id="afford-price">—</div>
-<div class="result-row"><span>Maximum loan amount</span><b id="afford-loan">—</b></div>
-<div class="result-row"><span>Maximum monthly housing payment</span><b id="afford-monthly">—</b></div>
-<div class="afford-breakdown">
-<div class="afford-breakdown-track" aria-hidden="true"><div id="bd-pi"></div><div id="bd-tax"></div><div id="bd-ins"></div><div id="bd-hoa"></div><div id="bd-pmi"></div></div>
-<ul class="afford-breakdown-legend">
-<li><span style="background:var(--navy)"></span>Principal &amp; interest</li>
-<li><span style="background:var(--teal)"></span>Property tax</li>
-<li><span style="background:var(--gold)"></span>Home insurance</li>
-<li><span style="background:#7a8a99"></span>HOA dues</li>
-<li><span style="background:#c46a52"></span>PMI</li>
+<p class="result-hero-sub">Monthly payment <b id="afford-monthly">—</b></p>
+<h3 class="result-group">Monthly payment</h3>
+<div class="breakdown-track" aria-hidden="true"><div id="bd-pi" class="seg-blue"></div><div id="bd-tax" class="seg-teal"></div><div id="bd-ins" class="seg-gold"></div><div id="bd-hoa" class="seg-gray"></div><div id="bd-pmi" class="seg-coral"></div></div>
+<ul class="breakdown-legend">
+<li><span class="swatch seg-blue"></span>Principal &amp; interest <b id="lg-pi">—</b></li>
+<li><span class="swatch seg-teal"></span>Property tax <b id="lg-tax">—</b></li>
+<li><span class="swatch seg-gold"></span>Home insurance <b id="lg-ins">—</b></li>
+<li><span class="swatch seg-gray"></span>HOA dues <b id="lg-hoa">—</b></li>
+<li><span class="swatch seg-coral"></span>PMI <b id="lg-pmi">—</b></li>
 </ul>
-</div>
 <div class="result-row"><span>Principal &amp; interest / month</span><b id="afford-pi">—</b></div>
 <div class="result-row"><span>Property tax / month</span><b id="afford-tax">—</b></div>
 <div class="result-row"><span>Home insurance / month</span><b id="afford-insurance">—</b></div>
-<div class="result-row"><span>HOA dues / month</span><b id="afford-hoa">—</b></div>
-<div class="result-row"><span>PMI / month</span><b id="afford-pmi">—</b></div>
-<div class="result-row afford-total-row"><span>Estimated cash to close</span><b id="cash-to-close">—</b></div>
+<div class="result-row" id="row-afford-hoa"><span>HOA dues / month</span><b id="afford-hoa">—</b></div>
+<div class="result-row" id="row-afford-pmi"><span>PMI / month</span><b id="afford-pmi">—</b></div>
+<h3 class="result-group">Loan totals</h3>
+<div class="result-row"><span>Maximum loan amount</span><b id="afford-loan">—</b></div>
+<div class="result-row"><span>Estimated cash to close</span><b id="cash-to-close">—</b></div>
+<p class="hidden-row-note" id="hidden-rows-note"></p>
+<div class="copy-row"><button class="tool-btn tool-btn-outline" id="copy-results" type="button">Copy results</button><button class="tool-btn tool-btn-outline" id="print-results" type="button">Print</button></div>
+<p class="copy-note" id="copy-note"></p>
 <div style="margin-top:26px"><a class="btn btn-outline" href="../../tools/mortgage-calculator/" style="white-space:normal">See the payment on the mortgage calculator ↗</a></div>
 </aside>
 </div></section>

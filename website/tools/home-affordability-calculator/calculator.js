@@ -27,7 +27,7 @@
   }
   function num(id) {
     var el = document.getElementById(id);
-    return el ? Number(el.value) : 0;
+    return el ? Number(String(el.value).replace(/,/g, '').trim()) : 0;
   }
   function set(id, s) {
     var el = document.getElementById(id);
@@ -36,6 +36,16 @@
   function setWidth(id, pct) {
     var el = document.getElementById(id);
     if (el && el.style) el.style.width = pct + '%';
+  }
+  function setAttr(el, key, value) {
+    if (el && el.setAttribute) el.setAttribute(key, value);
+  }
+  function hideRow(id, hide) {
+    var el = document.getElementById(id);
+    if (el) el.hidden = hide;
+  }
+  function fmt(n) {
+    return Number.isFinite(n) ? n.toLocaleString('en-US', { maximumFractionDigits: 2 }) : '';
   }
   function valid(n, a, b) {
     return Number.isFinite(n) && n >= a && n <= b;
@@ -68,15 +78,28 @@
       valid(rate, 0, 100) && valid(years, 1, 50) &&
       valid(taxRate, 0, 100) && valid(ins, 0, 1e12) && valid(hoa, 0, 1e12) &&
       valid(pmiRate, 0, 100) && valid(closing, 0, 100);
+    // Empty fields are invalid, not zero.
+    var required = ['monthly-budget', 'down-payment', 'interest-rate', 'loan-years',
+      'property-tax-rate', 'home-insurance', 'hoa-fee', 'pmi-rate', 'closing-costs'];
+    for (var ri = 0; ri < required.length; ri++) {
+      var rel = document.getElementById(required[ri]);
+      if (!rel || rel.value === '') { ok = false; break; }
+    }
 
     if (!ok) {
       set('afford-price', 'Check inputs');
       OUTPUTS.forEach(function (id) { set(id, '—'); });
       set('down-percent', '');
+      set('validation-note', 'Check the values: amounts 0 or more, rates 0–100%, term 1–50 years, and no field left empty.');
+      set('lg-pi', '—'); set('lg-tax', '—'); set('lg-ins', '—'); set('lg-hoa', '—'); set('lg-pmi', '—');
+      set('sticky-value', '—');
+      set('hidden-rows-note', '');
+      hideRow('row-afford-hoa', false); hideRow('row-afford-pmi', false);
       setWidth('bd-pi', 0); setWidth('bd-tax', 0); setWidth('bd-ins', 0);
       setWidth('bd-hoa', 0); setWidth('bd-pmi', 0);
       return;
     }
+    set('validation-note', '');
 
     var p = { f: factor(rate / 1200, years * 12), t: taxRate / 1200,
       pm: pmiRate / 1200, insM: ins / 12, hoa: hoa, down: down };
@@ -98,6 +121,20 @@
     set('afford-pmi', usd(pmiM));
     set('cash-to-close', usd(down + price * closing / 100));
     set('down-percent', price > 0 ? (down / price * 100).toFixed(1) + '% of max price' : '');
+
+    // Shared restyle behaviors: legend amounts, $0-row hiding, sticky value.
+    set('lg-pi', usd(pi)); set('lg-tax', usd(taxM)); set('lg-ins', usd(p.insM));
+    set('lg-hoa', usd(hoa)); set('lg-pmi', usd(pmiM));
+    set('sticky-value', usd(price));
+    hideRow('row-afford-hoa', hoa === 0);
+    hideRow('row-afford-pmi', pmiM === 0);
+    var hidden = [];
+    if (hoa === 0) hidden.push('HOA');
+    if (pmiM === 0) hidden.push('PMI');
+    set('hidden-rows-note', hidden.length
+      ? 'Not shown because $0: ' + hidden.join(', ') + '.'
+      : '');
+    syncDownPct();
 
     if (housing > 0) {
       setWidth('bd-pi', (pi / housing) * 100);
@@ -144,5 +181,104 @@
   });
   var guideBtn = document.getElementById('guide-budget-btn');
   if (guideBtn) guideBtn.addEventListener('click', useGuideline);
+  // Down payment $ and % stay in sync; the % field never overwrites itself
+  // while the user is typing in it. Here the % is of the computed max price.
+  function syncDownPct() {
+    var pctEl = document.getElementById('down-percent-input');
+    if (!pctEl) return;
+    if (typeof document !== 'undefined' && document.activeElement === pctEl) return;
+    var downEl = document.getElementById('down-payment');
+    var priceEl = document.getElementById('afford-price');
+    if (!downEl || !priceEl) return;
+    var down = Number(String(downEl.value).replace(/,/g, ''));
+    var price = Number(String(priceEl.textContent).replace(/[^0-9.]/g, ''));
+    if (Number.isFinite(price) && price > 0 && Number.isFinite(down)) {
+      pctEl.value = (down / price * 100).toFixed(1);
+    }
+  }
+  // Slider sync by delegation on the form (keeps per-input listeners intact).
+  form.addEventListener('input', function (e) {
+    var t = e && e.target;
+    if (!t || !t.id) return;
+    if (t.type === 'range') {
+      var numEl = document.getElementById(t.id.replace(/-slider$/, ''));
+      if (numEl) numEl.value = t.value;
+      run();
+    } else if (t.type === 'number') {
+      var slider = document.getElementById(t.id + '-slider');
+      if (slider) {
+        var v = Number(String(t.value).replace(/,/g, ''));
+        if (Number.isFinite(v)) {
+          var mn = Number(slider.min), mx = Number(slider.max);
+          if (Number.isFinite(mn) && v < mn) v = mn;
+          if (Number.isFinite(mx) && v > mx) v = mx;
+          slider.value = String(v);
+        }
+      }
+    }
+  });
+  form.addEventListener('change', function (e) {
+    var t = e && e.target;
+    if (t && t.id === 'down-percent-input') {
+      var downEl = document.getElementById('down-payment');
+      var priceEl = document.getElementById('afford-price');
+      if (downEl && priceEl) {
+        var price = Number(String(priceEl.textContent).replace(/[^0-9.]/g, ''));
+        var pct = Number(String(t.value).replace(/,/g, ''));
+        if (Number.isFinite(price) && price > 0 && Number.isFinite(pct)) {
+          downEl.value = String(Math.round(pct / 100 * price));
+        }
+      }
+      run();
+    }
+  });
+  // Segmented loan term: buttons set the hidden loan-years value.
+  document.querySelectorAll('.seg-control button').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var yearsEl = document.getElementById('loan-years');
+      if (yearsEl) yearsEl.value = btn.getAttribute ? btn.getAttribute('data-years') : '';
+      document.querySelectorAll('.seg-control button').forEach(function (b) {
+        setAttr(b, 'aria-pressed', b === btn ? 'true' : 'false');
+      });
+      run();
+    });
+  });
+  // Thousand separators on blur only, so the cursor stays stable while typing.
+  document.querySelectorAll('#home-affordability-form input[type="number"]').forEach(function (input) {
+    input.addEventListener('blur', function () {
+      var v = Number(String(input.value).replace(/,/g, '').trim());
+      if (Number.isFinite(v)) input.value = fmt(v);
+    });
+    var initial = Number(String(input.value).replace(/,/g, '').trim());
+    if (input.value !== '' && Number.isFinite(initial)) input.value = fmt(initial);
+  });
+  function copyResults(pairs, title) {
+    var lines = [title];
+    pairs.forEach(function (pair) {
+      var el = document.getElementById(pair[1]);
+      if (el) lines.push(pair[0] + ': ' + el.textContent);
+    });
+    var text = lines.join('\n');
+    var done = function (ok) {
+      set('copy-note', ok ? 'Results copied.' : 'Copy is not available in this browser — use Print instead.');
+    };
+    try {
+      if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
+        var p = navigator.clipboard.writeText(text);
+        if (p && p.then) p.then(function () { done(true); }, function () { done(false); });
+        else done(true);
+      } else done(false);
+    } catch (err) { done(false); }
+  }
+  var copyBtn = document.getElementById('copy-results');
+  if (copyBtn) copyBtn.addEventListener('click', function () {
+    copyResults([['Maximum price', 'afford-price'], ['Maximum loan', 'afford-loan'],
+      ['Monthly payment', 'afford-monthly'], ['Cash to close', 'cash-to-close']],
+      'Home Affordability Calculator');
+  });
+  var printBtn = document.getElementById('print-results');
+  if (printBtn) printBtn.addEventListener('click', function () {
+    if (typeof window !== 'undefined' && window.print) window.print();
+  });
   run();
 })();
