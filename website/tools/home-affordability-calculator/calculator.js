@@ -51,8 +51,7 @@
     return r === 0 ? 1 / n : r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
   }
 
-  var OUTPUTS = ['afford-loan', 'afford-monthly', 'afford-pi', 'afford-tax',
-    'afford-insurance', 'afford-hoa', 'afford-pmi', 'cash-to-close'];
+  var OUTPUTS = ['afford-loan', 'afford-monthly', 'cash-to-close'];
 
   // Solve the maximum price for one monthly housing budget.
   function solvePrice(budget, p) {
@@ -117,11 +116,6 @@
     set('afford-price', usd(price));
     set('afford-loan', usd(loan));
     set('afford-monthly', usd(housing));
-    set('afford-pi', usd(pi));
-    set('afford-tax', usd(taxM));
-    set('afford-insurance', usd(p.insM));
-    set('afford-hoa', usd(hoa));
-    set('afford-pmi', usd(pmiM));
     set('cash-to-close', usd(down + price * closing / 100));
     set('down-percent', price > 0 ? (down / price * 100).toFixed(1) + '% of max price' : '');
 

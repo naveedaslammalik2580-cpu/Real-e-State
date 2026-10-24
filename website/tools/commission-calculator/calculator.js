@@ -40,8 +40,8 @@
     return v === 'listing' || v === 'buyer' ? v : 'both';
   }
 
-  var OUTPUTS = ['commission-total', 'referral-amount', 'franchise-amount',
-    'listing-side', 'buyer-side', 'your-side-gross', 'broker-share',
+  var OUTPUTS = ['commission-total',
+    'listing-side', 'buyer-side', 'your-side-gross',
     'commission-agent', 'commission-fees', 'commission-net',
     'selling-cost', 'seller-net'];
 
@@ -81,7 +81,7 @@
       OUTPUTS.slice(1).forEach(function (id) { set(id, '—'); });
       set('your-side-label', 'Your side');
       set('validation-note', 'Check the values: rates and shares must be 0–100%, amounts 0 or more, and no field left empty.');
-      set('lg-referral', '—'); set('lg-franchise', '—'); set('lg-yours', '—'); set('lg-broker', '—');
+      set('lg-referral', '—'); set('lg-franchise', '—'); set('lg-broker', '—');
       set('sticky-value', '—');
       hideRow('result-body', true); hideRow('result-empty', false);
       setWidth('bd-referral', 0); setWidth('bd-franchise', 0);
@@ -107,12 +107,9 @@
     var sellerNet = price - total - otherCosts - payoff;
 
     set('commission-total', usd(total));
-    set('referral-amount', usd(referral));
-    set('franchise-amount', usd(franchise));
     set('listing-side', usd(listingSide));
     set('buyer-side', usd(buyerSide));
     set('your-side-gross', usd(yourSide));
-    set('broker-share', usd(brokerShare));
     set('commission-agent', usd(yourShare));
     set('commission-fees', usd(fee));
     set('commission-net', usd(net));
@@ -125,7 +122,7 @@
     // Referral and franchise rows always show, even at $0.00, so the panel
     // never contradicts itself with a "not shown" note.
     set('lg-referral', usd(referral)); set('lg-franchise', usd(franchise));
-    set('lg-yours', usd(yourShare)); set('lg-broker', usd(brokerShare));
+    set('lg-broker', usd(brokerShare));
     set('sticky-value', usd(total));
 
     if (total > 0) {

@@ -59,7 +59,6 @@
   }
 
   var OUTPUTS = ['monthly-payment', 'loan-amount', 'total-interest', 'total-paid',
-    'monthly-tax', 'monthly-insurance', 'monthly-hoa', 'monthly-pmi',
     'monthly-total', 'total-cost', 'payoff-date', 'interest-with-extras',
     'interest-saved', 'time-saved'];
 
@@ -151,7 +150,7 @@
       set('mortgage-pmi-note', '');
       set('schedule-note', '');
       set('mortgage-error', 'Check the highlighted values: down payment cannot exceed the price, rate must be 0–100%, and term must be 1–50 years.');
-      set('lg-pi', '—'); set('lg-tax', '—'); set('lg-ins', '—'); set('lg-hoa', '—'); set('lg-pmi', '—');
+      set('lg-tax', '—'); set('lg-ins', '—'); set('lg-hoa', '—'); set('lg-pmi', '—');
       set('sticky-value', '—');
       setHtml('balance-chart', '');
       set('chart-balance-end', '—'); set('chart-interest-end', '—');
@@ -196,10 +195,6 @@
     set('loan-amount', usd(principal));
     set('total-interest', usd(baseInterest));
     set('total-paid', usd(pi * baseMonths));
-    set('monthly-tax', usd(taxM));
-    set('monthly-insurance', usd(insM));
-    set('monthly-hoa', usd(hoaM));
-    set('monthly-pmi', usd(pmiM));
     set('monthly-total', usd(total));
     set('total-cost', usd(totalCost));
     set('down-percent', price > 0 ? downPct.toFixed(1) + '% of price' : '');
@@ -217,7 +212,7 @@
     // Shared restyle behaviors: legend amounts and sticky value.
     // HOA, PMI, interest-saved and time-saved rows always show, even at $0,
     // so the panel never contradicts itself with a "not shown" note.
-    set('lg-pi', usd(pi)); set('lg-tax', usd(taxM)); set('lg-ins', usd(insM));
+    set('lg-tax', usd(taxM)); set('lg-ins', usd(insM));
     set('lg-hoa', usd(hoaM)); set('lg-pmi', usd(pmiM));
     set('sticky-value', usd(total));
     syncDownPct();
