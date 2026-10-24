@@ -1,10 +1,19 @@
 /* Commission calculator — scoped styles. Shared layout tokens live in theme.css. */
 /* The calculator lives inside the first (hero) section, right under the title. */
-.page-hero { padding: 22px 0 30px; }
-.page-hero h1 { font-size: clamp(2rem, 4.5vw, 2.9rem); line-height: 1.12; margin: 12px 0 10px; }
-.page-hero .calculator-layout { margin-top: 22px; }
-.section { padding: 26px 0 40px; }
-.calculator-layout { align-items: start; gap: 24px; }
+.page-hero { padding: 22px 0 28px; }
+.page-hero h1 { font-size: clamp(2rem, 4vw, 2.5rem); line-height: 1.05; margin: 12px 0 10px; }
+.page-hero .calculator-layout { margin-top: 12px; }
+.section { padding: 20px 0 32px; }
+.content h2 { margin-top: 28px; }
+.content h2:first-child { margin-top: 0; }
+/* Equal halves on desktop; own collapse (calculator.css loads after site.css). */
+.calculator-layout { align-items: start; gap: 24px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+@media (max-width: 760px) { .calculator-layout { grid-template-columns: 1fr; } }
+/* Visible form groups (replacing the old collapsed Advanced section). */
+.form-group { border: 0; padding: 0; margin: 0 0 20px; min-width: 0; }
+.form-group:last-child { margin-bottom: 0; }
+.form-group legend { font-weight: 800; color: #102131; font-size: 0.95rem; padding: 0; margin-bottom: 12px; }
+.form-group-optional { font-size: 0.75rem; font-weight: 600; color: #5E6C79; border: 1px solid #E2DED5; border-radius: 999px; padding: 2px 8px; margin-left: 8px; vertical-align: middle; }
 .result .result-row { padding: 6px 0; }
 .result > div:last-child { margin-top: 16px !important; }
 .commission-breakdown { margin-top: 14px; }

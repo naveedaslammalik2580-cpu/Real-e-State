@@ -31,9 +31,6 @@
     var el = document.getElementById(id);
     if (el) el.hidden = hide;
   }
-  function fmt(n) {
-    return Number.isFinite(n) ? n.toLocaleString('en-US', { maximumFractionDigits: 2 }) : '';
-  }
   function valid(n, a, b) {
     return Number.isFinite(n) && n >= a && n <= b;
   }
@@ -55,20 +52,32 @@
       fee = num('transaction-fee'), otherPct = num('other-closing-costs'),
       payoff = num('mortgage-payoff');
 
-    var ok = valid(price, 0, 1e12) && valid(rate, 0, 100) &&
-      valid(listingShare, 0, 100) && valid(split, 0, 100) &&
-      valid(referralPct, 0, 100) && valid(franchisePct, 0, 100) &&
-      valid(fee, 0, 1e12) && valid(otherPct, 0, 100) && valid(payoff, 0, 1e12);
-    // Empty fields are invalid, not zero.
-    var required = ['sale-price', 'commission-rate', 'listing-share', 'agent-split',
-      'referral-fee', 'franchise-fee', 'transaction-fee', 'other-closing-costs', 'mortgage-payoff'];
-    for (var ri = 0; ri < required.length; ri++) {
-      var rel = document.getElementById(required[ri]);
-      if (!rel || rel.value === '') { ok = false; break; }
+    // Named validation: every problem is reported by field name in the panel.
+    // Empty fields are invalid, not zero. Labels omit units so the message
+    // reads exactly like the example: "Property sale price is empty."
+    var FIELDS = [
+      { id: 'sale-price', label: 'Property sale price', value: price, max: 1e12 },
+      { id: 'commission-rate', label: 'Total commission rate', value: rate, max: 100 },
+      { id: 'listing-share', label: 'Listing side share', value: listingShare, max: 100 },
+      { id: 'agent-split', label: 'Your share of your side', value: split, max: 100 },
+      { id: 'referral-fee', label: 'Referral fee', value: referralPct, max: 100 },
+      { id: 'franchise-fee', label: 'Franchise / royalty fee', value: franchisePct, max: 100 },
+      { id: 'transaction-fee', label: 'Transaction fee', value: fee, max: 1e12 },
+      { id: 'other-closing-costs', label: 'Other seller closing costs', value: otherPct, max: 100 },
+      { id: 'mortgage-payoff', label: 'Mortgage payoff', value: payoff, max: 1e12 }
+    ];
+    var problems = [];
+    for (var fi = 0; fi < FIELDS.length; fi++) {
+      var f = FIELDS[fi];
+      var fel = document.getElementById(f.id);
+      if (!fel || fel.value === '') problems.push(f.label + ' is empty.');
+      else if (!valid(f.value, 0, f.max)) problems.push(f.label + (f.max === 100 ? ' must be 0–100%.' : ' must be 0 or more.'));
     }
+    var ok = problems.length === 0;
 
     if (!ok) {
-      set('commission-total', 'Check inputs');
+      set('commission-total', problems[0]);
+      set('result-empty', problems.join(' '));
       OUTPUTS.slice(1).forEach(function (id) { set(id, '—'); });
       set('your-side-label', 'Your side');
       set('validation-note', 'Check the values: rates and shares must be 0–100%, amounts 0 or more, and no field left empty.');
@@ -164,15 +173,11 @@
       }
     }
   });
-  // Thousand separators on blur only, so the cursor stays stable while typing.
-  document.querySelectorAll('#commission-form input[type="number"]').forEach(function (input) {
-    input.addEventListener('blur', function () {
-      var v = Number(String(input.value).replace(/,/g, '').trim());
-      if (Number.isFinite(v)) input.value = fmt(v);
-    });
-    var initial = Number(String(input.value).replace(/,/g, '').trim());
-    if (input.value !== '' && Number.isFinite(initial)) input.value = fmt(initial);
-  });
+  // NOTE: no thousand-separator rewriting here, on load or on blur. These
+  // are type="number" fields, and a browser erases a comma-formatted value
+  // ("450,000" is not a valid floating-point number), which used to empty
+  // the sale price on first load and on blur. Typed values are left alone;
+  // num() already strips commas when reading, so pasted values still work.
   function copyResults(pairs, title) {
     var lines = [title];
     pairs.forEach(function (pair) {

@@ -93,8 +93,11 @@ assert.equal(c.get('commission-total'), '$13,500.00'); assert.equal(c.get('commi
 assert.equal(c.get('commission-net'), '$9,155.00');
 c.set('agent-split', 100); assert.equal(c.get('commission-net'), '$13,205.00');
 c.set('commission-rate', 0); assert.equal(c.get('commission-total'), '$0.00');
-c.set('commission-rate', 101); assert.equal(c.get('commission-total'), 'Check inputs');
+c.set('commission-rate', 101); assert.equal(c.get('commission-total'), 'Total commission rate must be 0–100%.');
 c.set('commission-rate', 3); c.set('agent-split', 70);
+c.set('sale-price', ''); assert.equal(c.get('commission-total'), 'Property sale price is empty.');
+c.set('commission-rate', ''); assert.equal(c.get('result-empty'), 'Property sale price is empty. Total commission rate is empty.');
+c.set('sale-price', 450000); c.set('commission-rate', 3);
 assert.equal(c.get('listing-side'), '$6,750.00'); assert.equal(c.get('buyer-side'), '$6,750.00');
 assert.equal(c.get('seller-net'), '$436,500.00'); assert.equal(c.get('your-side-label'), 'Your side (both sides)');
 c.put('agent-role', 'listing'); c.fire('agent-role', 'change');
