@@ -84,8 +84,6 @@
       set('lg-referral', '—'); set('lg-franchise', '—'); set('lg-yours', '—'); set('lg-broker', '—');
       set('sticky-value', '—');
       hideRow('result-body', true); hideRow('result-empty', false);
-      set('hidden-rows-note', '');
-      hideRow('row-referral-amount', false); hideRow('row-franchise-amount', false);
       setWidth('bd-referral', 0); setWidth('bd-franchise', 0);
       setWidth('bd-yours', 0); setWidth('bd-broker', 0);
       return;
@@ -123,18 +121,12 @@
     set('your-side-label', r === 'listing' ? 'Your side (listing side)'
       : r === 'buyer' ? 'Your side (buyer side)' : 'Your side (both sides)');
 
-    // Shared restyle behaviors: legend amounts, $0-row hiding, sticky value.
+    // Shared restyle behaviors: legend amounts and sticky value.
+    // Referral and franchise rows always show, even at $0.00, so the panel
+    // never contradicts itself with a "not shown" note.
     set('lg-referral', usd(referral)); set('lg-franchise', usd(franchise));
     set('lg-yours', usd(yourShare)); set('lg-broker', usd(brokerShare));
     set('sticky-value', usd(total));
-    hideRow('row-referral-amount', referral === 0);
-    hideRow('row-franchise-amount', franchise === 0);
-    var hidden = [];
-    if (referral === 0) hidden.push('Referral fee');
-    if (franchise === 0) hidden.push('Franchise fee');
-    set('hidden-rows-note', hidden.length
-      ? 'Not shown because $0: ' + hidden.join(', ') + '.'
-      : '');
 
     if (total > 0) {
       setWidth('bd-referral', (referral / total) * 100);

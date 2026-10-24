@@ -10,10 +10,19 @@
 .calculator-layout { align-items: start; gap: 24px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 @media (max-width: 760px) { .calculator-layout { grid-template-columns: 1fr; } }
 /* Visible form groups (replacing the old collapsed Advanced section). */
-.form-group { border: 0; padding: 0; margin: 0 0 20px; min-width: 0; }
-.form-group:last-child { margin-bottom: 0; }
-.form-group legend { font-weight: 800; color: #102131; font-size: 0.95rem; padding: 0; margin-bottom: 12px; }
+.form-group { border: 0; padding: 0; margin: 24px 0 0; min-width: 0; }
+.form-group:first-of-type { margin-top: 8px; }
+.form-group legend { font-weight: 800; color: #102131; font-size: 0.95rem; padding: 0 0 8px; margin-bottom: 16px; width: 100%; border-bottom: 1px solid #E2DED5; }
 .form-group-optional { font-size: 0.75rem; font-weight: 600; color: #5E6C79; border: 1px solid #E2DED5; border-radius: 999px; padding: 2px 8px; margin-left: 8px; vertical-align: middle; }
+/* Row alignment: each field is a column with its input pushed to the bottom,
+   so inputs in a row start at the same height no matter how labels wrap. */
+.form-field { display: flex; flex-direction: column; }
+.form-field > .input-unit, .form-field > select { margin-top: auto; }
+/* Sliders stay full input width; shorter box so the next row sits close under. */
+.field-slider { min-height: 32px; }
+/* Full-width note below both columns (moved out from under the form). */
+.calculator-disclaimers { margin-top: 4px; }
+.calculator-disclaimers p:last-child { margin-bottom: 0; }
 .result .result-row { padding: 6px 0; }
 .result > div:last-child { margin-top: 16px !important; }
 .commission-breakdown { margin-top: 14px; }
