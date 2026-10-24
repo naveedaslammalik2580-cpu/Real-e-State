@@ -63,5 +63,14 @@ window.realEstateTools = Object.freeze([
     status: 'published',
     publicUrl: 'property-investment-calculator/',
     icon: '◈'
+  }),
+  Object.freeze({
+    slug: 'capital-gains-tax-calculator',
+    title: 'Capital Gains Tax Calculator',
+    category: 'Finance & numbers',
+    description: 'Estimate the tax on a property sale: capital gain, primary-residence exclusion, depreciation recapture and net proceeds.',
+    status: 'published',
+    publicUrl: 'capital-gains-tax-calculator/',
+    icon: '§'
   })
 ]);
