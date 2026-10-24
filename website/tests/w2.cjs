@@ -75,7 +75,10 @@ function calculator(name) {
   }
   const form = `${name}-form`;
   const inputs = [...html.matchAll(/<input[^>]*\bid="([^"]+)"[^>]*>/g)].map(m => elements[m[1]]);
-  vm.runInNewContext(shared, { Intl, document: {
+  // Each tool runs its own scoped script; the shared script keeps only the
+  // menu and the commission calculator until it gets its own folder too.
+  const script = name === 'mortgage' ? read('tools/mortgage-calculator/calculator.js') : shared;
+  vm.runInNewContext(script, { Intl, document: {
     querySelector: s => s === '#' + form ? elements[form] : null,
     querySelectorAll: s => s === '#' + form + ' input' ? inputs : [], getElementById: id => elements[id]
   } });
