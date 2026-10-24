@@ -1,0 +1,177 @@
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url(fonts/inter-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-weight: 600 700;
+  font-display: swap;
+  src: url(fonts/source-serif-4-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* W1 – approved RealtorOS palette for the PUBLIC tools website.
+   Keep layout-specific styling here; CRM app CSS is deliberately untouched. */
+:root {
+  --font-body:'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-display:'Source Serif 4',Georgia,'Times New Roman',serif;
+  --navy:#102131;
+  --navy2:#1A3347;
+  --teal:#0F766E;
+  --teal-dark:#095E58;
+  --text:#0B1F33;
+  --muted:#5E6C79;
+  --line:#E5E2DB;
+  --paper:#F6F5F0;
+  --mist:#EAF2EF;
+  --white:#FFFFFF;
+  --gold:#C49B52;
+  --shadow:0 18px 55px rgba(16,33,49,.10);
+  --round:17px;
+  --max:1200px;
+}
+body { background:var(--paper); color:var(--text); }
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible {
+  outline:3px solid var(--gold); outline-offset:3px;
+}
+.skip-link {position:absolute;top:-70px;left:20px;background:var(--navy);color:#fff;padding:12px 18px;z-index:40;border-radius:8px;}
+.skip-link:focus {top:12px;}
+h1,h2 {font-family:Georgia, 'Times New Roman',serif;letter-spacing:-.045em;font-weight:700;}
+h1 {line-height:1.055;}
+h2 {line-height:1.1;}
+h3 {letter-spacing:-.025em;}
+.header {height:80px;background:rgba(255,255,255,.97);border-color:var(--line);box-shadow:0 2px 20px rgba(16,33,49,.025);}
+.head-inner {gap:30px;}
+.brand {color:var(--navy);font-size:.95rem;letter-spacing:-.035em;line-height:1.05;}
+.brand-mark {border-radius:11px;background:var(--navy);color:var(--gold);border:1px solid #243A4D;font-size:1.5rem;}
+.brand-name em {font-size:.61rem;font-weight:600;letter-spacing:.055em;color:#73818C;margin-top:6px;}
+.nav {gap:29px;}
+.nav a:not(.btn) {color:#4A5968;transition:color .15s ease;}
+.nav a:hover,.nav a.current {color:var(--teal);}
+.nav a.current {position:relative;}
+.nav a.current:after {content:"";position:absolute;left:0;right:0;bottom:-27px;background:var(--gold);height:3px;border-radius:2px;}
+.nav-buttons {margin-left:auto;}
+.nav .mobile-nav-cta {display:none;}
+.btn {border-radius:10px;box-shadow:none;}
+.btn-primary {background:var(--teal);color:white;box-shadow:0 7px 17px rgba(15,118,110,.13);}
+.btn-primary:hover {background:var(--teal-dark);}
+.btn-outline {background:white;border-color:#D6D9D5;}
+.btn-outline:hover {border-color:var(--teal);}
+.btn-dark {background:var(--navy);}
+.btn-dark:hover {background:#223E51;}
+.eyebrow {color:var(--teal);letter-spacing:.13em;font-size:.72rem;}
+.hero {background:radial-gradient(circle at 82% 30%,rgba(217,231,224,.8),transparent 33%), linear-gradient(180deg,#FCFBF7 0%,#F6F5F0 100%);border-color:var(--line);}
+.hero-grid {min-height:610px;padding:89px 0 90px;gap:68px;}
+.hero h1 {font-size:clamp(3.3rem,5vw,5.6rem);color:var(--navy);margin-bottom:23px;}
+.hero h1 span {color:var(--teal);}
+.hero p {color:#566677;font-size:1.09rem;line-height:1.7;margin-bottom:26px;}
+.hero-note {color:#637176;}
+.dot {background:var(--teal);}
+.visual {border:1px solid #DFE2DC;box-shadow:0 29px 74px rgba(16,33,49,.14);transform:rotate(.5deg);}
+.visual-top {background:#fff;padding:18px 22px;}
+.tool-search {background:#F6F5F0;color:#78838A;}
+.visual-feature {background:var(--navy);}
+.visual-feature:after {background:var(--teal);}
+.visual-feature p {color:#BBC9CE;}
+.visual-feature .mini-link {color:#AEE1D2;}
+.visual-label {color:#777E81;}
+.mini-tile {background:#FCFCFA;border-color:var(--line);}
+.mini-ico {background:#E4F0EB;color:var(--teal);}
+.value-band {background:#fff;border-block:1px solid var(--line);}
+.value-items {display:grid;grid-template-columns:repeat(3,1fr);gap:22px;padding-block:23px;}
+.value-items > div {display:flex;align-items:center;gap:12px;color:#4B5A66;font-weight:650;font-size:.84rem;}
+.value-icon {display:grid;place-items:center;width:32px;height:32px;flex-shrink:0;background:#F1EFE7;border:1px solid #EAE4D8;border-radius:50%;color:#917035;font-size:1rem;}
+.section {padding:90px 0;}
+.section-header {align-items:end;}
+.section-header h2 {color:var(--navy);}
+.panel {background:#fff;border-color:var(--line);box-shadow:0 5px 30px rgba(16,33,49,.025);}
+.tool-card {transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;}
+.tool-card:hover {transform:translateY(-3px);border-color:#B5CDC6;box-shadow:0 17px 35px rgba(16,33,49,.08);}
+.card-ico {background:#E7F1EC;color:var(--teal);border:1px solid #D5E6DF;}
+.live-chip {background:#E6F2EB;color:#246B4E;}
+.card-arrow {color:var(--teal);}
+.stripe {background:var(--navy);}
+.stripe:after {background:radial-gradient(circle,rgba(196,155,82,.12),transparent 69%);}
+.stripe .eyebrow {color:#D3B275;}
+.stripe p {color:#CBD4D7;}
+.feature-points div:before {color:#D6B978;}
+.crm-preview {border:1px solid #E5E2DB;box-shadow:0 20px 65px rgba(0,0,0,.22);}
+.insight {background:#F6F5F0;}
+.crm-line {border-color:var(--line);}
+.crm-button {border-color:#AFCBC2;color:var(--teal);}
+.step-n {color:#8A6C32;}
+.cta-section {background:#E9E5D9;border-top:1px solid #E2DCCF;}
+.cta-section h2 {color:var(--navy);}
+.footer {background:var(--navy);}
+.footer p,.footer a {color:#BAC7CD;}
+.footer-top .brand-name {color:#fff;}
+.footer-top .brand-mark {color:var(--gold);background:#1B384A!important;}
+.foot-bottom {border-color:#304758;color:#A7BBC3;}
+.page-hero {background:linear-gradient(165deg,#F5F4EF 0%,#FFFEFB 100%);border-color:var(--line);}
+.page-hero h1 {color:var(--navy);}
+.crumb {color:#63727C;}
+.crumb a {color:var(--teal);}
+.search-field,.field,.category-filter {border-color:#D9DBD5;color:var(--navy);}
+.category-filter.active {background:var(--navy);border-color:var(--navy);color:#fff;}
+.result {background:var(--navy);}
+.result-row {border-color:#30495A;}
+.note {background:#EBF3EF;border-color:var(--teal);}
+.kicker {color:var(--teal);border-color:#B7D6CC;}
+.note-card {background:#F9FAF7;border-color:#BCCDC5;}
+.notice {background:#F5F5EE;border-color:#E0DDC8;color:#52615B;}
+/* Responsiveness: prevent horizontal overflow, keep controls reachable */
+@media(max-width:1050px){
+  .nav {gap:20px;}
+  .hero-grid {gap:34px;}
+}
+@media(max-width:760px){
+  .header {height:68px;}
+  .nav {top:68px;background:#fff;border-color:var(--line);}
+  .nav a.current:after {display:none;}
+  .nav a.current {background:#E8F2EE;}
+  .nav .mobile-nav-cta {display:inline-flex;color:#fff!important;margin-top:9px;justify-content:center;}
+  .menu-toggle {display:block;background:#fff;color:var(--navy);border-color:#DADCD7;}
+  .hero-grid {min-height:0;padding-block:65px;gap:38px;}
+  .hero h1 {font-size:clamp(2.8rem,9.5vw,4.4rem);}
+  .section {padding-block:66px;}
+  .value-items {grid-template-columns:1fr;gap:13px;padding-block:20px;}
+  .visual {transform:none;}
+  .footer-top .brand {max-width:100%;}
+}
+@media(max-width:520px){
+  .hero h1 {font-size:clamp(2.7rem,11vw,3.5rem);}
+  .hero-note {font-size:.76rem;}
+  .mini-ico {height:32px;width:32px;}
+  .brand {font-size:.82rem;}
+  .brand-mark {height:34px;width:34px;}
+  .visual-top {padding:14px;}
+  .visual-body {padding:15px;}
+  .section-header h2 {font-size:2.15rem;}
+  .btn {white-space:normal;text-align:center;}
+  .footer-top {grid-template-columns:1fr 1fr;}
+}
+
+/* Registry directory: wrap categories and respect filtered card visibility. */
+#tool-filters {display:flex;flex-wrap:wrap;gap:12px;max-width:100%;}
+#tool-grid .tool-card[hidden] {display:none;}
+#tool-grid .tool-card {overflow-wrap:anywhere;}
+
+/* Keep configurable header labels consistent with the original wordmark. */
+.brand-name > [data-brand-name] {text-transform:uppercase;}
+@media(max-width:1150px){.nav-buttons{display:none;}}
+
+/* Semantic headings with the existing footer appearance. */
+.footer .footer-heading {font-family:inherit;font-size:.84rem;font-weight:700;letter-spacing:normal;line-height:1.6;margin:0 0 16px;color:white;}
+.visually-hidden {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;}
+
+/* Shared navigation/wordmark typography; existing page layouts are retained. */
+.header,.footer {font-family:var(--font-body);}
+.nav {font-size:.9375rem;font-weight:500;letter-spacing:0;}
+.brand {font-weight:600;letter-spacing:.01em;}
+.brand-name em {font-weight:400;letter-spacing:.025em;}
+.header .btn,.footer .btn {font-weight:600;letter-spacing:0;}
+@media(min-width:761px) and (max-width:900px){.head-inner {gap:16px;}.nav {gap:14px;}.brand {font-size:.85rem;}}

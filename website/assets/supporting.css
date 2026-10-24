@@ -1,0 +1,21 @@
+/* Supporting pages reuse the approved shared palette and components. */
+.supporting-page { overflow-wrap: anywhere; }
+.supporting-page .support-layout { display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); gap:24px; align-items:start; }
+.supporting-page .support-heading { font-size:clamp(1.6rem,3vw,2.2rem); }
+.supporting-page .support-links { padding-left:20px; }
+.supporting-page .support-links li { margin-block:12px; }
+.supporting-page .support-links a { color:var(--teal); text-decoration:underline; text-underline-offset:3px; }
+.supporting-page .support-spaced { margin-top:24px; }
+.supporting-page .field { min-width:0; max-width:100%; }
+.supporting-page textarea { font:inherit; resize:vertical; min-height:160px; }
+.supporting-page .form-wide { grid-column:1/-1; }
+.supporting-page .form-field { min-width:0; }
+.supporting-page .btn { min-height:44px; white-space:normal; }
+.supporting-page :is(a,button,input,select,textarea):focus-visible { outline:3px solid var(--navy); outline-offset:4px; }
+.supporting-page button:disabled { cursor:not-allowed; opacity:.7; }
+.supporting-page [hidden] { display:none; }
+.supporting-page .resource-list { list-style:none; padding:0; margin:24px 0; }
+.supporting-page .resource-list h3 { margin-top:0; }
+.supporting-page .resource-list .eyebrow { margin-bottom:12px; }
+@media(max-width:760px) { .supporting-page .support-layout { grid-template-columns:minmax(0,1fr); } }
+@media(max-width:520px) { .supporting-page .form-grid { grid-template-columns:minmax(0,1fr); } .supporting-page .btn { width:100%; } }

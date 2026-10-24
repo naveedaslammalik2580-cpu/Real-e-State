@@ -1,0 +1,1 @@
+﻿model,case_id,subject,body,raw_output,word_count,all_pass,valid_json,word_count,allowed_merge_fields,no_urls,no_new_currency_amounts,no_unsubscribe,no_bracket_placeholders,wall_seconds,generation_seconds,tokens_per_second,eval_count,api_error,parse_error,human score (1–5)

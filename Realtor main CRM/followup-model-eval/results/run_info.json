@@ -1,0 +1,47 @@
+{
+  "status": "not_run",
+  "started_at": "2026-10-06T13:34:21.256144+00:00",
+  "updated_at": "2026-10-06T13:34:21.256157+00:00",
+  "models": [
+    "qwen3.5:2b",
+    "qwen3.5:4b",
+    "phi4-mini:latest"
+  ],
+  "case_ids": [
+    "case_01",
+    "case_02",
+    "case_03",
+    "case_04",
+    "case_05",
+    "case_06",
+    "case_07",
+    "case_08",
+    "case_09",
+    "case_10",
+    "case_11",
+    "case_12",
+    "case_13",
+    "case_14",
+    "case_15",
+    "case_16",
+    "case_17",
+    "case_18",
+    "case_19",
+    "case_20"
+  ],
+  "base_url": "http://localhost:11434",
+  "options": {
+    "temperature": 0.2,
+    "seed": 42,
+    "num_ctx": 4096,
+    "num_predict": 512
+  },
+  "format": "json",
+  "thinking": "disabled for qwen3.5; omitted for other models",
+  "python_version": "3.12.14",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+  "prompt_sha256": "280ba737d46719f76712038bda3b9f3e93b7a21d151e8420bc322766eadf248d",
+  "cases_sha256": "07d6f068691bd69c0ec1f3c60da2bdd76703be9adc9f53eaf8646f71435828e2",
+  "warmup": "one unscored one-token call per model",
+  "setup_errors": []
+}

@@ -1,0 +1,57 @@
+/* W3: product page only. Shared palette and other pages remain unchanged. */
+.realtoros-page { overflow-wrap: anywhere; }
+.realtoros-page [id] { scroll-margin-top: 100px; }
+.realtoros-page .product-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 48px;
+  align-items: center;
+}
+.realtoros-page .product-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+.realtoros-page .product-actions .btn { white-space: normal; text-align: center; min-height: 44px; }
+.realtoros-page .product-caption { color: var(--muted); font-size: .85rem; margin-top: 16px; }
+.realtoros-page .product-shot {
+  min-width: 0;
+  margin: 0;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--gold);
+  border-radius: var(--round);
+  background: var(--white);
+}
+.realtoros-page .product-shot-space {
+  aspect-ratio: 4 / 3;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 1px dashed var(--muted);
+  border-radius: 10px;
+  background: var(--paper);
+}
+.realtoros-page .product-shot-space strong { color: var(--navy); font-size: 1.2rem; }
+.realtoros-page .product-shot-space p { font-size: .9rem; color: var(--muted); margin: 12px 0 0; }
+.realtoros-page figcaption { font-size: .8rem; color: var(--muted); margin-top: 14px; }
+.realtoros-page .product-benefits { background: var(--mist); border-block: 1px solid var(--line); }
+.realtoros-page .product-steps { padding: 0; margin: 0; list-style: none; }
+.realtoros-page .step-n { display: block; }
+.realtoros-page .product-mobile { background: var(--white); border-top: 1px solid var(--line); }
+.realtoros-page .product-shot-mobile { width: min(100%, 330px); justify-self: center; }
+.realtoros-page .product-shot-mobile .product-shot-space { aspect-ratio: 3 / 4; }
+.realtoros-page .product-text-link { color: var(--teal); text-decoration: underline; text-underline-offset: 4px; display: inline-block; padding-block: 12px; }
+.realtoros-page .product-access-note { max-width: 700px; margin-top: 24px; padding: 20px; background: var(--paper); border-left: 3px solid var(--gold); color: var(--navy); }
+.realtoros-page .product-access-note p { margin: 8px 0 0; }
+/* Dark focus rings stay distinct on the light product backgrounds. */
+.realtoros-page a:focus-visible { outline: 3px solid var(--navy); outline-offset: 4px; }
+@media (max-width: 760px) {
+  .realtoros-page .product-split { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+  .realtoros-page .product-shot { width: 100%; }
+  .realtoros-page .product-shot-mobile { max-width: 330px; }
+}
+@media (max-width: 520px) {
+  .realtoros-page .product-actions .btn { width: 100%; }
+  .realtoros-page .product-shot { padding: 16px; }
+  .realtoros-page .product-shot-space { padding: 18px; }
+}
