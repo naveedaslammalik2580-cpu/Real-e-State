@@ -54,7 +54,7 @@ assert(!/Screenshot placeholder|Genuine preview pending|home-screenshot/.test(ht
 const footer = html.match(/<footer[\s\S]*?<\/footer>/)[0];
 assert(!/Before launch|Working name|brand pending|Static demonstration|finalized before public launch/.test(footer));
 assert(footer.includes('data-brand-name'));
-for (const href of ['tools/', 'tools/commission-calculator/', 'tools/mortgage-calculator/', 'tools/home-affordability-calculator/', 'realtoros/', 'resources/', 'about/', 'contact/']) assert(footer.includes(`href="${href}"`));
+for (const href of ['tools/', 'tools/commission-calculator/', 'tools/mortgage-calculator/', 'tools/home-affordability-calculator/', 'tools/rent-vs-buy-calculator/', 'realtoros/', 'resources/', 'about/', 'contact/']) assert(footer.includes(`href="${href}"`));
 assert(css.includes('.home .footer .brand {display:inline-flex'));
 assert(css.includes('max-width:100%;white-space:normal'));
 assert(css.includes('max-height:calc(100dvh - 68px);overflow-y:auto'));
@@ -68,7 +68,11 @@ const sections = [...html.matchAll(/<section class="([^"]+)"/g)].map(m => m[1]);
 assert.deepEqual(sections, ['home-hero', 'section home-use-cases', 'section home-how', 'home-product', 'section home-benefits-section', 'section home-faq', 'home-closing']);
 const cases = html.match(/<section class="section home-use-cases"[\s\S]*?<\/section>/)[0];
 const caseLinks = [...cases.matchAll(/href="([^"]+)"/g)].map(m => m[1]);
-assert.deepEqual(caseLinks, Array.from(published, t => 'tools/' + t.publicUrl));
+// Use-case section is curated, not a mirror of the directory: new tools live on
+// the Tools page (homepage panel rule), so only a subset is featured here.
+const publishedUrls = Array.from(published, t => 'tools/' + t.publicUrl);
+assert.equal(caseLinks.length, 3);
+for (const link of caseLinks) assert(publishedUrls.includes(link));
 const faq = html.match(/<section class="section home-faq"[\s\S]*?<\/section>/)[0];
 assert.equal((faq.match(/<details>/g) || []).length, 4);
 assert.equal((faq.match(/<summary>/g) || []).length, 4);

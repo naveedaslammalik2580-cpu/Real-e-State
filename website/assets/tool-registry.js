@@ -27,5 +27,14 @@ window.realEstateTools = Object.freeze([
     status: 'published',
     publicUrl: 'home-affordability-calculator/',
     icon: '⌂'
+  }),
+  Object.freeze({
+    slug: 'rent-vs-buy-calculator',
+    title: 'Rent vs Buy Calculator',
+    category: 'Finance & numbers',
+    description: 'Compare renting vs buying: full multi-year costs and the breakeven year.',
+    status: 'published',
+    publicUrl: 'rent-vs-buy-calculator/',
+    icon: '⇄'
   })
 ]);
