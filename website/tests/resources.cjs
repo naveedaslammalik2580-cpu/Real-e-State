@@ -8,7 +8,7 @@ for (const name of ['commission', 'mortgage']) {
     nodes[match[1]] = { value: match[0].match(/\bvalue="([^"]*)"/)?.[1] || '', textContent: '', addEventListener() {} };
   }
   const inputs = [...page.matchAll(/<input[^>]+\bid="([^"]+)"/g)].map(m => nodes[m[1]]);
-  const script = name === 'mortgage' ? read('tools/mortgage-calculator/calculator.js') : read('assets/site.js');
+  const script = name === 'mortgage' ? read('tools/mortgage-calculator/calculator.js') : read('tools/commission-calculator/calculator.js');
   vm.runInNewContext(script, { Intl, document: {
     querySelector: selector => selector === `#${name}-form` ? nodes[`${name}-form`] : null,
     querySelectorAll: selector => selector === `#${name}-form input` ? inputs : [],

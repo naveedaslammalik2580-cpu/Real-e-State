@@ -75,14 +75,13 @@ function calculator(name) {
   }
   const form = `${name}-form`;
   const inputs = [...html.matchAll(/<input[^>]*\bid="([^"]+)"[^>]*>/g)].map(m => elements[m[1]]);
-  // Each tool runs its own scoped script; the shared script keeps only the
-  // menu and the commission calculator until it gets its own folder too.
-  const script = name === 'mortgage' ? read('tools/mortgage-calculator/calculator.js') : shared;
+  // Each tool runs its own scoped script; the shared script keeps only the menu.
+  const script = name === 'mortgage' ? read('tools/mortgage-calculator/calculator.js') : name === 'commission' ? read('tools/commission-calculator/calculator.js') : shared;
   vm.runInNewContext(script, { Intl, document: {
     querySelector: s => s === '#' + form ? elements[form] : null,
     querySelectorAll: s => s === '#' + form + ' input' ? inputs : [], getElementById: id => elements[id]
   } });
-  return { get: id => elements[id].textContent, html: id => elements[id].innerHTML, fire(id, event) { elements[id].fire(event); }, set(id, value) { elements[id].value = String(value); elements[id].fire('input'); } };
+  return { get: id => elements[id].textContent, html: id => elements[id].innerHTML, fire(id, event) { elements[id].fire(event); }, put(id, value) { elements[id].value = String(value); }, set(id, value) { elements[id].value = String(value); elements[id].fire('input'); } };
 }
 const c = calculator('commission');
 assert.equal(c.get('commission-total'), '$13,500.00'); assert.equal(c.get('commission-agent'), '$9,450.00');
@@ -90,6 +89,17 @@ assert.equal(c.get('commission-net'), '$9,155.00');
 c.set('agent-split', 100); assert.equal(c.get('commission-net'), '$13,205.00');
 c.set('commission-rate', 0); assert.equal(c.get('commission-total'), '$0.00');
 c.set('commission-rate', 101); assert.equal(c.get('commission-total'), 'Check inputs');
+c.set('commission-rate', 3); c.set('agent-split', 70);
+assert.equal(c.get('listing-side'), '$6,750.00'); assert.equal(c.get('buyer-side'), '$6,750.00');
+assert.equal(c.get('seller-net'), '$436,500.00'); assert.equal(c.get('your-side-label'), 'Your side (both sides)');
+c.put('agent-role', 'listing'); c.fire('agent-role', 'change');
+assert.equal(c.get('commission-agent'), '$4,725.00'); assert.equal(c.get('commission-net'), '$4,430.00');
+assert.equal(c.get('your-side-label'), 'Your side (listing side)');
+c.set('referral-fee', 10); c.set('franchise-fee', 6);
+assert.equal(c.get('referral-amount'), '$1,350.00'); assert.equal(c.get('franchise-amount'), '$810.00');
+assert.equal(c.get('commission-agent'), '$3,969.00'); assert.equal(c.get('commission-net'), '$3,674.00');
+c.set('other-closing-costs', 1.5); c.set('mortgage-payoff', 200000);
+assert.equal(c.get('selling-cost'), '$20,250.00'); assert.equal(c.get('seller-net'), '$229,750.00');
 const m = calculator('mortgage');
 assert.equal(m.get('monthly-payment'), '$2,022.62'); assert.equal(m.get('loan-amount'), '$320,000.00');
 m.set('interest-rate', 0); assert.equal(m.get('monthly-payment'), '$888.89'); assert.equal(m.get('total-interest'), '$0.00');
@@ -134,5 +144,5 @@ for (const file of walk(root).filter(f => /\.(html|css|js)$/.test(f))) {
 const directoryHtml = read('tools/index.html');
 assert(directoryHtml.indexOf('tool-registry.js') < directoryHtml.indexOf('tool-directory.js'));
 assert(read('assets/theme.css').includes('#tool-grid .tool-card[hidden] {display:none;}'));
-console.log(`PASS: registry, published-only rendering, search/category combinations, empty/error states, navigation, 20 calculator assertions, JS syntax, ${references} internal references across ${pages} pages.`);
+console.log(`PASS: registry, published-only rendering, search/category combinations, empty/error states, navigation, 33 calculator assertions, JS syntax, ${references} internal references across ${pages} pages.`);
 console.log('DOM behavior uses stubs; browser responsive/visual verification remains manual.');
