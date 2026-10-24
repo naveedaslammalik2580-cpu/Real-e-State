@@ -2,7 +2,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const assert = require('node:assert/strict');
 const root = path.resolve(__dirname, '..');
-const pages = ['index.html', 'tools/index.html', 'realtoros/index.html', 'about/index.html', 'resources/index.html', 'contact/index.html', 'tools/commission-calculator/index.html', 'tools/mortgage-calculator/index.html', 'tools/home-affordability-calculator/index.html', 'tools/rent-vs-buy-calculator/index.html', 'tools/cap-rate-calculator/index.html', 'tools/bridge-loan-calculator/index.html', 'tools/property-investment-calculator/index.html', 'tools/capital-gains-tax-calculator/index.html'];
+const pages = ['index.html', 'tools/index.html', 'realtoros/index.html', 'about/index.html', 'resources/index.html', 'contact/index.html', 'tools/commission-calculator/index.html', 'tools/mortgage-calculator/index.html', 'tools/home-affordability-calculator/index.html', 'tools/rent-vs-buy-calculator/index.html', 'tools/cap-rate-calculator/index.html', 'tools/bridge-loan-calculator/index.html', 'tools/property-investment-calculator/index.html', 'tools/capital-gains-tax-calculator/index.html', 'tools/roi-calculator/index.html'];
 const titles = new Set(), descriptions = new Set();
 for (const page of pages) {
   const html = fs.readFileSync(path.join(root, page), 'utf8');
@@ -33,4 +33,4 @@ const contact = fs.readFileSync(path.join(root, 'contact/index.html'), 'utf8');
 assert(contact.includes('It does not send or save your enquiry.'));
 assert(contact.includes('Your draft (not sent)'));
 assert(!/<form[^>]*action=/.test(contact));
-console.log('PASS: 14 unique titles/descriptions, matching social metadata, heading order, language/skip links, deferred scripts, no invented canonical/sitemap URLs, honest draft-only contact messaging.');
+console.log('PASS: 15 unique titles/descriptions, matching social metadata, heading order, language/skip links, deferred scripts, no invented canonical/sitemap URLs, honest draft-only contact messaging.');

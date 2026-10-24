@@ -50,16 +50,16 @@ function directory(data) {
   };
 }
 let d = directory(registry);
-assert.equal(d.visible().length, 8);
-assert.deepEqual(d.visible().map(c => c.href), ['commission-calculator/', 'mortgage-calculator/', 'home-affordability-calculator/', 'rent-vs-buy-calculator/', 'cap-rate-calculator/', 'bridge-loan-calculator/', 'property-investment-calculator/', 'capital-gains-tax-calculator/']);
+assert.equal(d.visible().length, 9);
+assert.deepEqual(d.visible().map(c => c.href), ['commission-calculator/', 'mortgage-calculator/', 'home-affordability-calculator/', 'rent-vs-buy-calculator/', 'cap-rate-calculator/', 'bridge-loan-calculator/', 'property-investment-calculator/', 'capital-gains-tax-calculator/', 'roi-calculator/']);
 d.search('  MORTGAGE  '); assert.equal(d.visible().length, 1);
 d.search('transaction fees'); assert.equal(d.visible()[0].href, 'commission-calculator/');
 d.search('not-a-tool'); assert.equal(d.visible().length, 0); assert.equal(d.ids['no-results'].style.display, 'block');
-d.search(''); assert.equal(d.visible().length, 8);
+d.search(''); assert.equal(d.visible().length, 9);
 // Synthetic records exist only in memory, never as fake published pages.
 d = directory([...registry, { slug: 'test', title: 'Test', category: 'Planning', description: 'Schedule', status: 'published', publicUrl: 'test/' },
   { slug: 'draft', title: 'Secret draft', category: 'Draft category', description: '', status: 'draft', publicUrl: 'draft/' }]);
-assert.equal(d.visible().length, 9); assert.equal(d.ids['tool-filters'].children.length, 3);
+assert.equal(d.visible().length, 10); assert.equal(d.ids['tool-filters'].children.length, 3);
 d.filter('Planning'); assert.equal(d.visible().length, 1);
 assert.equal(d.ids['tool-filters'].children.find(b => b.textContent === 'Planning').attributes['aria-pressed'], 'true');
 d.search('mortgage'); assert.equal(d.visible().length, 0);
@@ -76,7 +76,7 @@ function calculator(name) {
   const form = `${name}-form`;
   const inputs = [...html.matchAll(/<input[^>]*\bid="([^"]+)"[^>]*>/g)].map(m => elements[m[1]]);
   // Each tool runs its own scoped script; the shared script keeps only the menu.
-  const script = name === 'mortgage' ? read('tools/mortgage-calculator/calculator.js') : name === 'commission' ? read('tools/commission-calculator/calculator.js') : name === 'home-affordability' ? read('tools/home-affordability-calculator/calculator.js') : name === 'rent-vs-buy' ? read('tools/rent-vs-buy-calculator/calculator.js') : name === 'cap-rate' ? read('tools/cap-rate-calculator/calculator.js') : name === 'bridge-loan' ? read('tools/bridge-loan-calculator/calculator.js') : name === 'property-investment' ? read('tools/property-investment-calculator/calculator.js') : name === 'capital-gains-tax' ? read('tools/capital-gains-tax-calculator/calculator.js') : shared;
+  const script = name === 'mortgage' ? read('tools/mortgage-calculator/calculator.js') : name === 'commission' ? read('tools/commission-calculator/calculator.js') : name === 'home-affordability' ? read('tools/home-affordability-calculator/calculator.js') : name === 'rent-vs-buy' ? read('tools/rent-vs-buy-calculator/calculator.js') : name === 'cap-rate' ? read('tools/cap-rate-calculator/calculator.js') : name === 'bridge-loan' ? read('tools/bridge-loan-calculator/calculator.js') : name === 'property-investment' ? read('tools/property-investment-calculator/calculator.js') : name === 'capital-gains-tax' ? read('tools/capital-gains-tax-calculator/calculator.js') : name === 'roi' ? read('tools/roi-calculator/calculator.js') : shared;
   vm.runInNewContext(script, { Intl, document: {
     querySelector: s => s === '#' + form ? elements[form] : null,
     querySelectorAll: s => s === '#' + form + ' input' ? inputs : [], getElementById: id => elements[id]
@@ -170,6 +170,19 @@ g.set('depreciation', 0); assert.equal(g.get('total-tax'), '$41,174.00');
 g.set('depreciation', 60000); g.set('state-rate', 0); assert.equal(g.get('total-tax'), '$48,004.00');
 g.set('sale-price', ''); assert.equal(g.get('total-tax'), 'Check inputs');
 assert.equal(g.get('cgt-validation'), 'Sale price is empty.');
+const roiCalc = calculator('roi');
+assert.equal(roiCalc.get('total-roi'), '201.58%'); assert.equal(roiCalc.get('hero-profit'), '$139,086.80');
+assert.equal(roiCalc.get('hero-annual'), '11.67%'); assert.equal(roiCalc.get('tile-profit'), '$139,086.80');
+assert.equal(roiCalc.get('tile-invested'), '$69,000.00'); assert.equal(roiCalc.get('tile-cf'), '$35,052.11');
+assert.equal(roiCalc.get('tile-appreciation'), '$103,174.91'); assert.equal(roiCalc.get('tile-paydown'), '$34,050.28');
+assert.equal(roiCalc.get('tile-equity'), '$197,225.19'); assert.equal(roiCalc.get('row-value'), '$403,174.91');
+assert.equal(roiCalc.get('row-balance'), '$205,949.72'); assert.equal(roiCalc.get('row-net'), '$173,034.70');
+roiCalc.set('hold-years', 5); assert.equal(roiCalc.get('tile-profit'), '$43,919.55');
+assert.equal(roiCalc.get('total-roi'), '63.65%'); assert.equal(roiCalc.get('hero-annual'), '10.35%');
+roiCalc.set('hold-years', 10); roiCalc.set('appreciation-rate', 0); assert.equal(roiCalc.get('tile-profit'), '$42,102.39');
+assert.equal(roiCalc.get('total-roi'), '61.02%'); assert.equal(roiCalc.get('hero-annual'), '4.88%');
+roiCalc.set('purchase-price', ''); assert.equal(roiCalc.get('total-roi'), 'Check inputs');
+assert.equal(roiCalc.get('roi-validation'), 'Purchase price is empty.');
 const toggle = new Element(), nav = new Element(), events = {};
 nav.contains = () => true;
 toggle.focus = () => { toggle.focused = true; };
@@ -203,5 +216,5 @@ for (const file of walk(root).filter(f => /\.(html|css|js)$/.test(f))) {
 const directoryHtml = read('tools/index.html');
 assert(directoryHtml.indexOf('tool-registry.js') < directoryHtml.indexOf('tool-directory.js'));
 assert(read('assets/theme.css').includes('#tool-grid .tool-card[hidden] {display:none;}'));
-console.log(`PASS: registry, published-only rendering, search/category combinations, empty/error states, navigation, 107 calculator assertions, JS syntax, ${references} internal references across ${pages} pages.`);
+console.log(`PASS: registry, published-only rendering, search/category combinations, empty/error states, navigation, 127 calculator assertions, JS syntax, ${references} internal references across ${pages} pages.`);
 console.log('DOM behavior uses stubs; browser responsive/visual verification remains manual.');

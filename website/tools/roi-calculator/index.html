@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#102131">
+<meta name="description" content="Project a rental property's total ROI over your hold period: cash flow, appreciation, loan paydown, sale proceeds and annualized return.">
+<title>ROI Calculator | Real Estate Tools</title>
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="stylesheet" href="../../assets/theme.css">
+<link rel="stylesheet" href="calculator.css">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ROI Calculator | Real Estate Tools">
+<meta property="og:description" content="Project a rental property's total ROI over your hold period: cash flow, appreciation, loan paydown, sale proceeds and annualized return.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ROI Calculator | Real Estate Tools">
+<meta name="twitter:description" content="Project a rental property's total ROI over your hold period: cash flow, appreciation, loan paydown, sale proceeds and annualized return.">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="header"><div class="wrap head-inner">
+<a class="brand" href="../../" aria-label="Real Estate Tools, homepage"><span class="brand-mark" aria-hidden="true">⌂</span><span class="brand-name"><span data-brand-name>Real Estate Tools</span><em>Tools · Software · Guides</em></span></a>
+<nav class="nav" id="site-menu" aria-label="Main navigation"><a href="../../tools/" class="current" aria-current="page">All Tools</a><a href="../../realtoros/" class="">RealtorOS</a><a href="../../resources/" class="">Resources</a><a href="../../about/">About</a><a href="../../contact/" class="">Contact</a><a class="btn btn-primary mobile-nav-cta" href="../../realtoros/">Discover RealtorOS <span aria-hidden="true">↗</span></a></nav>
+<div class="nav-buttons"><a class="btn btn-primary btn-small" href="../../realtoros/">Discover RealtorOS <span aria-hidden="true">↗</span></a></div>
+<button class="menu-toggle" type="button" aria-controls="site-menu" aria-expanded="false" aria-label="Open navigation"><span aria-hidden="true">☰</span></button>
+</div></header>
+<main id="main"><div class="roi-sticky" id="sticky-result"><span>Total ROI</span><b id="sticky-value">—</b></div>
+<section class="page-hero"><div class="wrap"><div class="crumb"><a href="../../">Home</a> / Tools / ROI calculator</div><span class="eyebrow">Real estate, simplified</span><h1>ROI Calculator</h1><p>Cash-on-cash tells you one year. This tells you the whole hold: rent collected, value gained, loan paid down, and what you walk away with at the sale — as one total return.</p></div>
+<div class="wrap calculator-layout">
+<div class="panel">
+<h2 style="font-size:1.7rem">Enter your figures</h2>
+<p class="muted">Adjust the sample values below to calculate an estimate instantly.</p>
+<form id="roi-form" onsubmit="return false"><div class="form-grid">
+<div class="form-field"><label for="purchase-price">Purchase price (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="purchase-price" type="number" min="0" max="1000000000000" step="1000" value="300000"></span><input class="field-slider" id="purchase-price-slider" type="range" min="0" max="2000000" step="5000" value="300000" aria-label="Purchase price (USD) slider"></div>
+<div class="form-field"><label for="down-payment">Down payment (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="down-payment" type="number" min="0" max="1000000000000" step="1000" value="60000"></span><input class="field-slider" id="down-payment-slider" type="range" min="0" max="500000" step="1000" value="60000" aria-label="Down payment (USD) slider"></div>
+<div class="form-field"><label for="down-percent-input">Down payment (%)</label><span class="input-unit"><input class="field" id="down-percent-input" type="number" min="0" max="100" step="0.1" value="20"><span class="unit-affix" aria-hidden="true">%</span></span><small class="field-helper">Share of the purchase price. Edit either value; the other follows automatically.</small></div>
+<div class="form-field"><label for="interest-rate">Mortgage rate (%)</label><span class="input-unit"><input class="field" id="interest-rate" type="number" min="0" max="100" step="0.01" value="7"><span class="unit-affix" aria-hidden="true">%</span></span><input class="field-slider" id="interest-rate-slider" type="range" min="0" max="15" step="0.1" value="7" aria-label="Mortgage rate (%) slider"></div>
+<div class="form-field"><span class="seg-label" id="loan-years-label">Loan term</span><div class="seg-control" role="group" aria-labelledby="loan-years-label"><button type="button" data-years="15" aria-pressed="false">15 years</button><button type="button" data-years="20" aria-pressed="false">20 years</button><button type="button" data-years="30" aria-pressed="true">30 years</button></div><input type="hidden" id="loan-years" value="30"></div>
+<div class="form-field"><label for="monthly-rent">Monthly rent (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="monthly-rent" type="number" min="0" max="1000000000000" step="10" value="2500"><span class="unit-affix" aria-hidden="true">/ month</span></span><input class="field-slider" id="monthly-rent-slider" type="range" min="0" max="10000" step="10" value="2500" aria-label="Monthly rent (USD) slider"></div>
+<div class="form-field"><label for="vacancy-rate">Vacancy rate (%)</label><span class="input-unit"><input class="field" id="vacancy-rate" type="number" min="0" max="100" step="0.5" value="5"><span class="unit-affix" aria-hidden="true">%</span></span><input class="field-slider" id="vacancy-rate-slider" type="range" min="0" max="50" step="1" value="5" aria-label="Vacancy rate (%) slider"></div>
+<div class="form-field"><label for="monthly-expenses">Monthly operating expenses (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="monthly-expenses" type="number" min="0" max="1000000000000" step="10" value="650"><span class="unit-affix" aria-hidden="true">/ month</span></span><small class="field-helper">Tax, insurance, HOA, maintenance and management combined.</small></div>
+<div class="form-field"><label for="appreciation-rate">Appreciation (% per year)</label><span class="input-unit"><input class="field" id="appreciation-rate" type="number" min="-50" max="100" step="0.5" value="3"><span class="unit-affix" aria-hidden="true">%</span></span></div>
+<div class="form-field"><label for="hold-years">Hold period (years)</label><span class="input-unit"><input class="field" id="hold-years" type="number" min="1" max="30" step="1" value="10"><span class="unit-affix" aria-hidden="true">years</span></span><input class="field-slider" id="hold-years-slider" type="range" min="1" max="30" step="1" value="10" aria-label="Hold period (years) slider"></div>
+<div class="form-field"><label for="selling-rate">Selling costs at exit (% of value)</label><span class="input-unit"><input class="field" id="selling-rate" type="number" min="0" max="100" step="0.5" value="6"><span class="unit-affix" aria-hidden="true">%</span></span></div>
+<div class="form-field"><label for="closing-costs">Closing costs when you buy (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="closing-costs" type="number" min="0" max="1000000000000" step="100" value="9000"></span><small class="field-helper">Counted in the cash you invest.</small></div>
+</div>
+<details class="advanced">
+<summary>Advanced options</summary>
+<div class="form-grid">
+<div class="form-field"><label for="rent-growth">Rent growth (% per year)</label><span class="input-unit"><input class="field" id="rent-growth" type="number" min="-50" max="100" step="0.5" value="2"><span class="unit-affix" aria-hidden="true">%</span></span></div>
+<div class="form-field"><label for="expense-growth">Expense growth (% per year)</label><span class="input-unit"><input class="field" id="expense-growth" type="number" min="-50" max="100" step="0.5" value="2"><span class="unit-affix" aria-hidden="true">%</span></span></div>
+</div>
+</details>
+</form>
+<p class="validation-note" id="validation-note" role="alert"></p>
+<p class="disclaimer">Total ROI is measured on the cash you invested (down payment plus closing costs), not the purchase price. Taxes are not included — run the exit gain through the capital gains calculator for the after-tax picture.</p>
+<p class="disclaimer">Estimates only. Not a loan offer or financial advice.</p>
+</div>
+<aside class="roi-results" aria-live="polite">
+<div class="roi-verdict">
+<p class="roi-verdict-label">Total ROI over the hold</p>
+<p class="roi-verdict-value" id="total-roi">—</p>
+<p class="roi-verdict-sub">Total profit <b id="hero-profit">—</b> · <b id="hero-annual">—</b> annualized</p>
+</div>
+<p class="roi-validation" id="roi-validation" role="alert"></p>
+<p class="roi-empty" id="result-empty" hidden>Enter your details to see your estimate.</p>
+<div id="result-body">
+<div class="roi-tiles">
+<div class="roi-tile"><span class="roi-tile-label">Total profit</span><b class="roi-tile-value" id="tile-profit">—</b></div>
+<div class="roi-tile"><span class="roi-tile-label">Cash invested</span><b class="roi-tile-value" id="tile-invested">—</b></div>
+<div class="roi-tile"><span class="roi-tile-label">Total cash flow</span><b class="roi-tile-value" id="tile-cf">—</b></div>
+<div class="roi-tile"><span class="roi-tile-label">Appreciation gain</span><b class="roi-tile-value" id="tile-appreciation">—</b></div>
+<div class="roi-tile"><span class="roi-tile-label">Loan paydown</span><b class="roi-tile-value" id="tile-paydown">—</b></div>
+<div class="roi-tile"><span class="roi-tile-label">Equity at sale</span><b class="roi-tile-value" id="tile-equity">—</b></div>
+</div>
+<h3 class="roi-group">At sale</h3>
+<div class="roi-row"><span>Purchase price</span><b id="row-purchase">—</b></div>
+<div class="roi-row"><span>Property value at sale</span><b id="row-value">—</b></div>
+<div class="roi-row"><span>Loan balance at sale</span><b id="row-balance">—</b></div>
+<div class="roi-row"><span>Equity at sale</span><b id="row-equity">—</b></div>
+<div class="roi-row" id="row-selling"><span>Selling costs</span><b id="row-selling-out">—</b></div>
+<div class="roi-row"><span>Net sale proceeds</span><b id="row-net">—</b></div>
+<div class="roi-row"><span>Down payment</span><b id="row-down">—</b></div>
+<div class="roi-row" id="row-closing"><span>Closing costs</span><b id="row-closing-out">—</b></div>
+<div class="roi-row"><span>Cash invested</span><b id="row-invested">—</b></div>
+<div class="roi-row" id="row-cf"><span>Total cash flow</span><b id="row-cf-out">—</b></div>
+<div class="roi-row" id="row-appreciation"><span>Appreciation gain</span><b id="row-appreciation-out">—</b></div>
+<div class="roi-row" id="row-paydown"><span>Loan paydown</span><b id="row-paydown-out">—</b></div>
+<div class="roi-row roi-row-total"><span>Total profit</span><b id="row-profit">—</b></div>
+<div class="roi-row roi-row-total"><span>Total ROI</span><b id="row-roi">—</b></div>
+<div class="roi-row roi-row-total"><span>Annualized ROI</span><b id="row-annual">—</b></div>
+<div class="roi-track" aria-hidden="true"><div id="bar-cf" class="roi-seg-cf"></div><div id="bar-appreciation" class="roi-seg-appreciation"></div><div id="bar-paydown" class="roi-seg-paydown"></div></div>
+<ul class="roi-legend"><li><span class="swatch roi-seg-cf"></span> Cash flow <b id="lg-cf">—</b></li><li><span class="swatch roi-seg-appreciation"></span> Appreciation <b id="lg-appreciation">—</b></li><li><span class="swatch roi-seg-paydown"></span> Paydown <b id="lg-paydown">—</b></li></ul>
+<p class="roi-note" id="hidden-rows-note"></p>
+<div class="roi-copy-row"><button class="roi-btn roi-btn-primary" id="copy-results" type="button">Copy results</button><button class="roi-btn roi-btn-outline" id="print-results" type="button">Print</button></div>
+<p class="roi-copy-note" id="copy-note"></p>
+<div class="roi-table-wrap"><table class="roi-table"><thead><tr><th>Year</th><th>Property value</th><th>Loan balance</th><th>Equity</th><th>Cash flow</th></tr></thead><tbody id="year-table-body"></tbody></table></div>
+</div>
+<div style="margin-top:26px"><a class="btn btn-outline" href="../../tools/capital-gains-tax-calculator/" style="white-space:normal">Estimate the tax on this sale with the capital gains calculator ↗</a></div>
+</aside>
+</div></section>
+<section class="section"><div class="wrap content">
+<h2>How the return is built</h2>
+<p>Total profit has three parts: all the cash flow collected over the hold, the appreciation gain (sale value minus purchase price), and the loan paydown (the principal you repaid, which becomes equity) — minus the selling costs at exit, with the whole thing measured against the cash you actually put in (down payment plus closing costs). Total ROI is that profit divided by cash invested; annualized ROI is the geometric yearly rate that compounds to the same total over the hold, so a 10-year hold and a 5-year hold can be compared fairly. The year-by-year table shows how the equity and cash flow build up — slowly at first, faster later, because the mortgage payment stays fixed while rents grow.</p>
+<h2>What moves the answer</h2>
+<p>Leverage dominates: a 20% down payment means every dollar of appreciation or paydown is earned on five dollars of property, which is why total ROI runs far above cash-on-cash. After that, the hold length matters most — appreciation compounds, and the later years contribute disproportionately. Selling costs are the silent reducer: 6% of a grown value is a much bigger number than 6% of the price you paid, so a short hold can lose money even on a property that appreciated.</p>
+<h2>Important note</h2>
+<p>This is an informational estimate, not investment advice. It ignores taxes, vacancies beyond the allowance, major repairs, refinancing, and rent or expense shocks — and past appreciation is not a promise about the next ten years. Verify rents, costs and growth assumptions with local records before making any buying decision.</p>
+</div></section>
+</main>
+<footer class="footer"><div class="wrap"><div class="footer-top"><div><a class="brand" href="../../" style="color:white;display:inline-flex;margin-bottom:18px"><span class="brand-mark" style="background:#254761">⌂</span><span class="brand-name"><span data-brand-name>Real Estate Tools</span><em style="color:#adc6c8">Tools · Software · Guides</em></span></a><p>Useful real estate tools for everyday decisions, with RealtorOS as the flagship CRM. Brand and company details will be finalized before public launch.</p></div><div><h2 class="footer-heading">Platform</h2><a href="../../tools/">All tools</a><a href="../../tools/commission-calculator/">Commission calculator</a><a href="../../tools/mortgage-calculator/">Mortgage calculator</a><a href="../../tools/home-affordability-calculator/">Home affordability calculator</a><a href="../../tools/rent-vs-buy-calculator/">Rent vs buy calculator</a><a href="../../tools/cap-rate-calculator/">Cap rate calculator</a><a href="../../tools/bridge-loan-calculator/">Bridge loan calculator</a><a href="../../tools/property-investment-calculator/">Property investment calculator</a><a href="../../tools/capital-gains-tax-calculator/">Capital gains tax calculator</a><a href="../../tools/roi-calculator/">ROI calculator</a></div><div><h2 class="footer-heading">Product</h2><a href="../../realtoros/">RealtorOS CRM</a><a href="../../resources/">Resources</a><a href="../../about/">About</a><a href="../../contact/">Contact</a></div><div><h2 class="footer-heading">Before launch</h2><p>Connect support email, app login, pricing and approved legal policies.</p></div></div><div class="foot-bottom"><span>© 2026 <span data-brand-name>Real Estate Tools</span> · Working name, brand pending.</span><span>Static demonstration · No customer information collected</span></div></div></footer>
+<script src="../../assets/site-config.js" defer></script>
+<script src="../../assets/site.js" defer></script>
+<script src="calculator.js" defer></script>
+</body>
+</html>

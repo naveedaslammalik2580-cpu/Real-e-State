@@ -72,5 +72,14 @@ window.realEstateTools = Object.freeze([
     status: 'published',
     publicUrl: 'capital-gains-tax-calculator/',
     icon: '§'
+  }),
+  Object.freeze({
+    slug: 'roi-calculator',
+    title: 'ROI Calculator',
+    category: 'Finance & numbers',
+    description: 'Project a rental\'s total return over your hold period: cash flow, appreciation, loan paydown and annualized ROI.',
+    status: 'published',
+    publicUrl: 'roi-calculator/',
+    icon: '▲'
   })
 ]);
