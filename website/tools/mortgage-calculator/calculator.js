@@ -113,29 +113,46 @@
       hoa = num('hoa-fee'), pmiRate = num('pmi-rate'),
       extra = num('extra-payment'), lump = num('lump-sum');
 
-    var ok = valid(price, 0, 1e12) && valid(down, 0, price) && valid(rate, 0, 100) &&
-      valid(years, 1, 50) && valid(tax, 0, 1e12) && valid(ins, 0, 1e12) &&
-      valid(hoa, 0, 1e12) && valid(pmiRate, 0, 100) &&
-      valid(extra, 0, 1e12) && valid(lump, 0, 1e12);
-    // Empty fields are invalid, not zero.
-    var required = ['home-price', 'down-payment', 'interest-rate', 'loan-years',
-      'property-tax', 'home-insurance', 'hoa-fee', 'pmi-rate', 'extra-payment', 'lump-sum'];
-    for (var ri = 0; ri < required.length; ri++) {
-      var rel = document.getElementById(required[ri]);
-      if (!rel || rel.value === '') { ok = false; break; }
+    // Named validation: the panel names every problem instead of a generic
+    // message with no reason. Rules are unchanged; only the presentation is.
+    var problems = [];
+    function isEmpty(id) {
+      var el = document.getElementById(id);
+      return !el || el.value === '';
     }
+    if (isEmpty('home-price')) problems.push('Home price is empty.');
+    else if (!valid(price, 0, 1e12)) problems.push('Home price must be 0 or more.');
+    if (isEmpty('down-payment')) problems.push('Down payment is empty.');
+    else if (down > price) problems.push('Down payment cannot exceed the home price.');
+    else if (!valid(down, 0, 1e12)) problems.push('Down payment must be 0 or more.');
+    if (isEmpty('interest-rate')) problems.push('Annual interest rate is empty.');
+    else if (!valid(rate, 0, 100)) problems.push('Annual interest rate must be 0–100%.');
+    if (isEmpty('loan-years')) problems.push('Loan term is empty.');
+    else if (!valid(years, 1, 50)) problems.push('Loan term must be 1–50 years.');
+    if (isEmpty('property-tax')) problems.push('Property tax is empty.');
+    else if (!valid(tax, 0, 1e12)) problems.push('Property tax must be 0 or more.');
+    if (isEmpty('home-insurance')) problems.push('Home insurance is empty.');
+    else if (!valid(ins, 0, 1e12)) problems.push('Home insurance must be 0 or more.');
+    if (isEmpty('hoa-fee')) problems.push('HOA dues is empty.');
+    else if (!valid(hoa, 0, 1e12)) problems.push('HOA dues must be 0 or more.');
+    if (isEmpty('pmi-rate')) problems.push('PMI rate is empty.');
+    else if (!valid(pmiRate, 0, 100)) problems.push('PMI rate must be 0–100%.');
+    if (isEmpty('extra-payment')) problems.push('Extra payment is empty.');
+    else if (!valid(extra, 0, 1e12)) problems.push('Extra payment must be 0 or more.');
+    if (isEmpty('lump-sum')) problems.push('One-time extra payment is empty.');
+    else if (!valid(lump, 0, 1e12)) problems.push('One-time extra payment must be 0 or more.');
+    var ok = problems.length === 0;
 
     if (!ok) {
       OUTPUTS.forEach(function (id) { set(id, '—'); });
+      set('monthly-total', problems[0]);
+      set('result-empty', problems.join(' '));
       set('down-percent', '');
       set('mortgage-pmi-note', '');
       set('schedule-note', '');
       set('mortgage-error', 'Check the highlighted values: down payment cannot exceed the price, rate must be 0–100%, and term must be 1–50 years.');
       set('lg-pi', '—'); set('lg-tax', '—'); set('lg-ins', '—'); set('lg-hoa', '—'); set('lg-pmi', '—');
       set('sticky-value', '—');
-      set('hidden-rows-note', '');
-      hideRow('row-monthly-hoa', false); hideRow('row-monthly-pmi', false);
-      hideRow('row-interest-saved', false); hideRow('row-time-saved', false);
       setHtml('balance-chart', '');
       set('chart-balance-end', '—'); set('chart-interest-end', '—');
       hideRow('result-body', true); hideRow('result-empty', false);
@@ -197,23 +214,12 @@
       ? 'Schedule includes your extra payments.'
       : 'Schedule shows the standard plan without extra payments.');
 
-    // Shared restyle behaviors: legend amounts, $0-row hiding, sticky value.
+    // Shared restyle behaviors: legend amounts and sticky value.
+    // HOA, PMI, interest-saved and time-saved rows always show, even at $0,
+    // so the panel never contradicts itself with a "not shown" note.
     set('lg-pi', usd(pi)); set('lg-tax', usd(taxM)); set('lg-ins', usd(insM));
     set('lg-hoa', usd(hoaM)); set('lg-pmi', usd(pmiM));
     set('sticky-value', usd(total));
-    var saved = Math.max(0, baseInterest - plan.totalInterest);
-    hideRow('row-monthly-hoa', hoaM === 0);
-    hideRow('row-monthly-pmi', pmiM === 0);
-    hideRow('row-interest-saved', saved < 0.005);
-    hideRow('row-time-saved', plan.months >= baseMonths);
-    var hidden = [];
-    if (hoaM === 0) hidden.push('HOA');
-    if (pmiM === 0) hidden.push('PMI');
-    if (saved < 0.005) hidden.push('interest saved');
-    if (plan.months >= baseMonths) hidden.push('time saved');
-    set('hidden-rows-note', hidden.length
-      ? 'Not shown because $0 or not applicable: ' + hidden.join(', ') + '.'
-      : '');
     syncDownPct();
 
     // Balance-over-time chart from the yearly schedule rows.
