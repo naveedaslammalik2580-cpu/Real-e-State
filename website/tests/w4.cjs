@@ -4,7 +4,7 @@ const vm = require('node:vm');
 const assert = require('node:assert/strict');
 const root = path.resolve(__dirname, '..');
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
-const pages = ['index.html', 'resources/index.html', 'contact/index.html', 'about/index.html', 'realtoros/index.html', 'tools/index.html', 'tools/commission-calculator/index.html', 'tools/mortgage-calculator/index.html', 'tools/home-affordability-calculator/index.html', 'tools/rent-vs-buy-calculator/index.html', 'tools/cap-rate-calculator/index.html', 'tools/bridge-loan-calculator/index.html'];
+const pages = ['index.html', 'resources/index.html', 'contact/index.html', 'about/index.html', 'realtoros/index.html', 'tools/index.html', 'tools/commission-calculator/index.html', 'tools/mortgage-calculator/index.html', 'tools/home-affordability-calculator/index.html', 'tools/rent-vs-buy-calculator/index.html', 'tools/cap-rate-calculator/index.html', 'tools/bridge-loan-calculator/index.html', 'tools/property-investment-calculator/index.html'];
 for (const file of pages) {
   const html = read(file);
   assert.equal((html.match(/<h1\b/g) || []).length, 1, file);
@@ -56,5 +56,5 @@ const config = read('assets/site-config.js').replace("brandName: 'Real Estate To
 vm.runInNewContext(config, { window: {}, document });
 assert.equal(labels[0].textContent, 'Test label'); assert.equal(link['aria-label'], 'Test label, homepage'); assert.equal(document.title, 'About | Test label');
 assert(read('resources/index.html').includes('Understanding Real Estate Commission'));
-console.log('PASS: twelve-page shared navigation, unique IDs, label references, viewport structure, form validation branches, submission prevention, draft-only behavior, stale-draft clearing and configurable brand.');
+console.log('PASS: thirteen-page shared navigation, unique IDs, label references, viewport structure, form validation branches, submission prevention, draft-only behavior, stale-draft clearing and configurable brand.');
 console.log('DOM stubs do not replace browser checks for responsive layout, native validation or keyboard interaction.');

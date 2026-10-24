@@ -54,5 +54,14 @@ window.realEstateTools = Object.freeze([
     status: 'published',
     publicUrl: 'bridge-loan-calculator/',
     icon: '⇋'
+  }),
+  Object.freeze({
+    slug: 'property-investment-calculator',
+    title: 'Property Investment Calculator',
+    category: 'Finance & numbers',
+    description: 'Analyze a rental property: monthly cash flow, cash-on-cash return, cap rate and break-even rent.',
+    status: 'published',
+    publicUrl: 'property-investment-calculator/',
+    icon: '◈'
   })
 ]);
