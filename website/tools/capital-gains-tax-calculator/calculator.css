@@ -5,11 +5,13 @@
    #C9D6E0. This page does not load the shared tools.css: everything below
    is self-contained. Display numbers use the site's Source Serif 4. */
 body { background: #F6F5F0; color: #0B1F33; }
-.page-hero { padding: 22px 0 30px; }
-.page-hero h1 { font-family: 'Source Serif 4', Georgia, serif; font-size: clamp(2rem, 4.5vw, 2.9rem); line-height: 1.12; margin: 12px 0 10px; color: #0B1F33; }
+.page-hero { padding: 22px 0 28px; }
+.page-hero h1 { font-family: 'Source Serif 4', Georgia, serif; font-size: clamp(2rem, 4vw, 2.5rem); line-height: 1.05; margin: 12px 0 10px; color: #0B1F33; }
 .page-hero p { color: #5E6C79; }
-.page-hero .calculator-layout { margin-top: 22px; }
-.section { padding: 26px 0 40px; }
+.page-hero .calculator-layout { margin-top: 12px; }
+.section { padding: 20px 0 32px; }
+.content h2 { margin-top: 28px; }
+.content h2:first-child { margin-top: 0; }
 .calculator-layout { align-items: start; gap: 24px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 
 /* Input panel: the site's own card treatment */
@@ -26,15 +28,24 @@ body { background: #F6F5F0; color: #0B1F33; }
 .unit-affix { display: flex; align-items: center; padding: 0 12px; color: #5E6C79; font-weight: 600; font-size: .92rem; white-space: nowrap; }
 .unit-affix:first-child { padding-right: 0; }
 .unit-affix:last-child { padding-left: 8px; }
-.field-slider { width: 100%; accent-color: #0F766E; margin-top: 10px; min-height: 44px; }
+.field-slider { width: 100%; accent-color: #0F766E; margin-top: 10px; min-height: 32px; }
+/* Full-width note below both columns (moved out from under the form). */
+.calculator-disclaimers { margin-top: 4px; }
+.calculator-disclaimers p:last-child { margin-bottom: 0; }
 .seg-control { display: flex; gap: 8px; }
 .seg-control button { flex: 1; min-height: 48px; border: 1px solid #d6e1e0; background: #fff; border-radius: 11px; font-weight: 700; color: #0B1F33; white-space: nowrap; transition: background .15s ease, border-color .15s ease, color .15s ease; }
 .seg-control button[aria-pressed="true"] { background: #0F766E; border-color: #0F766E; color: #fff; }
 .seg-control button:focus-visible { outline: 2px solid #0F766E; outline-offset: 2px; }
 .seg-label { display: block; font-size: 14px; font-weight: 700; color: #0B1F33; margin-bottom: 8px; }
-.advanced { border-top: 1px solid #E5E2DB; margin-top: 20px; padding-top: 14px; }
-.advanced summary { font-weight: 700; cursor: pointer; color: #0B1F33; min-height: 44px; display: flex; align-items: center; }
-.advanced .form-grid { margin-top: 14px; }
+/* Visible form groups (no collapsed section holding inputs). */
+.form-group { border: 0; padding: 0; margin: 24px 0 0; min-width: 0; }
+.form-group:first-of-type { margin-top: 8px; }
+.form-group legend { font-weight: 800; color: #102131; font-size: 0.95rem; padding: 0 0 8px; margin-bottom: 16px; width: 100%; border-bottom: 1px solid #E2DED5; }
+/* Row alignment: every label gets a fixed two-line height, so a row's
+   controls start at the same height. (Bottom-alignment is wrong here:
+   fields with helper text below the control would push their row partner
+   out of line, so controls align from the label, not the bottom.) */
+.form-field label, .form-field .seg-label { min-height: 3.2em; }
 .validation-note { color: #8A5A00; font-weight: 600; font-size: .9rem; }
 .validation-note:empty { display: none; }
 .disclaimer { color: #5E6C79; }
@@ -42,11 +53,11 @@ body { background: #F6F5F0; color: #0B1F33; }
 /* Results: light area, navy verdict banner, paper metric tiles */
 .cgt-results { background: #fff; color: #0B1F33; border: 1px solid #E5E2DB; border-radius: 17px; box-shadow: 0 6px 22px rgba(26, 58, 70, .035); padding: 28px; position: sticky; top: 105px; }
 .cgt-verdict { background: #102131; color: #fff; border-radius: 15px; padding: 22px 24px; }
-.cgt-verdict-label { color: #9FB3C4; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 8px; }
-.cgt-verdict-value { font-family: 'Source Serif 4', Georgia, serif; font-size: clamp(2.4rem, 4vw, 3.2rem); font-weight: 600; line-height: 1.05; color: #fff; margin: 0; overflow-wrap: anywhere; }
-.cgt-verdict-sub { color: #C9D6E0; margin: 10px 0 0; font-size: .95rem; }
-.cgt-verdict-sub b { color: #fff; }
-.cgt-validation { background: #F6F5F0; border-left: 3px solid #0F766E; border-radius: 0 12px 12px 0; padding: 14px 16px; color: #0B1F33; font-size: .9rem; margin: 16px 0 0; }
+.cgt-verdict .cgt-verdict-label { color: #9FB3C4; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 8px; }
+.cgt-verdict .cgt-verdict-value { font-family: 'Source Serif 4', Georgia, serif; font-size: clamp(2.4rem, 4vw, 3.2rem); font-weight: 600; line-height: 1.05; color: #fff; margin: 0; overflow-wrap: anywhere; }
+.cgt-verdict .cgt-verdict-sub { color: #C9D6E0; margin: 10px 0 0; font-size: .95rem; }
+.cgt-verdict .cgt-verdict-sub b { color: #fff; }
+.cgt-results .cgt-validation { background: #F6F5F0; border-left: 3px solid #0F766E; border-radius: 0 12px 12px 0; padding: 14px 16px; color: #0B1F33; font-size: .9rem; margin: 16px 0 0; }
 .cgt-validation:empty { display: none; }
 .cgt-empty { color: #5E6C79; margin: 20px 0 0; font-size: 1rem; line-height: 1.5; }
 .cgt-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }

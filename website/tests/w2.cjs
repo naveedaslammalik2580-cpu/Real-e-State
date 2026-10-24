@@ -176,7 +176,7 @@ assert.equal(g.get('row-realized'), '$611,000.00'); assert.equal(g.get('row-basi
 assert.equal(g.get('row-recapture-tax-out'), '$13,200.00'); assert.equal(g.get('row-gain-tax'), '$25,950.00');
 g.set('depreciation', 0); assert.equal(g.get('total-tax'), '$41,174.00');
 g.set('depreciation', 60000); g.set('state-rate', 0); assert.equal(g.get('total-tax'), '$48,004.00');
-g.set('sale-price', ''); assert.equal(g.get('total-tax'), 'Check inputs');
+g.set('sale-price', ''); assert.equal(g.get('total-tax'), 'Sale price is empty.');
 assert.equal(g.get('cgt-validation'), 'Sale price is empty.');
 const roiCalc = calculator('roi');
 assert.equal(roiCalc.get('total-roi'), '201.58%'); assert.equal(roiCalc.get('hero-profit'), '$139,086.80');

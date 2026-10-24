@@ -85,8 +85,6 @@
       if (!rel || rel.value === '') { ok = false; break; }
     }
     if (!ok) {
-      set('total-tax', 'Check inputs');
-      OUTPUTS.forEach(function (id) { if (id !== 'total-tax') set(id, '—'); });
       var problems = [];
       var checks = [
         ['sale-price', sale], ['purchase-price', purchase], ['improvements', improv],
@@ -102,11 +100,12 @@
         if (!(c[1] >= lo && c[1] <= hi)) problems.push(LABELS[c[0]] + ' is out of range.');
       });
       var message = problems.length ? problems.join(' ') : 'Check the values: sale price above $0, rates 0–100%, years 0–50, amounts 0 or more, and no field left empty.';
+      set('total-tax', problems.length ? problems[0] : message);
+      OUTPUTS.forEach(function (id) { if (id !== 'total-tax') set(id, '—'); });
       set('validation-note', message);
       set('cgt-validation', message);
       set('sticky-value', '—');
       set('cgt-note', '');
-      set('hidden-rows-note', '');
       hideRow('result-body', true); hideRow('result-empty', false);
       setWidth('bar-excluded', 0); setWidth('bar-kept', 0); setWidth('bar-tax', 0);
       return;
@@ -174,21 +173,8 @@
     set('cgt-note', (use === 'primary' && !(isLong && years >= 2))
       ? 'No primary-residence exclusion: the 2-year ownership and use test is not met.'
       : '');
-    // Hide $0 rows; everything else stays visible.
-    hideRow('row-depreciation', depr === 0);
-    hideRow('row-exclusion', exclusion === 0);
-    hideRow('row-recapture', recap === 0);
-    hideRow('row-recapture-tax', recapTax === 0);
-    hideRow('row-niit', niit === 0);
-    hideRow('row-state', stateTax === 0);
-    var hidden = [];
-    if (depr === 0) hidden.push('Depreciation claimed');
-    if (exclusion === 0) hidden.push('Primary-residence exclusion');
-    if (recap === 0) hidden.push('Depreciation recapture portion');
-    if (recapTax === 0) hidden.push('Recapture tax');
-    if (niit === 0) hidden.push('Net investment income tax');
-    if (stateTax === 0) hidden.push('State tax');
-    set('hidden-rows-note', hidden.length ? 'Not shown because $0: ' + hidden.join(', ') + '.' : '');
+    // All breakdown rows always show, even at $0, so the panel never
+    // contradicts itself with a "not shown" note.
   }
   document.querySelectorAll('#capital-gains-tax-form input').forEach(function (input) {
     input.addEventListener('input', run);
