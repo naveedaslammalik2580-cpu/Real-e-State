@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#102131">
-<meta name="description" content="Estimate the full monthly mortgage payment — principal and interest plus property tax, insurance, HOA and PMI — from price, down payment, rate and term.">
+<meta name="description" content="Estimate the full monthly mortgage payment with taxes, insurance, HOA and PMI, model extra payments and payoff savings, and compare 15, 20 and 30-year terms.">
 <title>Mortgage Payment Calculator | Real Estate Tools</title>
 <link rel="stylesheet" href="../../assets/site.css">
 <link rel="stylesheet" href="../../assets/theme.css">
@@ -12,10 +12,10 @@
 <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Mortgage Payment Calculator | Real Estate Tools">
-<meta property="og:description" content="Estimate the full monthly mortgage payment — principal and interest plus property tax, insurance, HOA and PMI — from price, down payment, rate and term.">
+<meta property="og:description" content="Estimate the full monthly mortgage payment with taxes, insurance, HOA and PMI, model extra payments and payoff savings, and compare 15, 20 and 30-year terms.">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mortgage Payment Calculator | Real Estate Tools">
-<meta name="twitter:description" content="Estimate the full monthly mortgage payment — principal and interest plus property tax, insurance, HOA and PMI — from price, down payment, rate and term.">
+<meta name="twitter:description" content="Estimate the full monthly mortgage payment with taxes, insurance, HOA and PMI, model extra payments and payoff savings, and compare 15, 20 and 30-year terms.">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -40,6 +40,8 @@
 <div class="form-field"><label for="home-insurance">Home insurance (USD per year)</label><input class="field" id="home-insurance" type="number" min="0" step="100" value="1800"></div>
 <div class="form-field"><label for="hoa-fee">HOA dues (USD per month)</label><input class="field" id="hoa-fee" type="number" min="0" step="10" value="0"></div>
 <div class="form-field"><label for="pmi-rate">PMI rate (annual %, only below 20% down)</label><input class="field" id="pmi-rate" type="number" min="0" max="100" step="0.05" value="0.5"></div>
+<div class="form-field"><label for="extra-payment">Extra payment (USD per month)</label><input class="field" id="extra-payment" type="number" min="0" step="50" value="0"></div>
+<div class="form-field"><label for="lump-sum">One-time extra payment (USD)</label><input class="field" id="lump-sum" type="number" min="0" step="1000" value="0"></div>
 </div></form>
 <p class="mortgage-error" id="mortgage-error" role="alert"></p>
 <p class="disclaimer">Principal and interest use a standard amortizing fixed-rate formula. PMI is estimated only while the loan balance is above 80% of the price. Taxes, insurance and HOA figures are your own inputs, not quotes.</p>
@@ -66,17 +68,33 @@
 <div class="result-row"><span>PMI / month</span><b id="monthly-pmi">—</b></div>
 <div class="result-row mortgage-total-row"><span>Total monthly payment</span><b id="monthly-total">—</b></div>
 <div class="result-row"><span>Total cost over term (all-in)</span><b id="total-cost">—</b></div>
+<div class="result-row"><span>Estimated payoff date</span><b id="payoff-date">—</b></div>
+<div class="result-row"><span>Total interest with extra payments</span><b id="interest-with-extras">—</b></div>
+<div class="result-row mortgage-saved-row"><span>Interest saved</span><b id="interest-saved">—</b></div>
+<div class="result-row mortgage-saved-row"><span>Time saved</span><b id="time-saved">—</b></div>
 <p class="muted" id="mortgage-pmi-note"></p>
 <div style="margin-top:26px"><a class="btn btn-outline" href="../../tools/">Explore more real estate tools ↗</a></div>
 </aside>
 </div>
 <div class="wrap content">
 <h2>How the payment is calculated</h2>
-<p>Monthly principal and interest follow the standard amortizing formula: M = P × r(1 + r)<sup>n</sup> / ((1 + r)<sup>n</sup> − 1), where P is the loan amount, r is the monthly interest rate and n is the number of monthly payments. Property tax and insurance are spread evenly across 12 months; HOA dues are added monthly; PMI is charged only while the balance is above 80% of the price.</p>
-<details>
-<summary>Yearly amortization schedule</summary>
+<p>Monthly principal and interest follow the standard amortizing formula: M = P × r(1 + r)<sup>n</sup> / ((1 + r)<sup>n</sup> − 1), where P is the loan amount, r is the monthly interest rate and n is the number of monthly payments. Property tax and insurance are spread evenly across 12 months; HOA dues are added monthly; PMI is charged only while the balance is above 80% of the price. Any extra monthly payment and one-time payment go straight to principal, which shortens the loan and reduces total interest.</p>
+<h2>Compare loan terms</h2>
+<p>Same home price, down payment and rate — only the term changes. Your current term is highlighted.</p>
 <table class="mortgage-schedule">
-<thead><tr><th>Year</th><th>Interest</th><th>Principal</th><th>Remaining balance</th></tr></thead>
+<thead><tr><th>Term</th><th>Monthly P&amp;I</th><th>Total interest</th><th>Total paid</th></tr></thead>
+<tbody id="term-compare-body"></tbody>
+</table>
+<details open>
+<summary>Amortization schedule</summary>
+<div class="mortgage-schedule-tools">
+<button class="mortgage-toggle" id="schedule-yearly-btn" type="button" aria-pressed="true">Yearly</button>
+<button class="mortgage-toggle" id="schedule-monthly-btn" type="button" aria-pressed="false">Monthly</button>
+<button class="mortgage-toggle" id="download-schedule-btn" type="button">Download CSV</button>
+</div>
+<p class="muted" id="schedule-note"></p>
+<table class="mortgage-schedule">
+<thead><tr><th>Year / Month</th><th>Interest</th><th>Principal</th><th>Remaining balance</th></tr></thead>
 <tbody id="mortgage-schedule-body"></tbody>
 </table>
 </details>

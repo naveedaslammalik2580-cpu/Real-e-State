@@ -82,7 +82,7 @@ function calculator(name) {
     querySelector: s => s === '#' + form ? elements[form] : null,
     querySelectorAll: s => s === '#' + form + ' input' ? inputs : [], getElementById: id => elements[id]
   } });
-  return { get: id => elements[id].textContent, set(id, value) { elements[id].value = String(value); elements[id].fire('input'); } };
+  return { get: id => elements[id].textContent, html: id => elements[id].innerHTML, fire(id, event) { elements[id].fire(event); }, set(id, value) { elements[id].value = String(value); elements[id].fire('input'); } };
 }
 const c = calculator('commission');
 assert.equal(c.get('commission-total'), '$13,500.00'); assert.equal(c.get('commission-agent'), '$9,450.00');
@@ -96,6 +96,11 @@ m.set('interest-rate', 0); assert.equal(m.get('monthly-payment'), '$888.89'); as
 m.set('down-payment', 400000); assert.equal(m.get('monthly-payment'), '$0.00');
 m.set('down-payment', 400001); assert.equal(m.get('monthly-payment'), '\u2014');
 m.set('down-payment', 80000); m.set('loan-years', 0); assert.equal(m.get('monthly-payment'), '\u2014');
+m.set('loan-years', 30); m.set('interest-rate', 6.5);
+assert.equal(m.get('interest-saved'), '$0.00'); assert.equal(m.get('time-saved'), 'No time saved');
+assert(m.html('term-compare-body').includes('$2,787.54')); assert(m.html('term-compare-body').includes('mortgage-current-term'));
+m.set('extra-payment', 200); assert.equal(m.get('interest-saved'), '$105,428.67'); assert.equal(m.get('time-saved'), '6 years 7 months sooner');
+m.fire('schedule-monthly-btn', 'click'); assert.equal((m.html('mortgage-schedule-body').match(/<tr>/g) || []).length, 281);
 const toggle = new Element(), nav = new Element(), events = {};
 nav.contains = () => true;
 toggle.focus = () => { toggle.focused = true; };
@@ -129,5 +134,5 @@ for (const file of walk(root).filter(f => /\.(html|css|js)$/.test(f))) {
 const directoryHtml = read('tools/index.html');
 assert(directoryHtml.indexOf('tool-registry.js') < directoryHtml.indexOf('tool-directory.js'));
 assert(read('assets/theme.css').includes('#tool-grid .tool-card[hidden] {display:none;}'));
-console.log(`PASS: registry, published-only rendering, search/category combinations, empty/error states, navigation, 13 calculator assertions, JS syntax, ${references} internal references across ${pages} pages.`);
+console.log(`PASS: registry, published-only rendering, search/category combinations, empty/error states, navigation, 20 calculator assertions, JS syntax, ${references} internal references across ${pages} pages.`);
 console.log('DOM behavior uses stubs; browser responsive/visual verification remains manual.');
