@@ -1,0 +1,30 @@
+/* Home affordability calculator — scoped styles. Shared layout tokens live in theme.css. */
+/* The calculator lives inside the first (hero) section, right under the title. */
+.page-hero { padding: 22px 0 30px; }
+.page-hero h1 { font-size: clamp(2rem, 4.5vw, 2.9rem); line-height: 1.12; margin: 12px 0 10px; }
+.page-hero .calculator-layout { margin-top: 22px; }
+.section { padding: 26px 0 40px; }
+.calculator-layout { align-items: start; gap: 24px; }
+.result .result-row { padding: 6px 0; }
+.result > div:last-child { margin-top: 16px !important; }
+.afford-down-hint { color: var(--muted); font-size: 0.9rem; margin-top: 6px; }
+.afford-presets { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 0 0 16px; }
+.afford-presets span { font-weight: 600; }
+.afford-preset { border: 1px solid var(--line); background: #fff; color: var(--navy); border-radius: 999px; padding: 7px 14px; font: inherit; font-size: 0.9rem; cursor: pointer; }
+.afford-breakdown { margin-top: 14px; }
+.afford-breakdown-track { display: flex; height: 12px; border-radius: 999px; overflow: hidden; background: var(--line); }
+.afford-breakdown-track > div { height: 100%; }
+#bd-pi { background: var(--navy); }
+#bd-tax { background: var(--teal); }
+#bd-ins { background: var(--gold); }
+#bd-hoa { background: #7a8a99; }
+#bd-pmi { background: #c46a52; }
+.afford-breakdown-legend { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 4px; font-size: 0.92rem; color: var(--muted); }
+@media (min-width: 700px) { .afford-breakdown-legend { grid-template-columns: 1fr 1fr; } }
+.afford-breakdown-legend span { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; }
+.afford-total-row { border-top: 1px solid var(--line); margin-top: 12px; padding-top: 12px; }
+.afford-schedule { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 0.95rem; }
+.afford-schedule th, .afford-schedule td { text-align: right; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+.afford-schedule th:first-child, .afford-schedule td:first-child { text-align: left; }
+.afford-schedule th { color: var(--muted); font-weight: 600; }
+.afford-current-scenario { background: #f2f6f5; font-weight: 600; }

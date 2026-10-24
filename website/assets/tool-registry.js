@@ -18,5 +18,14 @@ window.realEstateTools = Object.freeze([
     status: 'published',
     publicUrl: 'mortgage-calculator/',
     icon: '$'
+  }),
+  Object.freeze({
+    slug: 'home-affordability-calculator',
+    title: 'Home Affordability Calculator',
+    category: 'Finance & numbers',
+    description: 'Estimate the maximum home price that fits your income and debts.',
+    status: 'published',
+    publicUrl: 'home-affordability-calculator/',
+    icon: '⌂'
   })
 ]);
