@@ -25,9 +25,6 @@
     var el = document.getElementById(id);
     if (el) el.hidden = hide;
   }
-  function fmt(n) {
-    return Number.isFinite(n) ? n.toLocaleString('en-US', { maximumFractionDigits: 2 }) : '';
-  }
   function usd(n) {
     return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
@@ -140,15 +137,11 @@
       }
     }
   });
-  // Thousand separators on blur only, so the cursor stays stable while typing.
-  document.querySelectorAll('#cap-rate-form input[type="number"]').forEach(function (input) {
-    input.addEventListener('blur', function () {
-      var v = Number(String(input.value).replace(/,/g, '').trim());
-      if (Number.isFinite(v)) input.value = fmt(v);
-    });
-    var initial = Number(String(input.value).replace(/,/g, '').trim());
-    if (input.value !== '' && Number.isFinite(initial)) input.value = fmt(initial);
-  });
+  // NOTE: no thousand-separator rewriting here, on load or on blur. These
+  // are type="number" fields, and a browser erases a comma-formatted value
+  // ("450,000" is not a valid floating-point number), which used to empty
+  // large defaults on first load and on blur. Typed values are left alone;
+  // num() already strips commas when reading, so pasted values still work.
   function copyResults(pairs, title) {
     var lines = [title];
     pairs.forEach(function (pair) {
