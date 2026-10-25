@@ -1,8 +1,8 @@
 /* Mortgage calculator — scoped styles. Shared layout tokens live in theme.css. */
 /* The calculator lives inside the first (hero) section, right under the title. */
-.page-hero { padding: 22px 0 28px; }
-.page-hero h1 { font-size: clamp(2rem, 4vw, 2.5rem); line-height: 1.05; margin: 12px 0 10px; }
-.page-hero .calculator-layout { margin-top: 12px; }
+.page-hero { padding: 16px 0 24px; }
+.page-hero h1 { font-size: clamp(2rem, 4vw, 2.5rem); line-height: 1.05; margin: 12px 0 10px; letter-spacing: 0.01em; }
+.page-hero .calculator-layout { margin-top: 4px; }
 .section { padding: 20px 0 32px; }
 .content h2 { margin-top: 28px; }
 .content h2:first-child { margin-top: 0; }
@@ -11,7 +11,7 @@
 @media (max-width: 760px) { .calculator-layout { grid-template-columns: 1fr; } }
 /* Visible form groups (no collapsed section holding inputs). */
 .form-group { border: 0; padding: 0; margin: 24px 0 0; min-width: 0; }
-.form-group:first-of-type { margin-top: 8px; }
+.form-group:first-of-type { margin-top: 4px; }
 .form-group legend { font-weight: 800; color: #102131; font-size: 0.95rem; padding: 0 0 8px; margin-bottom: 16px; width: 100%; border-bottom: 1px solid #E2DED5; }
 /* Row alignment: two-line label height plus bottom-aligned inputs, so inputs
    in a row start at the same height no matter how labels wrap. */
@@ -20,13 +20,12 @@
 .form-field > .input-unit, .form-field > select { margin-top: auto; }
 .form-field-full { grid-column: 1 / -1; }
 /* Sliders stay full input width; shorter box so the next row sits close under. */
-.field-slider { min-height: 32px; }
+.field-slider { height: 32px; min-height: 32px; accent-color: #0F766E; }
 /* Full-width note below both columns (moved out from under the form). */
 .calculator-disclaimers { margin-top: 4px; }
 .calculator-disclaimers p:last-child { margin-bottom: 0; }
-.result .result-row { padding: 6px 0; }
+.result .result-row { padding: 6px 0; font-size: 14px; }
 .result .mortgage-breakdown { margin-top: 14px; }
-.result > div:last-child { margin-top: 16px !important; }
 .mortgage-error { color: #9b2c2c; font-weight: 600; margin: 12px 0 0; }
 .mortgage-error:empty { display: none; }
 .mortgage-down-hint { color: var(--muted); font-size: 0.9rem; margin-top: 6px; }
@@ -45,3 +44,42 @@
 .mortgage-schedule-tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
 .mortgage-toggle { border: 1px solid var(--line); background: #fff; color: var(--navy); border-radius: 999px; padding: 7px 14px; font: inherit; font-size: 0.9rem; cursor: pointer; }
 .mortgage-toggle[aria-pressed="true"] { background: var(--navy); color: #fff; border-color: var(--navy); }
+
+/* Mortgage results-panel alignment with the finalized commission standard
+   (2026-10-25) — page-scoped only. No shared CSS touched. */
+/* Form header matches commission: tight h2, 14px intro. */
+.panel h2 { margin-bottom: 6px; }
+.panel > .muted { font-size: 14px; }
+/* Hero number: commission's fixed 48px serif, 12px below the label. */
+.result-number { font-size: 48px; letter-spacing: 0.01em; margin: 12px 0 0; }
+/* Panel text tones (commission standard). These rules are qualified with
+   .result so they win over the shared .page-hero p rule, which otherwise
+   renders these lines dark (#4B5B6B) at 17px on the navy panel. */
+.result .result-label { color: #AAB8C7; font-size: 12px; }
+.result-group { color: #A9B8C6; padding-top: 12px; }
+.result .result-hero-sub { color: #C9D4DE; font-size: .95rem; }
+.result .result-empty { color: #C9D4DE; font-size: 1rem; }
+.result .copy-note { color: #C9D4DE; font-size: .85rem; }
+.result .result-row span { color: #C9D4DE; }
+/* Breakdown values in the muted tone; the hero number keeps white. */
+#result-body .result-row b { color: #C9D4DE; }
+/* A row marked hidden must leave the layout: site.css gives .result-row
+   display:flex, which otherwise beats the browser's [hidden] rule. */
+.result .result-row[hidden] { display: none; }
+/* Split legend grouped in a subtly contrasting section (commission pattern). */
+.breakdown-legend { margin: 12px 0 0; background: rgba(255, 255, 255, 0.04); padding: 10px 12px; border-radius: 10px; }
+/* Helper directly above the buttons, 44px buttons side by side. */
+#mortgage-pmi-note { margin-bottom: 0; }
+.result .copy-row { gap: 12px; margin-top: 16px; }
+.result .copy-row .tool-btn { height: 44px; min-height: 44px; flex: 1 1 0; }
+/* RealtorOS link below the panel (commission placement), not a panel button. */
+.realtoros-link { display: inline-block; margin-top: 16px; font-size: 14px; color: #0F766E; font-weight: 700; }
+/* Disclaimers in commission's small muted style. */
+.calculator-disclaimers .disclaimer { font-size: 13px; color: #6B7280; line-height: 1.5; max-width: 720px; }
+/* Lower sections share the tool's left edge: the .content 800px cap centred
+   them away from the 1200px tool (same drift commission had); body text
+   keeps the 720px measure. */
+.section .content { max-width: none; }
+.section .content p { max-width: 720px; }
+/* Mobile sticky total keeps its top position; its value takes the teal accent. */
+@media (max-width: 760px) { .sticky-result b { color: #2DD4BF; } }
