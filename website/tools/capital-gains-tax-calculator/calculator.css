@@ -1,13 +1,13 @@
 /* Capital Gains Tax Calculator — layout follows the investment tool
    (light results area, verdict banner, metric tiles), but every colour is a
    formal site token: navy #102131, teal #0F766E / #095E58, paper #F6F5F0,
-   line #E5E2DB, muted #5E6C79, chart colours #2DD4BF / #F2C14E / #8AB4F8 /
+   line #E5E2DB, muted #4b5563, chart colours #2DD4BF / #F2C14E / #8AB4F8 /
    #C9D6E0. This page does not load the shared tools.css: everything below
    is self-contained. Display numbers use the site's Source Serif 4. */
 body { background: #F6F5F0; color: #0B1F33; }
 .page-hero { padding: 22px 0 28px; }
 .page-hero h1 { font-family: 'Source Serif 4', Georgia, serif; font-size: clamp(2rem, 4vw, 2.5rem); line-height: 1.05; margin: 12px 0 10px; color: #0B1F33; }
-.page-hero p { color: #5E6C79; }
+.page-hero p { color: #4b5563; }
 .page-hero .calculator-layout { margin-top: 12px; }
 .section { padding: 20px 0 32px; }
 .content h2 { margin-top: 28px; }
@@ -18,14 +18,14 @@ body { background: #F6F5F0; color: #0B1F33; }
 .panel { background: #fff; border: 1px solid #E5E2DB; border-radius: 17px; box-shadow: 0 6px 22px rgba(26, 58, 70, .035); padding: 28px; }
 .panel h2 { color: #0B1F33; }
 .form-field label { font-size: 14px; font-weight: 700; color: #0B1F33; }
-.form-field small, .field-helper { font-size: .82rem; color: #5E6C79; }
+.form-field small, .field-helper { font-size: 14px; color: #4b5563; }
 .field { min-height: 48px; border-radius: 11px; border-color: #d6e1e0; color: #0B1F33; background: #fff; }
-.field:focus { outline: 3px solid #0F766E; outline-offset: 2px; border-color: #0F766E; }
+.field:focus { outline: 2px solid #0f766e; outline-offset: 2px; border-color: #0F766E; }
 .input-unit { display: flex; align-items: stretch; border: 1px solid #d6e1e0; border-radius: 11px; background: #fff; transition: border-color .15s ease, box-shadow .15s ease; }
 .input-unit .field { border: 0; flex: 1; min-width: 0; border-radius: 11px; }
 .input-unit .field:focus { outline: none; border-color: transparent; }
 .input-unit:focus-within { border-color: #0F766E; box-shadow: 0 0 0 3px rgba(15, 118, 110, .18); }
-.unit-affix { display: flex; align-items: center; padding: 0 12px; color: #5E6C79; font-weight: 600; font-size: .92rem; white-space: nowrap; }
+.unit-affix { display: flex; align-items: center; padding: 0 12px; color: #4b5563; font-weight: 600; font-size: .92rem; white-space: nowrap; }
 .unit-affix:first-child { padding-right: 0; }
 .unit-affix:last-child { padding-left: 8px; }
 .field-slider { width: 100%; accent-color: #0F766E; margin-top: 10px; min-height: 32px; }
@@ -45,31 +45,33 @@ body { background: #F6F5F0; color: #0B1F33; }
    controls start at the same height. (Bottom-alignment is wrong here:
    fields with helper text below the control would push their row partner
    out of line, so controls align from the label, not the bottom.) */
-.form-field label, .form-field .seg-label { min-height: 3.2em; }
-.validation-note { color: #8A5A00; font-weight: 600; font-size: .9rem; }
+.form-field label, .form-field .seg-label { min-height: 0; }
+.validation-note { color: #8A5A00; font-weight: 600; font-size: 14px; }
 .validation-note:empty { display: none; }
-.disclaimer { color: #5E6C79; }
+.disclaimer { color: #4b5563; }
 
 /* Results: light area, navy verdict banner, paper metric tiles */
 .cgt-results { background: #fff; color: #0B1F33; border: 1px solid #E5E2DB; border-radius: 17px; box-shadow: 0 6px 22px rgba(26, 58, 70, .035); padding: 28px; position: sticky; top: 105px; }
 .cgt-verdict { background: #102131; color: #fff; border-radius: 15px; padding: 22px 24px; }
-.cgt-verdict .cgt-verdict-label { color: #9FB3C4; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 8px; }
-.cgt-verdict .cgt-verdict-value { font-family: 'Source Serif 4', Georgia, serif; font-size: clamp(2.4rem, 4vw, 3.2rem); font-weight: 600; line-height: 1.05; color: #fff; margin: 0; overflow-wrap: anywhere; }
+.cgt-verdict .cgt-verdict-label { color: #9FB3C4; font-size: 14px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 8px; }
+.cgt-verdict .cgt-verdict-value { font-family: 'Source Serif 4', Georgia, serif; font-size: clamp(3.5rem, 8vw, 4.25rem); font-weight: 600; line-height: 1.05; color: #2fd4bf; margin: 0; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.cgt-loss-note { color: #f2b84b; font-size: 14px; font-weight: 700; margin: 10px 0 0; }
+.cgt-loss-note[hidden] { display: none; }
 .cgt-verdict .cgt-verdict-sub { color: #C9D6E0; margin: 10px 0 0; font-size: .95rem; }
 .cgt-verdict .cgt-verdict-sub b { color: #fff; }
 .cgt-results .cgt-validation { background: #F6F5F0; border-left: 3px solid #0F766E; border-radius: 0 12px 12px 0; padding: 14px 16px; color: #0B1F33; font-size: .9rem; margin: 16px 0 0; }
 .cgt-validation:empty { display: none; }
-.cgt-empty { color: #5E6C79; margin: 20px 0 0; font-size: 1rem; line-height: 1.5; }
-.cgt-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+.cgt-empty { color: #4b5563; margin: 20px 0 0; font-size: 1rem; line-height: 1.5; }
+.cgt-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 20px; }
 .cgt-tile { background: #F6F5F0; border: 1px solid #E5E2DB; border-radius: 14px; padding: 14px 16px; }
-.cgt-tile-label { display: block; font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: #5E6C79; margin-bottom: 4px; }
-.cgt-tile-value { display: block; font-size: 1.35rem; font-weight: 700; color: #0B1F33; overflow-wrap: anywhere; }
-.cgt-group { color: #0F766E; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin: 22px 0 4px; }
+.cgt-tile-label { display: block; font-size: 14px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: #4b5563; margin-bottom: 4px; }
+.cgt-tile-value { display: block; font-size: 1.15rem; font-weight: 700; color: #0B1F33; overflow-wrap: anywhere; }
+.cgt-group { color: #0F766E; font-size: 14px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin: 22px 0 4px; }
 .cgt-row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 10px 0; border-top: 1px solid #E5E2DB; }
-.cgt-row span { color: #5E6C79; }
+.cgt-row span { color: #4b5563; }
 .cgt-row b { color: #0B1F33; font-weight: 600; white-space: nowrap; }
 .cgt-row-total { border-top: 2px solid #E5E2DB; }
-.cgt-note { color: #5E6C79; font-size: .88rem; }
+.cgt-note { color: #4b5563; font-size: 14px; }
 .cgt-note:empty { display: none; }
 .cgt-track { display: flex; height: 12px; border-radius: 999px; overflow: hidden; background: #EDE9E0; margin-top: 14px; }
 .cgt-track > div { height: 100%; }
@@ -77,7 +79,7 @@ body { background: #F6F5F0; color: #0B1F33; }
 .cgt-seg-pi { background: #8AB4F8; }
 .cgt-seg-opex { background: #F2C14E; }
 .cgt-seg-cf { background: #2DD4BF; }
-.cgt-legend { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 6px; font-size: .9rem; color: #5E6C79; }
+.cgt-legend { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 6px; font-size: .9rem; color: #4b5563; }
 @media (min-width: 700px) { .cgt-legend { grid-template-columns: 1fr 1fr; } }
 .cgt-legend .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; }
 .cgt-legend b { color: #0B1F33; font-weight: 600; }
@@ -90,7 +92,7 @@ body { background: #F6F5F0; color: #0B1F33; }
 .cgt-btn-outline { background: transparent; border: 1px solid #0F766E; color: #102131; }
 .cgt-btn-outline:hover { background: #EAF2EF; border-color: #0F766E; color: #102131; }
 .cgt-btn:focus-visible { outline: 2px solid #0F766E; outline-offset: 2px; }
-.cgt-copy-note { color: #5E6C79; font-size: .85rem; min-height: 1.2em; }
+.cgt-copy-note { color: #4b5563; font-size: 14px; min-height: 1.2em; }
 .cgt-copy-note:empty { display: none; }
 .cgt-results .btn { min-height: 48px; max-width: 100%; white-space: normal; text-align: center; }
 .cgt-results .btn-outline { background: transparent; border-color: #0F766E; color: #102131; }
@@ -113,4 +115,44 @@ body { background: #F6F5F0; color: #0B1F33; }
 
 @media print {
   .header, .footer, .cgt-sticky, .cgt-copy-row { display: none !important; }
+}
+
+/* Simplified breakdown: 15px rows, 12px vertical padding, 1px dividers */
+.cgt-breakdown .cgt-row { font-size: 15px; padding: 12px 0; border-top: 1px solid #E5E2DB; }
+.cgt-breakdown .cgt-row-total { border-top: 1px solid #E5E2DB; border-bottom: 0; }
+.cgt-breakdown .cgt-row-total span { color: #0B1F33; font-weight: 700; }
+.cgt-breakdown .cgt-row-total b { color: #0F766E; font-weight: 700; }
+/* Collapsible form groups: real button + hidden panel, summary while collapsed */
+.cgt-collapse { border-top: 1px solid #E2DED5; margin-top: 20px; padding-top: 14px; }
+.cgt-collapse-btn { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; min-height: 44px; background: #fff; border: 0; padding: 0; font-size: 15px; font-weight: 800; color: #102131; cursor: pointer; text-align: left; }
+.cgt-collapse-btn:focus-visible { outline: 2px solid #0f766e; outline-offset: 2px; }
+.cgt-collapse-summary { font-weight: 600; color: #4b5563; font-size: 14px; text-align: right; flex: 1; }
+.cgt-chevron { color: #0F766E; font-size: 18px; transition: transform .15s ease; }
+.cgt-collapse-btn[aria-expanded="true"] .cgt-chevron { transform: rotate(180deg); }
+.cgt-collapse-panel, .cgt-collapse > div[hidden] { margin-top: 0; }
+.cgt-collapse > div:not([hidden]) { margin-top: 14px; }
+.cgt-depr-note { color: #4b5563; font-size: 14px; line-height: 1.5; margin: 12px 0 0; }
+.cgt-depr-note[hidden] { display: none; }
+/* RealtorOS text link + footnote in the results panel */
+.cgt-realtor-link { display: flex; align-items: center; justify-content: center; min-height: 44px; margin-top: 18px; color: #0F766E; font-weight: 700; font-size: 14px; text-align: center; }
+.cgt-realtor-link:focus-visible { outline: 2px solid #0f766e; outline-offset: 2px; }
+.cgt-footnote { color: #4b5563; font-size: 14px; line-height: 1.5; margin: 10px 0 0; text-align: center; }
+/* Mobile pinned bottom bar: hidden on desktop, fixed at the bottom below 720px */
+.cgt-bottom-bar { display: none; }
+.cgt-sticky { display: none !important; }
+@media (max-width: 720px) {
+  .cgt-bottom-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: #102131; color: #fff; padding: 14px 16px calc(14px + env(safe-area-inset-bottom)); min-height: 44px; text-decoration: none; box-shadow: 0 -8px 24px rgba(16, 33, 49, .25); }
+  .cgt-bottom-bar span { color: #9FB3C4; font-size: 14px; font-weight: 700; }
+  .cgt-bottom-bar b { color: #2fd4bf; font-size: 1.1rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .cgt-bottom-bar:focus-visible { outline: 2px solid #2fd4bf; outline-offset: -2px; }
+  main { padding-bottom: 76px; }
+  .cgt-tiles { grid-template-columns: 1fr; }
+  .calculator-layout { grid-template-columns: 1fr; }
+  .cgt-results { position: static; }
+}
+
+@media (max-width: 720px) {
+  .panel { padding: 16px; }
+  .cgt-results { padding: 16px; }
+  .cgt-verdict { padding: 20px 12px; }
 }

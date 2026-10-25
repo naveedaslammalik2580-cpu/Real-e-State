@@ -52,13 +52,34 @@
     'buying-costs': 'Buying costs', 'ordinary-rate': 'Ordinary income tax rate',
     'state-rate': 'State tax rate' };
   var OUTPUTS = ['total-tax', 'net-proceeds', 'tile-gain', 'tile-exclusion',
-    'tile-taxable', 'tile-federal', 'tile-effective', 'tile-net', 'row-sale',
+    'tile-taxable', 'tile-federal', 'tile-effective', 'tile-net', 'bottom-tax', 'row-sale',
     'row-selling', 'row-realized', 'row-purchase', 'row-improvements', 'row-buying',
     'row-depreciation-out', 'row-basis', 'row-gain', 'row-exclusion-out',
     'row-recapture-out', 'row-taxable', 'row-recapture-tax-out', 'row-gain-tax',
     'row-niit-out', 'row-state-out', 'row-total-tax', 'row-net', 'lg-excluded',
     'lg-kept', 'lg-tax'];
+  // Display only (no calculation change): keep the collapsed-group summaries
+  // in sync, and show years-lived only for a primary residence and
+  // depreciation only for an investment property. Hidden fields stay in the
+  // DOM with their values untouched, so validation and results are exactly
+  // as they were when the fields were visible.
+  function syncDisplay() {
+    var use = str('property-use');
+    hideRow('field-years-lived', use !== 'primary');
+    hideRow('field-depreciation', use !== 'investment');
+    var deprNote = document.getElementById('depr-note');
+    if (deprNote) {
+      deprNote.hidden = use !== 'primary';
+      if (use === 'primary') deprNote.textContent = 'Depreciation claimed is ' + usd(num('depreciation')) + ' and still affects basis and recapture. Switch to Investment to change it.';
+    }
+    var filingLabel = str('filing-status') === 'mfj' ? 'Married filing jointly' : 'Single';
+    var holdingLabel = str('holding') === 'short' ? '1 year or less' : 'More than 1 year';
+    set('summary-costs', 'Buying ' + usd(num('buying-costs')) + ' · Selling ' + num('selling-rate') + '%');
+    set('summary-situation', filingLabel + ' · ' + holdingLabel);
+    set('summary-rates', 'LTCG ' + num('ltcg-rate') + '% · Ordinary ' + num('ordinary-rate') + '% · State ' + num('state-rate') + '% · NIIT ' + (str('niit') === 'yes' ? 'applies' : 'does not apply'));
+  }
   function run() {
+    syncDisplay();
     var sale = num('sale-price');
     var purchase = num('purchase-price');
     var improv = num('improvements');
@@ -105,6 +126,8 @@
       set('validation-note', message);
       set('cgt-validation', message);
       set('sticky-value', '—');
+      var lossBad = document.getElementById('loss-note');
+      if (lossBad) lossBad.hidden = true;
       set('cgt-note', '');
       hideRow('result-body', true); hideRow('result-empty', false);
       setWidth('bar-excluded', 0); setWidth('bar-kept', 0); setWidth('bar-tax', 0);
@@ -170,6 +193,16 @@
     setWidth('bar-kept', share(kept));
     setWidth('bar-tax', share(total));
     set('sticky-value', usd(total));
+    set('bottom-tax', usd(total));
+    // Display only: hide breakdown rows whose value is $0 (total tax never hides).
+    hideRow('gain-realized-row', realized === 0);
+    hideRow('gain-basis-row', basis === 0);
+    hideRow('gain-taxable-row', taxableBase === 0);
+    hideRow('row-recapture-tax', recapTax === 0);
+    hideRow('row-niit', niit === 0);
+    hideRow('row-state', stateTax === 0);
+    var lossNote = document.getElementById('loss-note');
+    if (lossNote) lossNote.hidden = !(gain <= 0);
     set('cgt-note', (use === 'primary' && !(isLong && years >= 2))
       ? 'No primary-residence exclusion: the 2-year ownership and use test is not met.'
       : '');
@@ -239,11 +272,19 @@
       } else done(false);
     } catch (err) { done(false); }
   }
+  document.querySelectorAll('.cgt-collapse-btn').forEach(function (btn) {
+    if (btn && btn.addEventListener) btn.addEventListener('click', function () {
+      var panel = document.getElementById(btn.getAttribute ? btn.getAttribute('aria-controls') : '');
+      var open = btn.getAttribute ? btn.getAttribute('aria-expanded') === 'true' : false;
+      setAttr(btn, 'aria-expanded', open ? 'false' : 'true');
+      if (panel) panel.hidden = open;
+    });
+  });
   var copyBtn = document.getElementById('copy-results');
   if (copyBtn) copyBtn.addEventListener('click', function () {
     copyResults([['Total capital gain', 'tile-gain'], ['Exclusion applied', 'tile-exclusion'],
       ['Taxable gain', 'tile-taxable'], ['Federal tax', 'tile-federal'],
-      ['Total tax', 'total-tax'], ['Net proceeds', 'net-proceeds']],
+      ['Total tax', 'total-tax'], ['Net proceeds before mortgage payoff', 'net-proceeds']],
       'Capital Gains Tax Calculator');
   });
   var printBtn = document.getElementById('print-results');
