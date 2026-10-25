@@ -17,7 +17,8 @@
    in a row start at the same height no matter how labels wrap. */
 .form-field { display: flex; flex-direction: column; }
 .form-field label { min-height: 3.2em; }
-.form-field > .input-unit, .form-field > select { margin-top: auto; }
+/* Top-aligned inputs: with the fixed label height above, inputs start at the same top edge whether or not a field has a helper line. (margin-top:auto bottom-alignment misaligned helper rows.) */
+.form-field > .input-unit, .form-field > select { margin-top: 0; }
 .form-field-full { grid-column: 1 / -1; }
 /* Sliders stay full input width; shorter box so the next row sits close under. */
 .field-slider { height: 32px; min-height: 32px; accent-color: #0F766E; }

@@ -22,7 +22,8 @@
 .cap-group legend { font-weight: 800; color: #102131; font-size: 15px; padding: 0 0 8px; margin-bottom: 14px; width: 100%; border-bottom: 1px solid #E2DED5; }
 .panel .form-field label { font-size: 14px; font-weight: 700; color: #0B1F33; }
 .panel .form-field small, .panel .field-helper { font-size: 14px; color: #4b5563; }
-.panel .field:focus-visible { outline: 2px solid #0f766e; outline-offset: 2px; }
+/* Wrapped inputs get no inner ring: the shared .input-unit:focus-within ring is the only indicator. Buttons keep their own focus style below. */
+.panel .input-unit .field:focus, .panel .input-unit .field:focus-visible { outline: none; box-shadow: none; }
 .panel button:focus-visible { outline: 2px solid #0f766e; outline-offset: 2px; }
 /* Tiles on the dark results panel (tokens already used in tools.css) */
 .cap-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 20px; }
