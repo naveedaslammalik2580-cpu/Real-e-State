@@ -5,10 +5,14 @@
    #C9D6E0. This page does not load the shared tools.css: everything below
    is self-contained. Display numbers use the site's Source Serif 4. */
 body { background: #F6F5F0; color: #0B1F33; }
-.page-hero { padding: 22px 0 30px; }
-.page-hero h1 { font-family: 'Source Serif 4', Georgia, serif; font-size: clamp(2rem, 4.5vw, 2.9rem); line-height: 1.12; margin: 12px 0 10px; color: #0B1F33; }
+.page-hero { padding: 24px 0 30px; }
+.page-hero h1 { font-family: 'Source Serif 4', Georgia, serif; font-size: clamp(2rem, 4.5vw, 2.9rem); line-height: 1.12; margin: 0 0 10px; color: #0B1F33; }
 .page-hero p { color: #5E6C79; }
-.page-hero .calculator-layout { margin-top: 22px; }
+.page-hero .calculator-layout { margin-top: 24px; } /* 24px measured gap: intro p margin-bottom 16px collapses with this, so the larger value wins */
+@media (max-width: 760px) {
+  .page-hero { padding-top: 16px; }
+  .page-hero .calculator-layout { margin-top: 0; }
+}
 .section { padding: 26px 0 40px; }
 .calculator-layout { align-items: start; gap: 24px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 
