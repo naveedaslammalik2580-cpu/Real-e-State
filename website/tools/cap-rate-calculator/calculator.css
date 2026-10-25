@@ -7,3 +7,63 @@
 .calculator-layout { align-items: start; gap: 24px; }
 .result .result-row { padding: 6px 0; }
 .result > div:last-child { margin-top: 16px !important; }
+
+/* Cap Rate cleanup: page-local overrides only. Shared CSS is untouched. */
+/* Hero: beat .page-hero p (0,1,1) with .page-hero .result-* (0,2,0). */
+.page-hero .result-label { font-size: 14px; color: #9FB3C4; }
+.page-hero .result-number { color: #2fd4bf; font-size: clamp(3.5rem, 8vw, 4.25rem); font-variant-numeric: tabular-nums; margin: 12px 0 10px; }
+.page-hero .result-hero-sub { color: #C9D6E0; font-size: 15px; }
+.page-hero .result-hero-sub b { color: #fff; }
+.cap-note { color: #f2b84b; font-size: 14px; font-weight: 700; margin: 10px 0 0; }
+.cap-note[hidden] { display: none; }
+/* Form groups + 14px labels/helpers in #4b5563 */
+.cap-group { border: 0; padding: 0; margin-top: 22px; min-width: 0; }
+.cap-group:first-of-type { margin-top: 8px; }
+.cap-group legend { font-weight: 800; color: #102131; font-size: 15px; padding: 0 0 8px; margin-bottom: 14px; width: 100%; border-bottom: 1px solid #E2DED5; }
+.panel .form-field label { font-size: 14px; font-weight: 700; color: #0B1F33; }
+.panel .form-field small, .panel .field-helper { font-size: 14px; color: #4b5563; }
+.panel .field:focus-visible { outline: 2px solid #0f766e; outline-offset: 2px; }
+.panel button:focus-visible { outline: 2px solid #0f766e; outline-offset: 2px; }
+/* Tiles on the dark results panel (tokens already used in tools.css) */
+.cap-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 20px; }
+.cap-tile { background: #16384A; border: 1px solid #254055; border-radius: 14px; padding: 14px 10px; }
+.cap-tile-label { display: block; font-size: 14px; font-weight: 700; color: #9FB3C4; margin-bottom: 4px; }
+.cap-tile-value { display: block; font-size: 0.95rem; font-weight: 700; color: #fff; overflow-wrap: anywhere; }
+/* Breakdown: 15px rows, 12px vertical padding, 1px dividers */
+.cap-breakdown { margin-top: 20px; }
+.cap-breakdown .result-row { font-size: 15px; padding: 12px 0; border-top: 1px solid #254055; }
+.cap-breakdown .result-row span { color: #C9D6E0; }
+.cap-breakdown .result-row-total { border-bottom: 0; }
+.cap-breakdown .result-row-total span { color: #fff; font-weight: 700; }
+.cap-breakdown .result-row-total b { color: #2fd4bf; font-weight: 700; }
+/* Price-change strip */
+.cap-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+.cap-strip-tile { background: #16384A; border: 1px solid #254055; border-radius: 14px; padding: 12px 14px; text-align: center; }
+.cap-strip-label { display: block; font-size: 14px; font-weight: 700; color: #9FB3C4; margin-bottom: 4px; }
+.cap-strip-value { display: block; font-size: 1.15rem; font-weight: 700; color: #fff; }
+.cap-strip-note { color: #C9D6E0; font-size: 14px; margin: 10px 0 0; }
+/* Mortgage text link + footnote (dark panel: #2fd4bf focus for visibility) */
+.cap-mortgage-link { display: flex; align-items: center; justify-content: center; min-height: 44px; margin-top: 18px; color: #2fd4bf; font-weight: 700; font-size: 14px; text-align: center; }
+.cap-mortgage-link:focus-visible, .result .tool-btn:focus-visible { outline: 2px solid #2fd4bf; outline-offset: 2px; }
+.cap-footnote { color: #C9D6E0; font-size: 14px; line-height: 1.5; margin: 10px 0 0; text-align: center; }
+.copy-note { color: #C9D6E0; font-size: 14px; }
+/* Content: same width as the tool (site .content caps at 800px) + no first-heading gap */
+.section .content { max-width: 1200px; }
+.section .content h2:first-child { margin-top: 0; }
+.cap-faq details { border: 1px solid #E2DED5; border-radius: 12px; padding: 14px 16px; margin: 12px 0; background: #fff; }
+.cap-faq summary { font-weight: 700; cursor: pointer; min-height: 44px; display: flex; align-items: center; color: #0B1F33; }
+.cap-faq summary:focus-visible { outline: 2px solid #0f766e; outline-offset: 2px; }
+.cap-faq p { margin: 10px 0 0; color: #4b5563; }
+/* Mobile pinned bottom bar, replacing the top sticky bar */
+.cap-bottom-bar { display: none; }
+.sticky-result { display: none !important; }
+@media (max-width: 720px) {
+  .cap-bottom-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: #0F2230; color: #fff; padding: 14px 16px calc(14px + env(safe-area-inset-bottom)); min-height: 44px; text-decoration: none; box-shadow: 0 -8px 24px rgba(15, 34, 48, .25); }
+  .cap-bottom-bar span { color: #9FB3C4; font-size: 14px; font-weight: 700; }
+  .cap-bottom-bar b { color: #2fd4bf; font-size: 1.1rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .cap-bottom-bar:focus-visible { outline: 2px solid #2fd4bf; outline-offset: -2px; }
+  main { padding-bottom: 76px; }
+  .cap-tiles { grid-template-columns: 1fr; }
+  .result { position: static; }
+  .panel, .result { padding: 16px; }
+}

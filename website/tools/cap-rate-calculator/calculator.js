@@ -35,7 +35,7 @@
     return Number.isFinite(v) && v >= min && v <= max;
   }
   var OUTPUTS = ['cap-rate', 'noi-annual', 'effective-income', 'total-expenses',
-    'noi-monthly', 'grm', 'expense-ratio', 'cap-low', 'cap-high', 'value-at-target'];
+    'noi-monthly', 'grm', 'expense-ratio', 'cap-low', 'cap-high', 'value-at-target', 'row-noi', 'bottom-cap'];
   function run() {
     var price = num('property-price');
     var rent = num('monthly-rent');
@@ -60,7 +60,11 @@
       if (!rel || rel.value === '') { ok = false; break; }
     }
     if (!ok) {
-      set('cap-rate', 'Check inputs');
+      // Display only: a price of 0 (or empty) gets a specific neutral
+      // message instead of the generic one; validation itself is unchanged.
+      set('cap-rate', price === 0 ? 'Enter a price above $0' : 'Check inputs');
+      var capNoteBad = document.getElementById('cap-note');
+      if (capNoteBad) capNoteBad.hidden = true;
       OUTPUTS.forEach(function (id) { if (id !== 'cap-rate') set(id, '—'); });
       set('validation-note', 'Check the values: price above $0, rates 0–100%, target cap rate above 0%, amounts 0 or more, and no field left empty.');
       set('sticky-value', '—');
@@ -86,31 +90,14 @@
     set('cap-low', pct(noi / (price * 0.9) * 100));
     set('cap-high', pct(noi / (price * 1.1) * 100));
     set('value-at-target', noi > 0 ? usd(noi / (target / 100)) : '—');
+    set('row-noi', usd(noi));
+    set('bottom-cap', pct(cap));
+    var capNote = document.getElementById('cap-note');
+    if (capNote) capNote.hidden = !(noi < 0);
     set('sticky-value', pct(cap));
   }
   document.querySelectorAll('#cap-rate-form input').forEach(function (input) {
     input.addEventListener('input', run);
-  });
-  // Slider sync by delegation on the form (keeps per-input listeners intact).
-  form.addEventListener('input', function (e) {
-    var t = e && e.target;
-    if (!t || !t.id) return;
-    if (t.type === 'range') {
-      var numEl = document.getElementById(t.id.replace(/-slider$/, ''));
-      if (numEl) numEl.value = t.value;
-      run();
-    } else if (t.type === 'number') {
-      var slider = document.getElementById(t.id + '-slider');
-      if (slider) {
-        var v = Number(String(t.value).replace(/,/g, ''));
-        if (Number.isFinite(v)) {
-          var mn = Number(slider.min), mx = Number(slider.max);
-          if (Number.isFinite(mn) && v < mn) v = mn;
-          if (Number.isFinite(mx) && v > mx) v = mx;
-          slider.value = String(v);
-        }
-      }
-    }
   });
   // NOTE: no thousand-separator rewriting here, on load or on blur. These
   // are type="number" fields, and a browser erases a comma-formatted value
@@ -125,7 +112,7 @@
     });
     var text = lines.join('\n');
     var done = function (ok) {
-      set('copy-note', ok ? 'Results copied.' : 'Copy is not available in this browser — use Print instead.');
+      set('copy-note', ok ? 'Results copied.' : 'Copy is not available in this browser.');
     };
     try {
       if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {

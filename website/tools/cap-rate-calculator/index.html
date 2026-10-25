@@ -32,90 +32,85 @@
 <div class="panel">
 <h2 style="font-size:1.7rem">Enter your figures</h2>
 <p class="muted">Adjust the sample values below to calculate an estimate instantly.</p>
-<form id="cap-rate-form" onsubmit="return false"><div class="form-grid">
-<div class="form-field"><label for="property-price">Property price (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="property-price" type="number" min="0" max="1000000000000" step="1000" value="350000"></span><input class="field-slider" id="property-price-slider" type="range" min="0" max="1000000" step="1000" value="350000" aria-label="Property price (USD) slider"></div>
-<div class="form-field"><label for="monthly-rent">Monthly rent (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="monthly-rent" type="number" min="0" max="1000000000000" step="10" value="2200"><span class="unit-affix" aria-hidden="true">/ month</span></span><input class="field-slider" id="monthly-rent-slider" type="range" min="0" max="10000" step="10" value="2200" aria-label="Monthly rent (USD) slider"></div>
-<div class="form-field"><label for="vacancy-rate">Vacancy rate (%)</label><span class="input-unit"><input class="field" id="vacancy-rate" type="number" min="0" max="100" step="0.5" value="5"><span class="unit-affix" aria-hidden="true">%</span></span><input class="field-slider" id="vacancy-rate-slider" type="range" min="0" max="50" step="1" value="5" aria-label="Vacancy rate (%) slider"></div>
+<form id="cap-rate-form" onsubmit="return false">
+<fieldset class="cap-group"><legend>Income</legend><div class="form-grid">
+<div class="form-field"><label for="property-price">Property price (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="property-price" type="number" min="0" max="1000000000000" step="1000" value="350000"></span></div>
+<div class="form-field"><label for="monthly-rent">Monthly rent (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="monthly-rent" type="number" min="0" max="1000000000000" step="10" value="2200"><span class="unit-affix" aria-hidden="true">/ month</span></span></div>
+<div class="form-field"><label for="vacancy-rate">Vacancy rate (%)</label><span class="input-unit"><input class="field" id="vacancy-rate" type="number" min="0" max="100" step="0.5" value="5"><span class="unit-affix" aria-hidden="true">%</span></span></div>
+<div class="form-field"><label for="other-income">Other income (USD per year)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="other-income" type="number" min="0" max="1000000000000" step="100" value="0"><span class="unit-affix" aria-hidden="true">/ year</span></span><small class="field-helper">Parking, laundry, storage, pet fees and similar.</small></div>
+</div></fieldset>
+<fieldset class="cap-group"><legend>Expenses</legend><div class="form-grid">
 <div class="form-field"><label for="property-tax">Property tax (USD per year)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="property-tax" type="number" min="0" max="1000000000000" step="100" value="4200"><span class="unit-affix" aria-hidden="true">/ year</span></span></div>
 <div class="form-field"><label for="home-insurance">Insurance (USD per year)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="home-insurance" type="number" min="0" max="1000000000000" step="100" value="1800"><span class="unit-affix" aria-hidden="true">/ year</span></span></div>
-<div class="form-field"><label for="maintenance-cost">Maintenance &amp; repairs (USD per year)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="maintenance-cost" type="number" min="0" max="1000000000000" step="100" value="1500"><span class="unit-affix" aria-hidden="true">/ year</span></span></div>
-<div class="form-field"><label for="management-rate">Management fee (% of effective income)</label><span class="input-unit"><input class="field" id="management-rate" type="number" min="0" max="100" step="0.5" value="8"><span class="unit-affix" aria-hidden="true">%</span></span><input class="field-slider" id="management-rate-slider" type="range" min="0" max="30" step="1" value="8" aria-label="Management fee (%) slider"></div>
-</div>
-<details class="advanced">
-<summary>Advanced options</summary>
-<div class="form-grid">
-<div class="form-field"><label for="other-income">Other income (USD per year)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="other-income" type="number" min="0" max="1000000000000" step="100" value="0"><span class="unit-affix" aria-hidden="true">/ year</span></span><small class="field-helper">Parking, laundry, storage, pet fees and similar.</small></div>
+<div class="form-field"><label for="maintenance-cost">Maintenance &amp; repairs (USD / year)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="maintenance-cost" type="number" min="0" max="1000000000000" step="100" value="1500"><span class="unit-affix" aria-hidden="true">/ year</span></span><small class="field-helper">Repairs and upkeep.</small></div>
+<div class="form-field"><label for="management-rate">Management fee (%)</label><span class="input-unit"><input class="field" id="management-rate" type="number" min="0" max="100" step="0.5" value="8"><span class="unit-affix" aria-hidden="true">%</span></span><small class="field-helper">Percent of effective income.</small></div>
 <div class="form-field"><label for="hoa-other">HOA &amp; other costs (USD per year)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="hoa-other" type="number" min="0" max="1000000000000" step="100" value="0"><span class="unit-affix" aria-hidden="true">/ year</span></span></div>
+</div></fieldset>
+<fieldset class="cap-group"><legend>Implied value</legend><div class="form-grid">
 <div class="form-field"><label for="target-cap-rate">Target cap rate (%)</label><span class="input-unit"><input class="field" id="target-cap-rate" type="number" min="0" max="100" step="0.25" value="8"><span class="unit-affix" aria-hidden="true">%</span></span><small class="field-helper">Used only for the implied value below.</small></div>
-</div>
-</details>
+</div></fieldset>
 </form>
 <p class="validation-note" id="validation-note" role="alert"></p>
-<p class="disclaimer">Cap rate ignores financing completely — mortgage payments are not operating expenses, so they are deliberately left out. Use the mortgage calculator for the loan side.</p>
-<p class="disclaimer">Estimates only. Not a loan offer or financial advice.</p>
 </div>
-<aside class="result" aria-live="polite">
+<aside class="result" id="cap-results" aria-live="polite">
 <p class="result-label">Cap rate</p>
-<p class="result-number" id="cap-rate">—</p>
+<p class="result-number" id="cap-rate" aria-live="polite">—</p>
+<p class="cap-note" id="cap-note" hidden>Negative net operating income: operating expenses exceed income at these inputs.</p>
 <p class="result-hero-sub">Net operating income <b id="noi-annual">—</b> per year</p>
 <p class="result-empty" id="result-empty" hidden>Enter your details to see your estimate.</p>
-<div id="result-body"><h3 class="result-group">Income</h3>
+<div id="result-body">
+<div hidden aria-hidden="true"><span id="grm">—</span></div>
+<div class="cap-tiles">
+<div class="cap-tile"><span class="cap-tile-label">Monthly net operating income</span><b class="cap-tile-value" id="noi-monthly">—</b></div>
+<div class="cap-tile"><span class="cap-tile-label">Expense ratio</span><b class="cap-tile-value" id="expense-ratio">—</b></div>
+<div class="cap-tile"><span class="cap-tile-label">Value at target cap rate</span><b class="cap-tile-value" id="value-at-target">—</b></div>
+</div>
+<div class="cap-breakdown">
 <div class="result-row"><span>Effective gross income</span><b id="effective-income">—</b></div>
-<h3 class="result-group">Operating expenses</h3>
-<div class="result-row"><span>Total operating expenses</span><b id="total-expenses">—</b></div>
-<h3 class="result-group">Bottom line</h3>
-<div class="result-row"><span>Net operating income / month</span><b id="noi-monthly">—</b></div>
-<div class="result-row"><span>Gross rent multiplier</span><b id="grm">—</b></div>
-<div class="result-row"><span>Expense ratio</span><b id="expense-ratio">—</b></div>
-<h3 class="result-group">Price sensitivity</h3>
-<div class="result-row"><span>Cap rate at 10% below price</span><b id="cap-low">—</b></div>
-<div class="result-row"><span>Cap rate at 10% above price</span><b id="cap-high">—</b></div>
-<h3 class="result-group">Implied value</h3>
-<div class="result-row"><span>Value at target cap rate</span><b id="value-at-target">—</b></div>
-<div class="copy-row"><button class="tool-btn tool-btn-primary" id="copy-results" type="button">Copy results</button><button class="tool-btn tool-btn-outline" id="print-results" type="button">Print</button></div>
+<div class="result-row"><span>Operating expenses</span><b id="total-expenses">—</b></div>
+<div class="result-row result-row-total"><span>Net operating income</span><b id="row-noi">—</b></div>
+</div>
+<div class="cap-strip">
+<div class="cap-strip-tile"><span class="cap-strip-label">10% below the price</span><b class="cap-strip-value" id="cap-low">—</b></div>
+<div class="cap-strip-tile"><span class="cap-strip-label">10% above the price</span><b class="cap-strip-value" id="cap-high">—</b></div>
+</div>
+<p class="cap-strip-note">Both use the property price entered in the form.</p>
+<div class="copy-row"><button class="tool-btn tool-btn-primary" id="copy-results" type="button">Copy results</button></div>
 <p class="copy-note" id="copy-note"></p></div>
-<div style="margin-top:26px"><a class="btn btn-outline" href="../../tools/mortgage-calculator/" style="white-space:normal">See the payment on the mortgage calculator ↗</a></div>
+<a class="cap-mortgage-link" href="../../tools/mortgage-calculator/">See the payment on the mortgage calculator</a>
+<p class="cap-footnote">Estimate only. Not investment advice. Cap rate ignores financing, so mortgage payments are not included.</p>
 </aside>
 </div></section>
-<section class="section"><div class="wrap content">
-<h2>How cap rate works</h2>
-<p>Cap rate = net operating income ÷ property price × 100. It measures the property as if you bought it in cash: start with the annual rent, subtract a vacancy allowance to get effective gross income, add any other income, then subtract every operating expense — property tax, insurance, maintenance, management and HOA. What is left is the net operating income (NOI). Because financing is deliberately excluded, cap rate lets you compare two properties on the asset alone, no matter how each deal is funded.</p>
-<h2>What moves the answer</h2>
-<p>Three inputs do most of the work: the rent you can actually collect, the vacancy you assume, and the price you pay — which is why the panel shows the cap rate at 10% below and above the asking price. A lower price lifts the cap rate without the property changing at all, so a high cap rate can mean a bargain or a property with problems; always check why the rent or the price looks the way it does. The implied value runs the formula backwards: NOI ÷ your target cap rate tells you the most the property is worth to you at that return.</p>
-<h2>Important note</h2>
-<p>This is an informational estimate, not investment advice. Cap rate says nothing about your mortgage, taxes, appreciation or resale — and a single year of rent and expenses is not a guarantee of the next. Verify rents, occupancy and costs with local records before making any buying decision.</p>
-</div></section>
-
-<section class="section"><div class="wrap content">
+<section class="section"><div class="wrap content cap-content">
 <h2>Cap rate calculator: quick answer</h2>
-<p><strong>Quick answer:</strong> A cap rate calculator measures a rental property as if you bought it in cash: net operating income divided by price, as a percentage. On this page’s defaults, a $350,000 property with $2,200 monthly rent gives net operating income of $15,573.60 a year and a cap rate of 4.45%.</p>
-<p>Cap rate is useful because it strips financing out of the comparison. Two properties with different loans can still be compared on the asset alone, because mortgage payments are deliberately not operating expenses and are left out.</p>
+<p><strong>Quick answer:</strong> A cap rate measures a rental property as if you bought it in cash: net operating income divided by property price, times 100. To get net operating income, start with annual rent, subtract a vacancy allowance to get effective gross income, add any other income, then subtract operating expenses such as property tax, insurance, maintenance, management and HOA costs. Financing is deliberately left out, so mortgage payments never enter the calculation, and two properties with different loans can still be compared on the asset alone.</p>
 <h2>Worked example</h2>
-<p>With the values already filled in — a $350,000 price, $2,200 monthly rent, 5% vacancy, $4,200 tax, $1,800 insurance, $1,500 maintenance and an 8% management fee — gross rent is $26,400, effective gross income is $25,080, total operating expenses are $9,506.40, and net operating income is $15,573.60 a year, or $1,297.80 a month. The cap rate is 4.45%, the gross rent multiplier is 13.26x, and the expense ratio is 37.90%. At 10% below the price the cap rate is 4.94%, and at 10% above it is 4.05%. At a target cap rate of 8%, the implied value is $194,670.00.</p>
+<p>With the values already filled in — a $350,000 price, $2,200 monthly rent, 5% vacancy, $4,200 property tax, $1,800 insurance, $1,500 maintenance and repairs, an 8% management fee, no other income and no HOA costs — gross rent is $26,400, effective gross income is $25,080.00, total operating expenses are $9,506.40, and net operating income is $15,573.60 a year, or $1,297.80 a month. The cap rate is 4.45%, the gross rent multiplier is 13.26x, and the expense ratio is 37.90%. At 10% below the price the cap rate is 4.94%, and at 10% above it is 4.05%. At a target cap rate of 8%, the implied value is $194,670.00.</p>
+<h2>What moves the answer</h2>
+<p>Rent you can actually collect, the vacancy you assume, and the price you pay do most of the work. A lower price lifts the cap rate without the property changing at all, which is why the panel shows the rate at 10% below and above the asking price. A high cap rate can mean a bargain, or a property with problems, so always check why the rent or the price looks the way it does before trusting the number.</p>
+<h2>Understanding related numbers</h2>
+<p><strong>Expense ratio</strong> is total operating expenses as a share of effective gross income; it shows how much of the income is spent running the property. <strong>Gross rent multiplier</strong> is property price divided by gross annual rent; it is a rough shortcut that ignores expenses and vacancy, so it is useful for a first comparison but never a substitute for the cap rate.</p>
 <h2>Key takeaways</h2>
 <ul>
-<li>Cap rate equals net operating income divided by price. Financing is excluded on purpose.</li>
-<li>Rent collected, vacancy assumed, and price paid do most of the work — check why any of them looks unusual before trusting a high cap rate.</li>
-<li>Price sensitivity shows how much the answer moves with price alone, without the property changing at all.</li>
+<li>Cap rate equals net operating income divided by price, with financing excluded on purpose.</li>
+<li>Rent collected, vacancy assumed, and price paid do most of the work — check why any of them looks unusual.</li>
+<li>Price sensitivity shows how much the answer moves with price alone, without the property changing.</li>
 <li>Implied value runs the formula backwards: net operating income divided by your target cap rate is the most the property is worth to you at that return.</li>
 </ul>
-<h2>Frequently asked questions</h2>
-<h3>What is cap rate in real estate?</h3>
-<p>Cap rate is net operating income divided by property price, expressed as a percentage. It measures the property as if bought in cash, so financing does not affect the comparison.</p>
-<h3>How is net operating income calculated?</h3>
-<p>Start with annual rent, subtract a vacancy allowance to get effective gross income, add other income, then subtract operating expenses such as tax, insurance, maintenance, management and HOA. What remains is net operating income.</p>
-<h3>Why are mortgage payments excluded?</h3>
-<p>Because cap rate compares the asset, not the loan. A property’s income and expenses do not change just because one buyer borrows more than another. Use the mortgage calculator for the loan side.</p>
-<h3>Does a higher cap rate always mean a better property?</h3>
-<p>No. A high cap rate can mean a bargain, or a property with problems, weak rent, high vacancy or high expenses. Always check why the rent or price looks the way it does.</p>
-<h3>What does the implied value tell me?</h3>
-<p>It tells you the price at which the property would yield your target cap rate, given its net operating income. If the asking price is above that value, it does not meet your target on income alone.</p>
-<h3>Does cap rate include appreciation or taxes?</h3>
-<p>No. It says nothing about mortgage, taxes, appreciation or resale, and a single year of rent and expenses is not a guarantee of the next year.</p>
-<h2>Limitations and next steps</h2>
-<p>This is an informational estimate, not investment advice. Verify rents, occupancy and costs with local records before making any buying decision.</p>
 <p>Next steps: work out the income side alone in the <a href="../noi-calculator/">NOI Calculator</a>, test the full financed deal in the <a href="../property-investment-calculator/">Property Investment Calculator</a>, and check the loan payment in the <a href="../mortgage-calculator/">Mortgage Calculator</a>.</p>
+<h2>Frequently asked questions</h2>
+<div class="cap-faq">
+<details><summary>Does a higher cap rate always mean a better property?</summary><p>No. A high cap rate can mean a bargain, or a property with problems, weak rent, high vacancy or high expenses. Always check why the rent or price looks the way it does.</p></details>
+<details><summary>What does the implied value tell me?</summary><p>It tells you the price at which the property would yield your target cap rate, given its net operating income. If the asking price is above that value, it does not meet your target on income alone.</p></details>
+<details><summary>How is net operating income different from cash flow?</summary><p>Net operating income is income before financing, so it does not subtract mortgage payments. Cash flow is what remains after the loan is paid, which is why the two numbers answer different questions.</p></details>
+<details><summary>What vacancy should I assume?</summary><p>Use what local records and comparable properties actually show, not a round number picked for convenience. An optimistic vacancy assumption flatters every other number on the page.</p></details>
+<details><summary>Can I compare cap rates across cities or property types?</summary><p>Only with care. Different markets and property types carry different risks, costs and growth prospects, so a rate that looks attractive in one place may not mean the same thing in another.</p></details>
+<details><summary>Does cap rate include appreciation or taxes?</summary><p>No. It says nothing about mortgage, taxes, appreciation or resale, and a single year of rent and expenses is not a guarantee of the next year.</p></details>
+</div>
+<h2>Important note and limitations</h2>
+<p>This is an informational estimate, not investment advice. Cap rate says nothing about your mortgage, taxes, appreciation or resale, and a single year of rent and expenses is not a guarantee of the next. Verify rents, occupancy and costs with local records before making any buying decision.</p>
 </div></section>
+<a class="cap-bottom-bar" href="#cap-results"><span>Cap rate:</span><b id="bottom-cap">—</b></a>
 </main>
 <footer class="footer"><div class="wrap"><div class="footer-top"><div><a class="brand" href="../../" style="color:white;display:inline-flex;margin-bottom:18px"><span class="brand-mark" style="background:#254761">⌂</span><span class="brand-name"><span data-brand-name>Real Estate Tools</span><em style="color:#adc6c8">Tools · Software · Guides</em></span></a><p>Useful real estate tools for everyday decisions, with RealtorOS as the flagship CRM. Brand and company details will be finalized before public launch.</p></div><div><h2 class="footer-heading">Platform</h2><a href="../../tools/">All tools</a><a href="../../tools/commission-calculator/">Commission calculator</a><a href="../../tools/mortgage-calculator/">Mortgage calculator</a><a href="../../tools/home-affordability-calculator/">Home affordability calculator</a><a href="../../tools/rent-vs-buy-calculator/">Rent vs buy calculator</a><a href="../../tools/cap-rate-calculator/">Cap rate calculator</a><a href="../../tools/bridge-loan-calculator/">Bridge loan calculator</a><a href="../../tools/property-investment-calculator/">Property investment calculator</a><a href="../../tools/capital-gains-tax-calculator/">Capital gains tax calculator</a><a href="../../tools/roi-calculator/">ROI calculator</a><a href="../../tools/noi-calculator/">NOI calculator</a></div><div><h2 class="footer-heading">Product</h2><a href="../../realtoros/">RealtorOS CRM</a><a href="../../resources/">Resources</a><a href="../../about/">About</a><a href="../../contact/">Contact</a></div><div><h2 class="footer-heading">Before launch</h2><p>Connect support email, app login, pricing and approved legal policies.</p></div></div><div class="foot-bottom"><span>© 2026 <span data-brand-name>Real Estate Tools</span> · Working name, brand pending.</span><span>Static demonstration · No customer information collected</span></div></div></footer>
 <script src="../../assets/site-config.js" defer></script>
