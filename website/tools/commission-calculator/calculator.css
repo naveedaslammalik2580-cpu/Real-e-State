@@ -24,7 +24,6 @@
 .calculator-disclaimers { margin-top: 4px; }
 .calculator-disclaimers p:last-child { margin-bottom: 0; }
 .result .result-row { padding: 6px 0; }
-.result > div:last-child { margin-top: 16px !important; }
 .commission-breakdown { margin-top: 14px; }
 .commission-breakdown-track { display: flex; height: 12px; border-radius: 999px; overflow: hidden; background: var(--line); }
 .commission-breakdown-track > div { height: 100%; }
@@ -32,3 +31,50 @@
 .commission-breakdown-legend span { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; }
 .commission-total-row { border-top: 1px solid var(--line); margin-top: 12px; padding-top: 12px; }
 .commission-seller-row b { color: var(--teal); }
+
+/* Commission results-panel redesign (2026-10-25 brief) — scoped to this page. */
+.page-hero h1 { letter-spacing: 0.01em; }
+.panel h2 { margin-bottom: 6px; }
+.panel-intro { font-size: 14px; }
+.form-group:first-of-type { margin-top: 4px; }
+.result-label, .result-group { color: #A9B8C6; }
+.result-number { font-size: 48px; letter-spacing: 0.01em; margin: 12px 0 0; }
+.result-net-block { margin-top: 24px; }
+.result-net { font-size: 36px; font-weight: 600; color: #2DD4BF; letter-spacing: 0.01em; line-height: 1.1; }
+.breakdown-legend { margin: 12px 0 0; }
+.breakdown-group { margin-top: 24px; }
+.result-sides { font-size: 13px; color: #A9B8C6; margin: 0 0 4px; }
+.result-sides b { color: #fff; font-weight: 600; }
+.result .result-row { font-size: 14px; }
+.result .result-row span { color: #C9D4DE; }
+/* A row marked hidden must leave the layout: site.css gives .result-row
+   display:flex, which otherwise beats the browser's [hidden] rule. */
+.result .result-row[hidden] { display: none; }
+/* Breakdown values (gross, deductions, brokerage, fee) in the specified muted
+   tone. The net row keeps its white bold value; seller rows are untouched. */
+#result-body > .result-row:not(.result-row-total) b { color: #C9D4DE; }
+.result-row-total { border-top: 1px solid #254055; }
+.result-row-total b { font-weight: 700; }
+.seller-section { margin-top: 24px; padding-top: 20px; border-top: 1px solid #254055; }
+.seller-helper { font-size: 14px; color: #A9B8C6; margin: 0; }
+.seller-toggle { width: 100%; display: flex; justify-content: space-between; align-items: center; background: transparent; border: 0; color: #fff; font-weight: 700; font-size: 1rem; padding: 0; }
+.seller-chevron { transition: transform .15s ease; }
+.seller-toggle[aria-expanded="true"] .seller-chevron { transform: rotate(180deg); }
+#seller-details { margin-top: 12px; }
+.result .copy-row { gap: 12px; }
+.result .copy-row .tool-btn { height: 44px; min-height: 44px; flex: 1 1 0; }
+.realtoros-link { display: inline-block; margin-top: 16px; font-size: 14px; color: #0F766E; font-weight: 700; }
+.calculator-disclaimers .disclaimer { font-size: 13px; color: #6B7280; line-height: 1.5; max-width: 720px; }
+/* Body text keeps the 720px measure, but the container stays a full .wrap so
+   its left edge matches the calculator's (a capped, centred container drifted
+   right — first the 720px cap here, then site.css's 800px .content cap). */
+.section .content { max-width: none; }
+.section .content p { max-width: 720px; }
+.field-slider { height: 32px; min-height: 32px; accent-color: #0F766E; }
+@media (max-width: 767px) {
+  .calculator-layout { grid-template-columns: 1fr; }
+  body { padding-bottom: calc(56px + env(safe-area-inset-bottom)); }
+  .sticky-result { display: flex; justify-content: space-between; align-items: center; gap: 12px; position: fixed; left: 0; right: 0; bottom: 0; top: auto; height: calc(56px + env(safe-area-inset-bottom)); padding: 0 16px; padding-bottom: env(safe-area-inset-bottom); border-radius: 0; margin: 0; z-index: 30; background: #0F2230; color: #fff; box-shadow: 0 8px 24px rgba(20, 32, 43, .25); }
+  .sticky-result span { color: #C9D6E0; font-size: .82rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+  .sticky-result b { color: #2DD4BF; font-family: 'Fraunces', 'Source Serif 4', Georgia, serif; font-size: 1.3rem; white-space: nowrap; }
+}
