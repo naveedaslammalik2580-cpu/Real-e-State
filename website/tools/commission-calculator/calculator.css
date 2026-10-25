@@ -42,8 +42,8 @@
 .result-number { font-size: 48px; letter-spacing: 0.01em; margin: 12px 0 0; }
 .result-net-block { margin-top: 24px; }
 .result-net { font-size: 36px; font-weight: 600; color: #2DD4BF; letter-spacing: 0.01em; line-height: 1.1; }
-.breakdown-legend { margin: 12px 0 0; }
-.breakdown-group { margin-top: 24px; }
+.breakdown-legend { margin: 12px 0 0; background: rgba(255, 255, 255, 0.04); padding: 10px 12px; border-radius: 10px; }
+.breakdown-group { margin-top: 24px; padding-top: 12px; }
 .result-sides { font-size: 13px; color: #AAB8C7; margin: 0 0 4px; display: flex; flex-wrap: wrap; column-gap: 8px; row-gap: 2px; align-items: baseline; }
 /* Qualified so this color wins over the shared .page-hero p rule (which sets
    the label text dark); the amounts keep their own white rule below. */
@@ -59,13 +59,13 @@
 #result-body > .result-row:not(.result-row-total) b { color: #C9D4DE; }
 .result-row-total { border-top: 1px solid #254055; }
 .result-row-total b { font-weight: 700; }
-.seller-section { margin-top: 24px; padding-top: 20px; border-top: 1px solid #254055; }
+.seller-section { margin-top: 24px; padding-top: 12px; border-top: 1px solid #254055; }
 .result .seller-helper { font-size: 14px; color: #C9D4DE; margin: 0; }
 .seller-toggle { width: 100%; display: flex; justify-content: space-between; align-items: center; background: transparent; border: 0; color: #fff; font-weight: 700; font-size: 1rem; padding: 0; }
 .seller-chevron { transition: transform .15s ease; }
 .seller-toggle[aria-expanded="true"] .seller-chevron { transform: rotate(180deg); }
 #seller-details { margin-top: 12px; }
-.result .copy-row { gap: 12px; }
+.result .copy-row { gap: 12px; margin-top: 16px; }
 .result .copy-row .tool-btn { height: 44px; min-height: 44px; flex: 1 1 0; }
 .realtoros-link { display: inline-block; margin-top: 16px; font-size: 14px; color: #0F766E; font-weight: 700; }
 .calculator-disclaimers .disclaimer { font-size: 13px; color: #6B7280; line-height: 1.5; max-width: 720px; }
