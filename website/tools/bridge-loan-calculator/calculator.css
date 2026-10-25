@@ -1,8 +1,12 @@
 /* Bridge Loan Calculator — scoped styles. Shared layout tokens live in theme.css. */
 /* The calculator lives inside the first (hero) section, right under the title. */
-.page-hero { padding: 22px 0 30px; }
-.page-hero h1 { font-size: clamp(2rem, 4.5vw, 2.9rem); line-height: 1.12; margin: 12px 0 10px; }
-.page-hero .calculator-layout { margin-top: 22px; }
+.page-hero { padding: 24px 0 30px; }
+.page-hero h1 { font-size: clamp(2rem, 4.5vw, 2.9rem); line-height: 1.12; margin: 0 0 10px; }
+.page-hero .calculator-layout { margin-top: 24px; } /* 24px measured gap: intro p margin-bottom 16px collapses with this, so the larger value wins */
+@media (max-width: 760px) {
+  .page-hero { padding-top: 16px; }
+  .page-hero .calculator-layout { margin-top: 0; }
+}
 .section { padding: 26px 0 40px; }
 .calculator-layout { align-items: start; gap: 24px; }
 .result .result-row { padding: 6px 0; }
