@@ -31,6 +31,13 @@
     var el = document.getElementById(id);
     if (el) el.hidden = hide;
   }
+  function setVisible(id, showIt) {
+    var el = document.getElementById(id);
+    if (el) el.hidden = !showIt;
+  }
+  function neg(n) {
+    return '\u2212' + usd(n);
+  }
   function valid(n, a, b) {
     return Number.isFinite(n) && n >= a && n <= b;
   }
@@ -42,8 +49,9 @@
 
   var OUTPUTS = ['commission-total',
     'listing-side', 'buyer-side', 'your-side-gross',
-    'commission-agent', 'commission-fees', 'commission-net',
-    'selling-cost', 'seller-net'];
+    'commission-agent', 'breakdown-broker', 'breakdown-fee',
+    'breakdown-net', 'commission-net',
+    'selling-cost', 'seller-net', 'seller-payoff', 'breakdown-deductions'];
 
   function run() {
     var price = num('sale-price'), rate = num('commission-rate'),
@@ -59,7 +67,7 @@
       { id: 'sale-price', label: 'Property sale price', value: price, max: 1e12 },
       { id: 'commission-rate', label: 'Total commission rate', value: rate, max: 100 },
       { id: 'listing-share', label: 'Listing side share', value: listingShare, max: 100 },
-      { id: 'agent-split', label: 'Your share of your side', value: split, max: 100 },
+      { id: 'agent-split', label: 'Your commission split', value: split, max: 100 },
       { id: 'referral-fee', label: 'Referral fee', value: referralPct, max: 100 },
       { id: 'franchise-fee', label: 'Franchise / royalty fee', value: franchisePct, max: 100 },
       { id: 'transaction-fee', label: 'Transaction fee', value: fee, max: 1e12 },
@@ -79,7 +87,6 @@
       set('commission-total', problems[0]);
       set('result-empty', problems.join(' '));
       OUTPUTS.slice(1).forEach(function (id) { set(id, '—'); });
-      set('your-side-label', 'Your side');
       set('validation-note', 'Check the values: rates and shares must be 0–100%, amounts 0 or more, and no field left empty.');
       set('lg-referral', '—'); set('lg-franchise', '—'); set('lg-broker', '—');
       set('sticky-value', '—');
@@ -111,19 +118,36 @@
     set('buyer-side', usd(buyerSide));
     set('your-side-gross', usd(yourSide));
     set('commission-agent', usd(yourShare));
-    set('commission-fees', usd(fee));
+    set('breakdown-broker', neg(brokerShare));
+    set('breakdown-fee', neg(fee));
+    set('breakdown-net', usd(net));
+    set('seller-payoff', usd(payoff));
     set('commission-net', usd(net));
     set('selling-cost', usd(sellingCost));
     set('seller-net', usd(sellerNet));
-    set('your-side-label', r === 'listing' ? 'Your side (listing side)'
-      : r === 'buyer' ? 'Your side (buyer side)' : 'Your side (both sides)');
 
-    // Shared restyle behaviors: legend amounts and sticky value.
-    // Referral and franchise rows always show, even at $0.00, so the panel
-    // never contradicts itself with a "not shown" note.
+    // Legend shows only segments above $0; the breakdown hides its
+    // referral/franchise row when both are $0. The sticky bar shows Your net.
     set('lg-referral', usd(referral)); set('lg-franchise', usd(franchise));
     set('lg-broker', usd(brokerShare));
-    set('sticky-value', usd(total));
+    setVisible('lg-item-referral', referral > 0);
+    setVisible('lg-item-franchise', franchise > 0);
+    setVisible('lg-item-yours', yourShare > 0);
+    setVisible('lg-item-broker', brokerShare > 0);
+    var deductions = referral + franchise;
+    setVisible('breakdown-deductions-row', deductions > 0);
+    if (deductions > 0) set('breakdown-deductions', neg(deductions));
+    var showSeller = otherCosts > 0 || payoff > 0;
+    var sellerViewEl = document.getElementById('seller-view');
+    if (sellerViewEl && sellerViewEl.hidden && showSeller) {
+      hideRow('seller-details', true);
+      var tg = document.getElementById('seller-toggle');
+      if (tg && tg.setAttribute) tg.setAttribute('aria-expanded', 'false');
+    }
+    hideRow('seller-helper', showSeller);
+    hideRow('seller-view', !showSeller);
+    hideRow('seller-payoff-row', payoff <= 0);
+    set('sticky-value', usd(net));
 
     if (total > 0) {
       setWidth('bd-referral', (referral / total) * 100);
@@ -190,6 +214,14 @@
     copyResults([['Total commission', 'commission-total'], ['Your net', 'commission-net'],
       ['Your share', 'commission-agent'], ['Net to seller', 'seller-net']],
       'Real Estate Commission Calculator');
+  });
+  var sellerToggle = document.getElementById('seller-toggle');
+  if (sellerToggle) sellerToggle.addEventListener('click', function () {
+    var details = document.getElementById('seller-details');
+    if (!details) return;
+    var open = details.hidden;
+    details.hidden = !open;
+    sellerToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
   });
   var printBtn = document.getElementById('print-results');
   if (printBtn) printBtn.addEventListener('click', function () {
