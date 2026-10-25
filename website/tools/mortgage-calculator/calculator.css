@@ -83,3 +83,10 @@
 .section .content p { max-width: 720px; }
 /* Mobile sticky total keeps its top position; its value takes the teal accent. */
 @media (max-width: 760px) { .sticky-result b { color: #2DD4BF; } }
+/* Refined layout (2026-10-25): chart capped so it does not dominate the page,
+   and the amortization schedule is a clearly labelled collapsed disclosure. */
+.chart-wrap { max-width: 720px; }
+.mortgage-details { margin-top: 28px; border-top: 1px solid #E2DED5; padding-top: 16px; }
+.mortgage-details summary { cursor: pointer; font-weight: 800; color: #102131; font-size: 1.05rem; }
+.mortgage-details summary:focus-visible { outline: 2px solid #0F766E; outline-offset: 3px; border-radius: 4px; }
+.mortgage-details[open] summary { margin-bottom: 4px; }

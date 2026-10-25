@@ -65,20 +65,12 @@
 </div><div class="wrap"><a class="realtoros-link" href="../../realtoros/">Manage client follow-ups in RealtorOS ↗</a></div><div class="wrap calculator-disclaimers"><p class="disclaimer">Principal and interest use a standard amortizing fixed-rate formula. PMI is estimated only while the loan balance is above 80% of the price. Taxes, insurance and HOA figures are your own inputs, not quotes.</p>
 <p class="disclaimer">Estimates only. Not a loan offer or financial advice.</p></div></section>
 <section class="section"><div class="wrap content">
-<h2>How the payment is calculated</h2>
-<p>Monthly principal and interest follow the standard amortizing formula: M = P × r(1 + r)<sup>n</sup> / ((1 + r)<sup>n</sup> − 1), where P is the loan amount, r is the monthly interest rate and n is the number of monthly payments. Property tax and insurance are spread evenly across 12 months; HOA dues are added monthly; PMI is charged only while the balance is above 80% of the price. Any extra monthly payment and one-time payment go straight to principal, which shortens the loan and reduces total interest.</p>
-<h2>Compare loan terms</h2>
-<p>Same home price, down payment and rate — only the term changes. Your current term is highlighted.</p>
-<div class="table-scroll"><table class="mortgage-schedule">
-<thead><tr><th>Term</th><th>Monthly P&amp;I</th><th>Total interest</th><th>Total paid</th></tr></thead>
-<tbody id="term-compare-body"></tbody>
-</table></div>
-<h2>Balance over time</h2>
-<p>How the remaining balance falls, and how interest adds up, year by year.</p>
+<h2>Loan balance over time</h2>
+<p>The teal line is the remaining loan balance, falling to $0, and the gold line is the interest paid so far, rising to the total interest for the term.</p>
 <div class="chart-wrap"><svg id="balance-chart" viewBox="0 0 600 260" role="img" aria-label="Chart of remaining loan balance and cumulative interest over the loan term"></svg>
 <div class="chart-legend"><span><span class="swatch seg-teal"></span> Remaining balance <b id="chart-balance-end">—</b></span><span><span class="swatch seg-gold"></span> Interest paid so far <b id="chart-interest-end">—</b></span></div></div>
-<details open>
-<summary>Amortization schedule</summary>
+<details class="mortgage-details">
+<summary>View amortization schedule</summary>
 <div class="mortgage-schedule-tools">
 <button class="mortgage-toggle" id="schedule-yearly-btn" type="button" aria-pressed="true">Yearly</button>
 <button class="mortgage-toggle" id="schedule-monthly-btn" type="button" aria-pressed="false">Monthly</button>
@@ -90,28 +82,10 @@
 <tbody id="mortgage-schedule-body"></tbody>
 </table></div>
 </details>
-<h2>Understanding the estimate</h2>
-<p>Your actual monthly housing cost can differ due to tax reassessments, insurance premiums, HOA changes, PMI cancellation rules and lender fees.</p>
-<h2>Important note</h2>
-<p>This is an informational estimate, not a lender quote or financial advice. Verify terms with your lender before making any borrowing decision.</p>
-</div></section>
-<section class="section"><div class="wrap content">
-<h2>Mortgage calculator: quick answer, worked example and FAQs</h2>
-<p><strong>Quick Answer:</strong> A mortgage calculator estimates your monthly payment from the loan amount, interest rate and term, then adds property tax, insurance, HOA dues and PMI where they apply. For the calculator's default $400,000 price, $80,000 down and 6.5% over 30 years, that total is $2,572.62 a month.</p>
-<p>That total is the number to budget against — not just the principal-and-interest figure quoted in most rate comparisons. The rest of this section explains each part, works through the calculator's own default example step by step, and names what the estimate leaves out.</p>
-<h3>What does a mortgage calculator include?</h3>
-<p>A full monthly mortgage payment is usually more than principal and interest. The U.S. Consumer Financial Protection Bureau (CFPB) describes the total as principal and interest, plus mortgage insurance where it applies, plus escrow for homeowners insurance and tax. This calculator follows that shape, and adds HOA dues as a separate monthly item:</p>
-<ul>
-<li><strong>Principal:</strong> the part of each payment that reduces the loan balance.</li>
-<li><strong>Interest:</strong> the lender's charge for borrowing, calculated each month on the remaining balance.</li>
-<li><strong>Property tax:</strong> your annual input divided by 12.</li>
-<li><strong>Home insurance:</strong> your annual input divided by 12.</li>
-<li><strong>HOA dues:</strong> your monthly input, added in full.</li>
-<li><strong>PMI:</strong> charged only while the down payment is below 20% — see the PMI section below for how this calculator's simplified rule differs from real cancellation rules.</li>
-</ul>
-<p>Taxes and insurance do not reduce the loan balance. They are ownership costs collected alongside the loan payment in this estimate; whether a real lender collects them through escrow depends on the loan and the lender.</p>
-<h3>Worked example: the calculator's default inputs</h3>
-<p>These are the values already filled in when the page loads. Every figure below was re-checked against <code>calculator.js</code>; none is taken from a competitor or a rate table.</p>
+<h2>How the mortgage payment is calculated</h2>
+<p>Principal and interest use the standard fixed-rate formula: M = P × r(1 + r)<sup>n</sup> ÷ ((1 + r)<sup>n</sup> − 1), where P is the loan amount, r is the monthly interest rate (annual rate ÷ 12), and n is the number of monthly payments. At 0% interest, the payment is simply P ÷ n. Property tax and home insurance are each divided by 12, HOA dues are added monthly, and PMI is added only while it applies. Extra monthly and one-time payments go straight to principal, which shortens the loan and reduces total interest.</p>
+<h2>Worked example</h2>
+<p>These are the values already filled in when the page loads. The 6.5% rate is a sample default, not a current market rate or a quote.</p>
 <div class="table-scroll"><table class="mortgage-schedule">
 <thead><tr><th>Input</th><th>Value</th></tr></thead>
 <tbody>
@@ -120,84 +94,58 @@
 <tr><td>Loan amount</td><td>$320,000</td></tr>
 <tr><td>Annual interest rate</td><td>6.5% (fixed)</td></tr>
 <tr><td>Loan term</td><td>30 years (360 payments)</td></tr>
-<tr><td>Property tax</td><td>$4,800 per year ($400 per month)</td></tr>
-<tr><td>Home insurance</td><td>$1,800 per year ($150 per month)</td></tr>
-<tr><td>HOA dues</td><td>$0 per month</td></tr>
-<tr><td>PMI rate</td><td>0.5% per year (not charged at 20% down)</td></tr>
-<tr><td>Extra payments</td><td>$0</td></tr>
+<tr><td>Principal and interest</td><td>$2,022.62 per month</td></tr>
+<tr><td>Property tax</td><td>$400 per month</td></tr>
+<tr><td>Home insurance</td><td>$150 per month</td></tr>
+<tr><td>HOA dues and PMI</td><td>$0 per month</td></tr>
+<tr><td>Total monthly payment</td><td>$2,572.62</td></tr>
+<tr><td>Total interest over term</td><td>$408,142.36</td></tr>
 </tbody></table></div>
-<p><strong>Step 1 — monthly rate and payment count.</strong> Monthly rate r = 6.5% ÷ 12 = 0.0054167. Number of payments n = 30 × 12 = 360.</p>
-<p><strong>Step 2 — principal and interest.</strong> M = P × r(1 + r)<sup>n</sup> ÷ ((1 + r)<sup>n</sup> − 1), with P = $320,000. That gives an unrounded $2,022.6177 per month, displayed as <strong>$2,022.62 per month</strong>.</p>
-<p><strong>Step 3 — add the monthly ownership costs.</strong> As displayed: $2,022.62 + $400.00 tax + $150.00 insurance + $0 HOA + $0 PMI = <strong>$2,572.62 total per month</strong>. The unrounded total, $2,022.6177 + $550.00 = $2,572.6177, also displays as $2,572.62, so the displayed addition happens to match here.</p>
-<p><strong>Step 4 — totals over the term.</strong> Totals are calculated from the unrounded payment, not from the displayed monthly payment. Total principal and interest = $2,022.6177 × 360 = <strong>$728,142.36</strong> as displayed (unrounded $728,142.3631). Do not write $2,022.62 × 360, which gives $728,143.20 — $0.84 higher. Total interest alone = $728,142.36 − $320,000 = <strong>$408,142.36</strong>. The calculator's "total of monthly payments over term" adds tax and insurance over 30 years as entered ($4,800 × 30 + $1,800 × 30 = $198,000), giving $926,142.36 — before the down payment, which is not part of that total. That figure is likewise unrounded-based; $2,022.62 × 360 + $198,000 would give $926,143.20.</p>
-<p><strong>Rounding rule for this whole section:</strong> monthly payments, interest, principal, and balances are shown rounded to cents, but every total, difference, and schedule figure in this calculator is calculated from the unrounded values first and rounded only for display. A displayed monthly payment multiplied by a displayed number of months will therefore not always equal a displayed total.</p>
-<p><strong>Early vs late payments.</strong> In month 1, interest is $320,000 × approximately 0.0054167 = $1,733.33 as displayed (unrounded $1,733.3333), and principal is $289.28 as displayed (unrounded $289.2843, that is, the unrounded payment minus the unrounded interest). Do not subtract the displayed figures: $2,022.62 − $1,733.33 = $289.29, which is $0.01 higher than the displayed principal, because both displayed inputs were rounded up. The balance after month 1 is $319,710.72. In year 1 as a whole, $20,694.69 goes to interest and $3,576.72 to principal, a sum of $24,271.41 — the unrounded monthly payment × 12 — not $2,022.62 × 12 = $24,271.44. That interest-heavy start is normal for a fixed-rate amortizing loan; the split reverses as the balance falls. Use the page's amortization schedule to see any year or month.</p>
-<p>The 6.5% rate here is the calculator's sample default, not a current market rate and not a quote. Change it to any rate a lender has actually offered you before relying on the result.</p>
-<h3>How the term changes the payment</h3>
-<p>The page's term-comparison table changes only the term — same price, down payment, and rate. Its figures are principal and interest only, not the full monthly total:</p>
+<p>Totals are calculated from unrounded values and rounded only for display, so multiplying a displayed monthly payment by a displayed number of months may not exactly equal a displayed total.</p>
+<h2>Compare loan terms</h2>
+<p>Same home price, down payment and rate — only the term changes. Your current term is highlighted. The figures below are principal and interest only; tax, insurance, HOA and PMI, where they apply, sit on top of them.</p>
 <div class="table-scroll"><table class="mortgage-schedule">
-<thead><tr><th>Term</th><th>Monthly principal &amp; interest</th><th>Total interest</th><th>Total principal &amp; interest</th></tr></thead>
-<tbody>
-<tr><td>15 years</td><td>$2,787.54</td><td>$181,757.84</td><td>$501,757.84</td></tr>
-<tr><td>20 years</td><td>$2,385.83</td><td>$252,600.17</td><td>$572,600.17</td></tr>
-<tr><td>30 years</td><td>$2,022.62</td><td>$408,142.36</td><td>$728,142.36</td></tr>
-</tbody></table></div>
-<p>A shorter term costs more each month but far less interest overall: on these defaults, 15 years instead of 30 adds $764.92 a month to principal and interest (the difference of the two displayed monthly payments, $2,787.54 − $2,022.62; the unrounded monthly difference is $764.93) and saves $226,384.52 in interest (the difference of the two displayed totals, $408,142.36 − $181,757.84, both calculated from unrounded payments). That trade-off is the real decision — not which term looks cheaper in a single month. Do not expect displayed monthly × months to equal a displayed total: for 15 years it gives $501,757.20 against a displayed total of $501,757.84; for 20 years $572,599.20 against $572,600.17; for 30 years $728,143.20 against $728,142.36. Tax, insurance, HOA, and PMI, where they apply, sit on top of each of these principal-and-interest figures.</p>
-<h3>What extra payments do in this calculator</h3>
-<p>An extra monthly payment and a one-time payment both go straight to principal in this calculator — the one-time payment is applied in the first month only. Extra principal shrinks the balance that future interest is charged on, so the loan can finish early and total interest can fall.</p>
-<p>On the default loan, adding <strong>$200 a month</strong> with no other change finishes the loan in 281 months instead of 360, saves <strong>$105,428.67</strong> in interest, and finishes 6 years 7 months sooner (the calculator's own "interest saved" and "time saved" outputs, cross-checked). Before committing to extra payments, check with your servicer how extra payments are applied — some servicers need an explicit "apply to principal" instruction, and this calculator cannot change a servicer's policy.</p>
-<h3>PMI in this calculator — and how real cancellation differs</h3>
-<p>This calculator uses a simplified PMI rule: if the down payment is below 20%, it charges PMI at your entered annual rate on the loan amount, divided by 12, and stops charging it once the balance is no longer above 80% of the home price. It does not model credit score, loan type, servicer rules, or property-value changes.</p>
-<p>Example: a $400,000 price with 10% down ($40,000) gives a $360,000 loan. At 6.5% over 30 years, principal and interest is $2,275.44; at a 0.5% PMI rate, PMI is $150.00 a month; with the default $400 tax and $150 insurance, the total is $2,975.44 a month ($2,275.44 + $150.00 + $400.00 + $150.00). In this calculator, PMI runs for about 95 months on those inputs — an estimate of the simplified rule, not a promise about a real loan.</p>
-<p>For a real U.S. conventional loan with borrower-paid PMI, the CFPB explains a different set of rights: you may ask your servicer in writing to cancel PMI when the balance is scheduled to reach 80% of the home's original value (or reaches it early through extra payments), subject to being current, having a good payment history, certifying no junior liens, and evidencing that the value has not fallen below the original value. Separately, the servicer must generally terminate PMI automatically when the balance is scheduled to reach 78% of the original value, if you are current. FHA and VA loans and lender-paid mortgage insurance follow different rules — ask your servicer which rules govern your loan before assuming PMI will stop at 80%.</p>
-<h3>What this calculator does not include</h3>
+<thead><tr><th>Term</th><th>Monthly P&amp;I</th><th>Total interest</th><th>Total paid</th></tr></thead>
+<tbody id="term-compare-body"></tbody>
+</table></div>
+<p>The trade-off is simple: a shorter term costs more each month but far less interest overall, while a longer term lowers the monthly payment and raises total interest. Choose the term you can sustain, not just the one that looks cheapest in a single month.</p>
+<h2>Extra payments</h2>
+<p>Extra principal reduces the balance that future interest is charged on, so the loan can finish early. On the default loan, adding $200 a month with no other change finishes the loan in 281 months instead of 360, saves $105,428.67 in interest, and finishes 6 years 7 months sooner. Check with your servicer how extra payments are applied — some need an explicit “apply to principal” instruction.</p>
+<h2>PMI</h2>
+<p>This calculator uses a simplified PMI rule: if the down payment is below 20%, it charges PMI at your entered annual rate on the loan amount, divided by 12, and stops once the balance is no longer above 80% of the home price. For example, a $400,000 home with 10% down gives a $360,000 loan, $2,275.44 principal and interest, $150.00 PMI a month, and a $2,975.44 total with the default tax and insurance; PMI runs for about 95 months on those inputs. That is an estimate of the simplified rule, not a promise about a real loan. For many U.S. conventional loans with borrower-paid PMI, the Consumer Financial Protection Bureau (CFPB) describes a different set of rights: you may request cancellation in writing at a scheduled 80% of the home's original value, subject to being current and other conditions, and the servicer must generally terminate PMI automatically at a scheduled 78% if you are current. FHA and VA loans and lender-paid mortgage insurance follow different rules.</p>
+<h2>Key takeaways</h2>
 <ul>
-<li><strong>Closing costs, points, lender fees, and prepaid items.</strong> None are inputs, and none appear in any total.</li>
-<li><strong>The down payment itself</strong> in the "total of monthly payments" figure. It is cash paid at purchase, not a monthly payment.</li>
-<li><strong>Changes over time.</strong> Tax, insurance, and HOA are held flat at your entered values for the whole term in the totals. In real life they change, so a fixed-rate loan's principal-and-interest part can stay level while the total payment moves.</li>
-<li><strong>Adjustable rates.</strong> This is a fixed-rate calculator only. It cannot model a rate that resets.</li>
-<li><strong>Rate, approval, or eligibility.</strong> It does not check credit, income, debts, or property type, and it is not a loan offer.</li>
-<li><strong>Terms outside the buttons.</strong> The visible term choices are 15, 20, and 30 years; the underlying validation allows 1–50 years, but the page offers no other term control.</li>
-<li><strong>Escrow timing and servicer policy.</strong> The calculator divides annual tax and insurance by 12. It does not model escrow balances, shortages, or how a servicer applies extra payments.</li>
+<li>Budget on the full monthly total, not principal and interest alone — on the default example, the difference is $550.00 a month.</li>
+<li>A shorter term raises the monthly payment and cuts total interest sharply; a longer term does the opposite.</li>
+<li>Extra principal is powerful because it compounds in reverse: $200 a month extra saves $105,428.67 on the default loan.</li>
+<li>The calculator's PMI rule is simplified; real cancellation depends on your servicer and the 80% request and 78% automatic-termination points described by the CFPB.</li>
 </ul>
-<p>That list is why the page already says "Estimates only. Not a loan offer or financial advice." Treat the output as a way to compare scenarios on equal inputs, then verify the scenario you actually intend to take with a lender, using a written Loan Estimate.</p>
-</div></section>
-<section class="section"><div class="wrap content">
-<h2>Key Takeaways</h2>
-<ul>
-<li>Budget on the full monthly total — principal, interest, tax, insurance, HOA, and PMI where it applies — not on principal and interest alone. On the default example, the difference is $550.00 a month.</li>
-<li>On the default $320,000 loan at 6.5% over 30 years, principal and interest is $2,022.62 a month as displayed (unrounded $2,022.6177), the full total is $2,572.62, and total interest is $408,142.36, calculated from the unrounded payment — not from $2,022.62 × 360, which would give $728,143.20.</li>
-<li>A shorter term raises the monthly payment and cuts total interest sharply: 15 years saves $226,384.52 in interest against 30 years on these defaults (difference of the displayed totals), for $764.92 more principal and interest a month (difference of the displayed monthly payments; the unrounded monthly difference is $764.93).</li>
-<li>Extra principal is powerful because it compounds in reverse: $200 a month extra on the default loan saves $105,428.67 and finishes 6 years 7 months early in this calculator.</li>
-<li>The calculator's PMI rule is simplified. Real U.S. conventional PMI cancellation turns on the servicer's rules and, under federal law, the 80% request and 78% automatic-termination points described by the CFPB — not on this calculator's 80%-of-price switch alone.</li>
-<li>Nothing here is a rate, a quote, or an approval. Tax, insurance, and HOA are your inputs, held flat in the totals, and closing costs are not included at all.</li>
-</ul>
-</div></section>
-<section class="section"><div class="wrap content">
-<h2>Frequently Asked Questions</h2>
+<h2>Frequently asked questions</h2>
 <h3>How is a monthly mortgage payment calculated?</h3>
-<p>Principal and interest use the standard fixed-rate formula: payment = loan × monthly rate × (1 + monthly rate)<sup>payments</sup> ÷ ((1 + monthly rate)<sup>payments</sup> − 1). The monthly rate is the annual rate ÷ 12, and payments are years × 12. Tax and insurance are divided by 12, HOA is added monthly, and PMI is added where it applies.</p>
-<h3>What is included in the total monthly payment, beyond principal and interest?</h3>
-<p>The total adds property tax and home insurance (each annual figure ÷ 12), HOA dues in full each month, and PMI if the down payment is below 20%. The CFPB describes the same shape: principal and interest, plus mortgage insurance where applicable, plus escrow for insurance and tax.</p>
+<p>Principal and interest use the fixed-rate formula in “How the mortgage payment is calculated” above. Tax and insurance are divided by 12, HOA is added monthly, and PMI is added where it applies.</p>
+<h3>What is included in the total monthly payment?</h3>
+<p>Principal and interest, plus property tax, home insurance, HOA dues, and PMI if the down payment is below 20%. The CFPB describes the same shape: principal and interest, plus mortgage insurance where applicable, plus escrow for insurance and tax.</p>
 <h3>What happens if I put less than 20% down?</h3>
-<p>With less than 20% down, this calculator adds PMI at your entered rate until the balance is no longer above 80% of the price. On a $400,000 home with 10% down at 6.5% over 30 years, that is a $360,000 loan, $2,275.44 principal and interest, $150.00 PMI, and a $2,975.44 total with default tax and insurance.</p>
+<p>This calculator adds PMI at your entered rate until the balance is no longer above 80% of the price. On a $400,000 home with 10% down at 6.5% over 30 years, that is a $360,000 loan, $2,275.44 principal and interest, $150.00 PMI, and a $2,975.44 total with default tax and insurance.</p>
 <h3>Does a shorter mortgage term always save money?</h3>
-<p>A shorter term saves total interest but raises the monthly payment, so it helps only if you can sustain that payment. On the default loan, 15 years costs $2,787.54 principal and interest against $2,022.62 for 30 years, but total interest falls from $408,142.36 to $181,757.84. Totals use the unrounded payment, not displayed monthly × months.</p>
+<p>It saves total interest but raises the monthly payment, so it helps only if you can sustain that payment. Compare the term table above on the same price, down payment and rate before deciding.</p>
 <h3>Do extra payments really save interest?</h3>
-<p>Yes, because extra principal reduces the balance that future interest is charged on. Adding $200 a month to the default loan finishes it in 281 months instead of 360, saves $105,428.67 in interest, and finishes 6 years 7 months sooner. The saving is largest early, when the balance and monthly interest charge are highest.</p>
+<p>Yes, because extra principal reduces the balance that future interest is charged on. Adding $200 a month to the default loan finishes it in 281 months instead of 360 and saves $105,428.67 in interest.</p>
 <h3>When can PMI actually be removed from a real loan?</h3>
-<p>For many U.S. conventional loans with borrower-paid PMI, the CFPB states you may request cancellation in writing at a scheduled 80% of original value, if current, with a good payment history, no junior liens, and evidence the value has not fallen. If you do nothing, termination is generally automatic at a scheduled 78%, if current.</p>
+<p>For many U.S. conventional loans with borrower-paid PMI, the CFPB states you may request cancellation in writing at a scheduled 80% of original value, if current and meeting the other conditions. If you do nothing, termination is generally automatic at a scheduled 78%, if current.</p>
 <h3>Why can my total payment change if I have a fixed-rate loan?</h3>
-<p>The principal-and-interest part generally stays level, but tax, insurance, HOA dues, and escrow adjustments do not. Rising property values often raise taxes, premiums change, and an escrow review can move the escrow part of the payment. This calculator holds your entered tax, insurance, and HOA flat, so a real payment that moves is not a calculator error.</p>
+<p>The principal-and-interest part generally stays level, but tax, insurance, HOA dues and escrow adjustments do not. This calculator holds your entered tax, insurance and HOA flat, so a real payment that moves is not a calculator error.</p>
 <h3>Is this mortgage calculator a loan offer or an approval?</h3>
-<p>No. It is an estimate from the numbers you enter only: price, down payment, rate, term, tax, insurance, HOA, PMI rate, and extra payments. It does not check credit, income, debts, property type, closing costs, or lender fees, and it uses the sample 6.5% default unless you change it.</p>
-<p><strong>Next steps:</strong> run your own numbers in the calculator at the top of this page, then compare the result with the <a href="../home-affordability-calculator/">Home Affordability Calculator</a> to test what price fits a monthly budget, or the <a href="../rent-vs-buy-calculator/">Rent vs Buy Calculator</a> to test buying against renting over the same period. The <a href="../../resources/#mortgage-guide">mortgage guide on Resources</a> explains the same payment in shorter form, and <a href="../../tools/">all tools</a> lists every published calculator.</p>
+<p>No. It is an estimate from the numbers you enter only. It does not check credit, income, debts, property type, closing costs or lender fees, and it uses the sample 6.5% default unless you change it.</p>
+<h2>Limitations, sources and related calculators</h2>
+<p>This is an informational estimate, not a lender quote or financial advice. It does not include closing costs, points, lender fees or prepaid items; it holds tax, insurance and HOA flat over the whole term; it models fixed rates only, not adjustable rates; and it does not check credit, income, debts or property type. Verify the scenario you intend to take with a lender, using a written Loan Estimate.</p>
 <h3>Sources</h3>
 <ul>
-<li>Consumer Financial Protection Bureau — <a href="https://www.consumerfinance.gov/ask-cfpb/on-a-mortgage-whats-the-difference-between-my-principal-and-interest-payment-and-my-total-monthly-payment-en-1941/">On a mortgage, what's the difference between my principal and interest payment and my total monthly payment?</a> — total payment = principal and interest + mortgage insurance (if applicable) + escrow (homeowners insurance and tax); HOA fees usually paid separately; escrow can change even when principal and interest stay level.</li>
-<li>Consumer Financial Protection Bureau — <a href="https://www.consumerfinance.gov/ask-cfpb/when-can-i-remove-private-mortgage-insurance-pmi-from-my-loan-en-202/">When can I remove private mortgage insurance (PMI) from my loan?</a> — borrower-requested cancellation at a scheduled 80% of original value subject to stated conditions; automatic termination at a scheduled 78% if current; FHA/VA and lender-paid rules differ.</li>
+<li>Consumer Financial Protection Bureau — <a href="https://www.consumerfinance.gov/ask-cfpb/on-a-mortgage-whats-the-difference-between-my-principal-and-interest-payment-and-my-total-monthly-payment-en-1941/">On a mortgage, what's the difference between my principal and interest payment and my total monthly payment?</a></li>
+<li>Consumer Financial Protection Bureau — <a href="https://www.consumerfinance.gov/ask-cfpb/when-can-i-remove-private-mortgage-insurance-pmi-from-my-loan-en-202/">When can I remove private mortgage insurance (PMI) from my loan?</a></li>
 </ul>
-<p>All other figures in this section are outputs of this page's own calculator, not third-party statistics. No market rate, approval rate, or lender claim is made.</p>
+<p>All other figures on this page are outputs of this page's own calculator, not third-party statistics. No market rate, approval rate or lender claim is made.</p>
+<p>Next steps: run your own numbers in the calculator at the top of this page, then compare the result with the <a href="../home-affordability-calculator/">Home Affordability Calculator</a> to test what price fits a monthly budget, or the <a href="../rent-vs-buy-calculator/">Rent vs Buy Calculator</a> to test buying against renting over the same period. The <a href="../../resources/#mortgage-guide">mortgage guide on Resources</a> explains the same payment in shorter form, and <a href="../../tools/">all tools</a> lists every published calculator.</p>
 </div></section>
 </main>
 <footer class="footer"><div class="wrap"><div class="footer-top"><div><a class="brand" href="../../" style="color:white;display:inline-flex;margin-bottom:18px"><span class="brand-mark" style="background:#254761">⌂</span><span class="brand-name"><span data-brand-name>Real Estate Tools</span><em style="color:#adc6c8">Tools · Software · Guides</em></span></a><p>Useful real estate tools for everyday decisions, with RealtorOS as the flagship CRM. Brand and company details will be finalized before public launch.</p></div><div><h2 class="footer-heading">Platform</h2><a href="../../tools/">All tools</a><a href="../../tools/commission-calculator/">Commission calculator</a><a href="../../tools/mortgage-calculator/">Mortgage calculator</a><a href="../../tools/home-affordability-calculator/">Home affordability calculator</a><a href="../../tools/rent-vs-buy-calculator/">Rent vs buy calculator</a><a href="../../tools/cap-rate-calculator/">Cap rate calculator</a><a href="../../tools/bridge-loan-calculator/">Bridge loan calculator</a><a href="../../tools/property-investment-calculator/">Property investment calculator</a><a href="../../tools/capital-gains-tax-calculator/">Capital gains tax calculator</a><a href="../../tools/roi-calculator/">ROI calculator</a><a href="../../tools/noi-calculator/">NOI calculator</a></div><div><h2 class="footer-heading">Product</h2><a href="../../realtoros/">RealtorOS CRM</a><a href="../../resources/">Resources</a><a href="../../about/">About</a><a href="../../contact/">Contact</a></div><div><h2 class="footer-heading">Before launch</h2><p>Connect support email, app login, pricing and approved legal policies.</p></div></div><div class="foot-bottom"><span>© 2026 <span data-brand-name>Real Estate Tools</span> · Working name, brand pending.</span><span>Static demonstration · No customer information collected</span></div></div></footer>
