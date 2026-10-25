@@ -32,37 +32,35 @@
 <h2 style="font-size:1.7rem">Enter your figures</h2>
 <p class="muted">Adjust the sample values below to calculate an estimate instantly.</p>
 <form id="property-investment-form" onsubmit="return false"><div class="form-grid">
-<div class="form-field"><label for="property-price">Purchase price (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="property-price" type="number" min="0" max="1000000000000" step="1000" value="250000"></span><input class="field-slider" id="property-price-slider" type="range" min="0" max="1000000" step="1000" value="250000" aria-label="Purchase price (USD) slider"></div>
-<div class="form-field"><label for="down-payment">Down payment (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="down-payment" type="number" min="0" max="1000000000000" step="1000" value="50000"></span><input class="field-slider" id="down-payment-slider" type="range" min="0" max="500000" step="1000" value="50000" aria-label="Down payment (USD) slider"></div>
+<div class="form-field"><label for="property-price">Purchase price (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="property-price" type="number" min="0" max="1000000000000" step="1000" value="250000"></span></div>
+<div class="form-field"><label for="down-payment">Down payment (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="down-payment" type="number" min="0" max="1000000000000" step="1000" value="50000"></span></div>
 <div class="form-field"><label for="down-percent-input">Down payment (%)</label><span class="input-unit"><input class="field" id="down-percent-input" type="number" min="0" max="100" step="0.1" value="20"><span class="unit-affix" aria-hidden="true">%</span></span><small class="field-helper">Share of the purchase price. Edit either value; the other follows automatically.</small></div>
-<div class="form-field"><label for="interest-rate">Mortgage rate (%)</label><span class="input-unit"><input class="field" id="interest-rate" type="number" min="0" max="100" step="0.01" value="7"><span class="unit-affix" aria-hidden="true">%</span></span><input class="field-slider" id="interest-rate-slider" type="range" min="0" max="15" step="0.1" value="7" aria-label="Mortgage rate (%) slider"></div>
+<div class="form-field"><label for="interest-rate">Mortgage rate (%)</label><span class="input-unit"><input class="field" id="interest-rate" type="number" min="0" max="100" step="0.01" value="7"><span class="unit-affix" aria-hidden="true">%</span></span></div>
 <div class="form-field"><span class="seg-label" id="loan-years-label">Loan term</span><div class="seg-control" role="group" aria-labelledby="loan-years-label"><button type="button" data-years="15" aria-pressed="false">15 years</button><button type="button" data-years="20" aria-pressed="false">20 years</button><button type="button" data-years="30" aria-pressed="true">30 years</button></div><input type="hidden" id="loan-years" value="30"></div>
-<div class="form-field"><label for="monthly-rent">Monthly rent (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="monthly-rent" type="number" min="0" max="1000000000000" step="10" value="2400"><span class="unit-affix" aria-hidden="true">/ month</span></span><input class="field-slider" id="monthly-rent-slider" type="range" min="0" max="10000" step="10" value="2400" aria-label="Monthly rent (USD) slider"></div>
-<div class="form-field"><label for="vacancy-rate">Vacancy rate (%)</label><span class="input-unit"><input class="field" id="vacancy-rate" type="number" min="0" max="100" step="0.5" value="5"><span class="unit-affix" aria-hidden="true">%</span></span><input class="field-slider" id="vacancy-rate-slider" type="range" min="0" max="50" step="1" value="5" aria-label="Vacancy rate (%) slider"></div>
-<div class="form-field"><label for="other-income">Other income (USD per month)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="other-income" type="number" min="0" max="1000000000000" step="10" value="0"><span class="unit-affix" aria-hidden="true">/ month</span></span></div>
+<div class="form-field"><label for="monthly-rent">Monthly rent (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="monthly-rent" type="number" min="0" max="1000000000000" step="10" value="2400"><span class="unit-affix" aria-hidden="true">/ month</span></span></div>
+<div class="form-field"><label for="vacancy-rate">Vacancy rate (%)</label><span class="input-unit"><input class="field" id="vacancy-rate" type="number" min="0" max="100" step="0.5" value="5"><span class="unit-affix" aria-hidden="true">%</span></span></div>
+<div class="form-field"><label for="other-income">Other income (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="other-income" type="number" min="0" max="1000000000000" step="10" value="0"><span class="unit-affix" aria-hidden="true">/ month</span></span></div>
 </div>
-<details class="advanced">
-<summary>Advanced options</summary>
-<div class="form-grid">
-<div class="form-field"><label for="property-tax">Property tax (USD per year)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="property-tax" type="number" min="0" max="1000000000000" step="100" value="3000"><span class="unit-affix" aria-hidden="true">/ year</span></span></div>
-<div class="form-field"><label for="home-insurance">Insurance (USD per year)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="home-insurance" type="number" min="0" max="1000000000000" step="100" value="1200"><span class="unit-affix" aria-hidden="true">/ year</span></span></div>
-<div class="form-field"><label for="hoa-fee">HOA dues (USD per month)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="hoa-fee" type="number" min="0" max="1000000000000" step="10" value="0"><span class="unit-affix" aria-hidden="true">/ month</span></span></div>
+<div class="form-grid advanced-fields">
+<div class="form-field"><label for="property-tax">Property tax (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="property-tax" type="number" min="0" max="1000000000000" step="100" value="3000"><span class="unit-affix" aria-hidden="true">/ year</span></span></div>
+<div class="form-field"><label for="home-insurance">Insurance (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="home-insurance" type="number" min="0" max="1000000000000" step="100" value="1200"><span class="unit-affix" aria-hidden="true">/ year</span></span></div>
+<div class="form-field"><label for="hoa-fee">HOA dues (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="hoa-fee" type="number" min="0" max="1000000000000" step="10" value="0"><span class="unit-affix" aria-hidden="true">/ month</span></span></div>
 <div class="form-field"><label for="maintenance-rate">Maintenance (% of rent)</label><span class="input-unit"><input class="field" id="maintenance-rate" type="number" min="0" max="100" step="0.5" value="5"><span class="unit-affix" aria-hidden="true">%</span></span></div>
 <div class="form-field"><label for="capex-rate">CapEx reserve (% of rent)</label><span class="input-unit"><input class="field" id="capex-rate" type="number" min="0" max="100" step="0.5" value="5"><span class="unit-affix" aria-hidden="true">%</span></span></div>
-<div class="form-field"><label for="management-rate">Management fee (% of effective income)</label><span class="input-unit"><input class="field" id="management-rate" type="number" min="0" max="100" step="0.5" value="8"><span class="unit-affix" aria-hidden="true">%</span></span></div>
+<div class="form-field"><label for="management-rate">Management fee (%)</label><small class="field-helper">Percent of effective income.</small><span class="input-unit"><input class="field" id="management-rate" type="number" min="0" max="100" step="0.5" value="8"><span class="unit-affix" aria-hidden="true">%</span></span></div>
 <div class="form-field"><label for="closing-costs">Closing costs (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="closing-costs" type="number" min="0" max="1000000000000" step="100" value="7500"></span><small class="field-helper">Counted in the cash you invest.</small></div>
 </div>
-</details>
 </form>
 <p class="validation-note" id="validation-note" role="alert"></p>
 <p class="disclaimer">Cash-on-cash return uses all the cash you put in — down payment plus closing costs — not just the down payment. Mortgage payments are excluded from operating expenses and counted separately as debt service.</p>
 <p class="disclaimer">Estimates only. Not a loan offer or financial advice.</p>
 </div>
-<aside class="inv-results" aria-live="polite">
+<aside class="inv-results" id="investment-results" aria-live="polite">
 <div class="inv-verdict">
 <p class="inv-verdict-label">Monthly cash flow</p>
-<p class="inv-verdict-value" id="monthly-cash-flow">—</p>
-<p class="inv-verdict-sub">Annual cash flow <b id="annual-cash-flow">—</b></p>
+<p class="inv-verdict-value" id="monthly-cash-flow" aria-live="polite">—</p>
+<p class="inv-negative-note">Negative cash flow: this property costs more each month than it earns.</p>
+<p class="inv-verdict-sub"><b id="annual-cash-flow">—</b> per year</p>
 </div>
 <p class="inv-validation" id="inv-validation" role="alert"></p>
 <p class="inv-empty" id="result-empty" hidden>Enter your details to see your estimate.</p>
@@ -70,35 +68,31 @@
 <div class="inv-tiles">
 <div class="inv-tile"><span class="inv-tile-label">Cash-on-cash return</span><b class="inv-tile-value" id="tile-coc">—</b></div>
 <div class="inv-tile"><span class="inv-tile-label">Cap rate</span><b class="inv-tile-value" id="tile-cap">—</b></div>
-<div class="inv-tile"><span class="inv-tile-label">DSCR</span><b class="inv-tile-value" id="tile-dscr">—</b></div>
-<div class="inv-tile"><span class="inv-tile-label">Annual NOI</span><b class="inv-tile-value" id="tile-noi">—</b></div>
-<div class="inv-tile"><span class="inv-tile-label">Break-even rent</span><b class="inv-tile-value" id="tile-breakeven">—</b></div>
 <div class="inv-tile"><span class="inv-tile-label">Cash invested</span><b class="inv-tile-value" id="tile-invested">—</b></div>
 </div>
-<h3 class="inv-group">Monthly cash flow</h3>
-<div class="inv-row"><span>Monthly rent</span><b id="row-rent">—</b></div>
-<div class="inv-row" id="row-vacancy"><span>Vacancy loss</span><b id="row-vacancy-loss">—</b></div>
-<div class="inv-row" id="row-other"><span>Other income</span><b id="row-other-income">—</b></div>
-<div class="inv-row"><span>Effective income</span><b id="row-effective">—</b></div>
-<div class="inv-row"><span>Mortgage payment (P&amp;I)</span><b id="row-pi">—</b></div>
-<div class="inv-row"><span>Property tax</span><b id="row-tax">—</b></div>
-<div class="inv-row"><span>Insurance</span><b id="row-insurance">—</b></div>
-<div class="inv-row" id="row-hoa"><span>HOA dues</span><b id="row-hoa-out">—</b></div>
-<div class="inv-row"><span>Maintenance</span><b id="row-maintenance">—</b></div>
-<div class="inv-row"><span>CapEx reserve</span><b id="row-capex">—</b></div>
-<div class="inv-row"><span>Management fee</span><b id="row-management">—</b></div>
+<div hidden aria-hidden="true"><span id="tile-dscr">—</span><span id="tile-noi">—</span><span id="tile-breakeven">—</span></div>
+<h3 class="inv-group">Monthly breakdown</h3>
+<div class="inv-breakdown">
+<div class="inv-row"><span>Rent after vacancy</span><b id="row-rent-after-vacancy">—</b></div>
+<div class="inv-row"><span>Mortgage payment (principal and interest)</span><b id="row-pi">—</b></div>
+<div class="inv-row"><span>Operating expenses</span><b id="row-opex">—</b></div>
 <div class="inv-row inv-row-total"><span>Monthly cash flow</span><b id="row-cash-flow">—</b></div>
-<div class="inv-track" aria-hidden="true"><div id="bar-vacancy" class="inv-seg-vacancy"></div><div id="bar-pi" class="inv-seg-pi"></div><div id="bar-opex" class="inv-seg-opex"></div><div id="bar-cf" class="inv-seg-cf"></div></div>
-<ul class="inv-legend"><li><span class="swatch inv-seg-vacancy"></span> Vacancy <b id="lg-vacancy">—</b></li><li><span class="swatch inv-seg-pi"></span> Mortgage P&amp;I <b id="lg-pi">—</b></li><li><span class="swatch inv-seg-opex"></span> Operating expenses <b id="lg-opex">—</b></li><li><span class="swatch inv-seg-cf"></span> Cash flow <b id="lg-cf">—</b></li></ul>
-<h3 class="inv-group">Investment ratios</h3>
-<div class="inv-row"><span>Gross yield</span><b id="row-gross-yield">—</b></div>
-<div class="inv-row"><span>Rent as % of price</span><b id="row-rent-ratio">—</b></div>
-<p class="inv-note" id="hidden-rows-note"></p>
-<div class="inv-copy-row"><button class="inv-btn inv-btn-primary" id="copy-results" type="button">Copy results</button><button class="inv-btn inv-btn-outline" id="print-results" type="button">Print</button></div>
+</div>
+<div class="inv-copy-row"><button class="inv-btn inv-btn-primary" id="copy-results" type="button">Copy results</button></div>
 <p class="inv-copy-note" id="copy-note"></p></div>
-<div style="margin-top:26px"><a class="btn btn-outline" href="../../tools/mortgage-calculator/" style="white-space:normal">See the payment on the mortgage calculator ↗</a></div>
+<a class="inv-mortgage-link" href="../../tools/mortgage-calculator/">See the payment on the mortgage calculator</a>
+<p class="inv-footnote">Cash-on-cash return uses all the cash you put in, including closing costs. Estimate only. Not a loan offer or financial advice.</p>
 </aside>
 </div></section>
+
+<section class="section"><div class="wrap content">
+<h2>Understanding the numbers</h2>
+<p><strong>DSCR</strong> (debt service coverage ratio) is net operating income divided by annual debt service. At the defaults it is 1.13x, below the 1.25 level many lenders look for, so the property's income covers the loan payment with little buffer.</p>
+<p><strong>Net operating income (NOI)</strong> is effective income minus operating expenses, before the mortgage. At the defaults it is $18,091.20 a year, and it is the starting point for both cap rate and DSCR.</p>
+<p><strong>Break-even rent</strong> is the rent the property needs just to cover operating expenses and the mortgage payment, with zero cash flow. At the defaults it is $2,171.32 a month, so rent above that is the property's buffer against a vacancy or a repair.</p>
+<p><strong>Gross yield</strong> is annual rent divided by price, before expenses. It is a quick first screen, not a return, because it ignores vacancy, expenses and financing.</p>
+</div></section>
+
 <section class="section"><div class="wrap content">
 <h2>How the analysis works</h2>
 <p>Start with the rent, subtract a vacancy allowance and add other income to get effective income. Subtract every operating expense — tax, insurance, HOA, maintenance, CapEx reserve and management — to get net operating income (NOI). The mortgage never appears in NOI; it is counted separately as debt service. Monthly cash flow is effective income minus operating expenses minus the mortgage payment. Cap rate is NOI divided by price, cash-on-cash is annual cash flow divided by all the cash you invested (down payment plus closing costs), and DSCR is NOI divided by annual debt service — most lenders look for 1.25 or better.</p>
@@ -138,6 +132,7 @@
 <p>Verify rents, occupancy and costs with local records before making any buying decision. A single year of figures does not predict the next year.</p>
 <p>Next steps: compare the property on income alone in the <a href="../cap-rate-calculator/">Cap Rate Calculator</a> and the <a href="../noi-calculator/">NOI Calculator</a>, project the whole hold in the <a href="../roi-calculator/">ROI Calculator</a>, and check the loan payment in the <a href="../mortgage-calculator/">Mortgage Calculator</a>.</p>
 </div></section>
+<a class="inv-bottom-bar" href="#investment-results"><span>Monthly cash flow:</span><b id="bottom-cash-flow">—</b></a>
 </main>
 <footer class="footer"><div class="wrap"><div class="footer-top"><div><a class="brand" href="../../" style="color:white;display:inline-flex;margin-bottom:18px"><span class="brand-mark" style="background:#254761">⌂</span><span class="brand-name"><span data-brand-name>Real Estate Tools</span><em style="color:#adc6c8">Tools · Software · Guides</em></span></a><p>Useful real estate tools for everyday decisions, with RealtorOS as the flagship CRM. Brand and company details will be finalized before public launch.</p></div><div><h2 class="footer-heading">Platform</h2><a href="../../tools/">All tools</a><a href="../../tools/commission-calculator/">Commission calculator</a><a href="../../tools/mortgage-calculator/">Mortgage calculator</a><a href="../../tools/home-affordability-calculator/">Home affordability calculator</a><a href="../../tools/rent-vs-buy-calculator/">Rent vs buy calculator</a><a href="../../tools/cap-rate-calculator/">Cap rate calculator</a><a href="../../tools/bridge-loan-calculator/">Bridge loan calculator</a><a href="../../tools/property-investment-calculator/">Property investment calculator</a><a href="../../tools/capital-gains-tax-calculator/">Capital gains tax calculator</a><a href="../../tools/roi-calculator/">ROI calculator</a><a href="../../tools/noi-calculator/">NOI calculator</a></div><div><h2 class="footer-heading">Product</h2><a href="../../realtoros/">RealtorOS CRM</a><a href="../../resources/">Resources</a><a href="../../about/">About</a><a href="../../contact/">Contact</a></div><div><h2 class="footer-heading">Before launch</h2><p>Connect support email, app login, pricing and approved legal policies.</p></div></div><div class="foot-bottom"><span>© 2026 <span data-brand-name>Real Estate Tools</span> · Working name, brand pending.</span><span>Static demonstration · No customer information collected</span></div></div></footer>
 <script src="../../assets/site-config.js" defer></script>

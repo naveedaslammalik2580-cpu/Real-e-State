@@ -39,7 +39,8 @@
     return Number.isFinite(v) && v >= min && v <= max;
   }
   var OUTPUTS = ['monthly-cash-flow', 'annual-cash-flow', 'tile-coc', 'tile-cap',
-    'tile-dscr', 'tile-noi', 'tile-breakeven', 'tile-invested', 'row-rent',
+    'tile-dscr', 'tile-noi', 'tile-breakeven', 'tile-invested', 'row-rent-after-vacancy',
+    'row-opex', 'bottom-cash-flow', 'row-rent',
     'row-vacancy-loss', 'row-other-income', 'row-effective', 'row-pi', 'row-tax',
     'row-insurance', 'row-hoa-out', 'row-maintenance', 'row-capex', 'row-management',
     'row-cash-flow', 'lg-vacancy', 'lg-pi', 'lg-opex', 'lg-cf', 'row-gross-yield',
@@ -130,6 +131,8 @@
       set('validation-note', message);
       set('inv-validation', message);
       set('sticky-value', '—');
+      var verdictBad = document.querySelector('.inv-verdict');
+      if (verdictBad && verdictBad.classList) verdictBad.classList.remove('is-negative');
       set('hidden-rows-note', '');
       hideRow('result-body', true); hideRow('result-empty', false);
       setWidth('bar-vacancy', 0); setWidth('bar-pi', 0); setWidth('bar-opex', 0); setWidth('bar-cf', 0);
@@ -168,6 +171,12 @@
     if (breakeven !== null && breakeven <= 0) breakeven = null;
     set('monthly-cash-flow', negUsd(cf));
     set('annual-cash-flow', negUsd(cf * 12));
+    set('row-rent-after-vacancy', usd(rent - vacancyLoss));
+    set('row-opex', usd(opex));
+    set('bottom-cash-flow', negUsd(cf));
+    // Display only: negative cash flow gets amber + a text note (CSS class).
+    var verdictEl = document.querySelector('.inv-verdict');
+    if (verdictEl && verdictEl.classList) verdictEl.classList.toggle('is-negative', cf < 0);
     set('tile-coc', coc === null ? '—' : pct(coc));
     set('tile-cap', pct(cap));
     set('tile-dscr', dscr === null ? '—' : dscr.toFixed(2) + 'x');
