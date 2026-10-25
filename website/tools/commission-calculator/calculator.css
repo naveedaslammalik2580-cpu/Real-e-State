@@ -37,13 +37,17 @@
 .panel h2 { margin-bottom: 6px; }
 .panel-intro { font-size: 14px; }
 .form-group:first-of-type { margin-top: 4px; }
-.result-label, .result-group { color: #A9B8C6; }
+.result .result-label { color: #AAB8C7; }
+.result-group { color: #A9B8C6; }
 .result-number { font-size: 48px; letter-spacing: 0.01em; margin: 12px 0 0; }
 .result-net-block { margin-top: 24px; }
 .result-net { font-size: 36px; font-weight: 600; color: #2DD4BF; letter-spacing: 0.01em; line-height: 1.1; }
 .breakdown-legend { margin: 12px 0 0; }
 .breakdown-group { margin-top: 24px; }
-.result-sides { font-size: 13px; color: #A9B8C6; margin: 0 0 4px; }
+.result-sides { font-size: 13px; color: #AAB8C7; margin: 0 0 4px; display: flex; flex-wrap: wrap; column-gap: 8px; row-gap: 2px; align-items: baseline; }
+/* Qualified so this color wins over the shared .page-hero p rule (which sets
+   the label text dark); the amounts keep their own white rule below. */
+.result .result-sides { color: #AAB8C7; }
 .result-sides b { color: #fff; font-weight: 600; }
 .result .result-row { font-size: 14px; }
 .result .result-row span { color: #C9D4DE; }
@@ -56,7 +60,7 @@
 .result-row-total { border-top: 1px solid #254055; }
 .result-row-total b { font-weight: 700; }
 .seller-section { margin-top: 24px; padding-top: 20px; border-top: 1px solid #254055; }
-.seller-helper { font-size: 14px; color: #A9B8C6; margin: 0; }
+.result .seller-helper { font-size: 14px; color: #C9D4DE; margin: 0; }
 .seller-toggle { width: 100%; display: flex; justify-content: space-between; align-items: center; background: transparent; border: 0; color: #fff; font-weight: 700; font-size: 1rem; padding: 0; }
 .seller-chevron { transition: transform .15s ease; }
 .seller-toggle[aria-expanded="true"] .seller-chevron { transform: rotate(180deg); }
