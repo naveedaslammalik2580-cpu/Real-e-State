@@ -25,136 +25,259 @@
 <div class="nav-buttons"><a class="btn btn-primary btn-small" href="../../realtoros/">Discover RealtorOS <span aria-hidden="true">↗</span></a></div>
 <button class="menu-toggle" type="button" aria-controls="site-menu" aria-expanded="false" aria-label="Open navigation"><span aria-hidden="true">☰</span></button>
 </div></header>
-<main id="main"><div class="cgt-sticky" id="sticky-result"><span>Total tax</span><b id="sticky-value">—</b></div>
+<main id="main">
+
 <section class="page-hero"><div class="wrap"><h1>Capital Gains Tax Calculator</h1><p>Selling a property? Enter what you paid, what you spent on it, and what you sold it for — we'll work out the taxable gain, any primary-residence exclusion, depreciation recapture, and what you keep after tax.</p></div>
 <div class="wrap calculator-layout">
+
 <div class="panel">
 <h2 style="font-size:1.7rem">Enter your figures</h2>
 <p class="muted">Adjust the sample values below to calculate an estimate instantly.</p>
-<form id="capital-gains-tax-form" onsubmit="return false"><div class="form-grid">
-<div class="form-field"><label for="sale-price">Sale price (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="sale-price" type="number" min="0" max="1000000000000" step="1000" value="650000"></span></div>
-<div class="form-field"><label for="purchase-price">Purchase price (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="purchase-price" type="number" min="0" max="1000000000000" step="1000" value="400000"></span></div>
-<div class="form-field"><label for="improvements">Capital improvements (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="improvements" type="number" min="0" max="1000000000000" step="1000" value="30000"></span><small class="field-helper">Additions and major renovations only — routine repairs do not count.</small></div>
-<div class="form-field"><span class="seg-label" id="property-use-label">Property use</span><div class="seg-control" role="group" aria-labelledby="property-use-label"><button type="button" data-target="property-use" data-value="primary" aria-pressed="false">Primary residence</button><button type="button" data-target="property-use" data-value="investment" aria-pressed="true">Investment</button></div><input type="hidden" id="property-use" value="investment"></div>
+
+<form id="capital-gains-tax-form" onsubmit="return false">
+
+<fieldset class="form-group">
+<legend>The sale</legend>
+<div class="form-grid">
+<div class="form-field"><label for="sale-price">Sale price</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="sale-price" type="number" min="0" max="1000000000000" step="1000" value="650000"></span></div>
+<div class="form-field"><label for="purchase-price">Purchase price</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="purchase-price" type="number" min="0" max="1000000000000" step="1000" value="400000"></span></div>
+<div class="form-field form-field-wide"><label for="improvements">Capital improvements</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="improvements" type="number" min="0" max="1000000000000" step="1000" value="30000"></span><small class="field-helper">Additions and major renovations only. Routine repairs do not count.</small></div>
+</div>
+</fieldset>
+
+<fieldset class="form-group">
+<legend>How you used it</legend>
+<div class="form-field">
+<span class="seg-label" id="property-use-label">Property use</span>
+<div class="seg-control cgt-use" role="group" aria-labelledby="property-use-label">
+<button type="button" data-target="property-use" data-value="primary" aria-pressed="false"><strong>Primary residence</strong><span>Up to $250,000 of gain can be excluded if you qualify.</span></button>
+<button type="button" data-target="property-use" data-value="investment" aria-pressed="true"><strong>Investment</strong><span>Depreciation recapture applies.</span></button>
+</div>
+<input type="hidden" id="property-use" value="investment">
 </div>
 <div class="form-grid" id="conditional-fields">
-<div class="form-field" id="field-years-lived" hidden><label for="years-lived">Years lived in as main home</label><span class="input-unit"><input class="field" id="years-lived" type="number" min="0" max="50" step="1" value="0"><span class="unit-affix" aria-hidden="true">years</span></span><small class="field-helper">Only matters for a primary residence — needs 2+ years for the exclusion.</small></div>
-<div class="form-field" id="field-depreciation"><label for="depreciation">Depreciation claimed (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="depreciation" type="number" min="0" max="1000000000000" step="1000" value="60000"></span><small class="field-helper">Rental properties only — leave at 0 for a home you never depreciated.</small></div>
+<div class="form-field" id="field-years-lived" hidden><label for="years-lived">Years lived in as main home</label><span class="input-unit"><input class="field" id="years-lived" type="number" min="0" max="50" step="1" value="0"><span class="unit-affix" aria-hidden="true">years</span></span><small class="field-helper">You need 2 or more for the exclusion.</small></div>
+<div class="form-field" id="field-depreciation"><label for="depreciation">Depreciation claimed</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="depreciation" type="number" min="0" max="1000000000000" step="1000" value="60000"></span><small class="field-helper">Leave at 0 if you never depreciated it.</small></div>
 </div>
 <p class="cgt-depr-note" id="depr-note" hidden></p>
+</fieldset>
+
+<fieldset class="form-group">
+<legend>Refine the estimate</legend>
+
 <div class="cgt-collapse">
-<button type="button" class="cgt-collapse-btn" aria-expanded="false" aria-controls="panel-costs"><span>Costs</span><span class="cgt-collapse-summary" id="summary-costs"></span><span class="cgt-chevron" aria-hidden="true">▾</span></button>
+<button type="button" class="cgt-collapse-btn" aria-expanded="false" aria-controls="panel-costs"><span class="t">Costs</span><span class="cgt-collapse-summary" id="summary-costs"></span><span class="cgt-act"><span class="cgt-edit"></span><span class="cgt-chevron" aria-hidden="true">▾</span></span></button>
 <div id="panel-costs" hidden><div class="form-grid">
-<div class="form-field"><label for="buying-costs">Buying costs (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="buying-costs" type="number" min="0" max="1000000000000" step="100" value="8000"></span><small class="field-helper">Closing costs from the purchase — they raise your basis.</small></div>
-<div class="form-field"><label for="selling-rate">Selling costs (% of sale price)</label><span class="input-unit"><input class="field" id="selling-rate" type="number" min="0" max="100" step="0.5" value="6"><span class="unit-affix" aria-hidden="true">%</span></span></div>
+<div class="form-field"><label for="buying-costs">Buying costs</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="buying-costs" type="number" min="0" max="1000000000000" step="100" value="8000"></span><small class="field-helper">Closing costs from the purchase. They raise your basis.</small></div>
+<div class="form-field"><label for="selling-rate">Selling costs</label><span class="input-unit"><input class="field" id="selling-rate" type="number" min="0" max="100" step="0.5" value="6"><span class="unit-affix" aria-hidden="true">% of sale price</span></span></div>
 </div></div>
 </div>
+
 <div class="cgt-collapse">
-<button type="button" class="cgt-collapse-btn" aria-expanded="false" aria-controls="panel-situation"><span>Your situation</span><span class="cgt-collapse-summary" id="summary-situation"></span><span class="cgt-chevron" aria-hidden="true">▾</span></button>
+<button type="button" class="cgt-collapse-btn" aria-expanded="false" aria-controls="panel-situation"><span class="t">Your situation</span><span class="cgt-collapse-summary" id="summary-situation"></span><span class="cgt-act"><span class="cgt-edit"></span><span class="cgt-chevron" aria-hidden="true">▾</span></span></button>
 <div id="panel-situation" hidden><div class="form-grid">
 <div class="form-field"><span class="seg-label" id="filing-status-label">Filing status</span><div class="seg-control" role="group" aria-labelledby="filing-status-label"><button type="button" data-target="filing-status" data-value="single" aria-pressed="true">Single</button><button type="button" data-target="filing-status" data-value="mfj" aria-pressed="false">Married filing jointly</button></div><input type="hidden" id="filing-status" value="single"></div>
 <div class="form-field"><span class="seg-label" id="holding-label">How long you owned it</span><div class="seg-control" role="group" aria-labelledby="holding-label"><button type="button" data-target="holding" data-value="short" aria-pressed="false">1 year or less</button><button type="button" data-target="holding" data-value="long" aria-pressed="true">More than 1 year</button></div><input type="hidden" id="holding" value="long"></div>
 </div></div>
 </div>
+
 <div class="cgt-collapse">
-<button type="button" class="cgt-collapse-btn" aria-expanded="false" aria-controls="panel-rates"><span>Tax rates</span><span class="cgt-collapse-summary" id="summary-rates"></span><span class="cgt-chevron" aria-hidden="true">▾</span></button>
+<button type="button" class="cgt-collapse-btn" aria-expanded="false" aria-controls="panel-rates"><span class="t">Tax rates</span><span class="cgt-collapse-summary" id="summary-rates"></span><span class="cgt-act"><span class="cgt-edit"></span><span class="cgt-chevron" aria-hidden="true">▾</span></span></button>
 <div id="panel-rates" hidden><div class="form-grid">
 <div class="form-field"><span class="seg-label" id="ltcg-rate-label">Long-term capital gains rate</span><div class="seg-control" role="group" aria-labelledby="ltcg-rate-label"><button type="button" data-target="ltcg-rate" data-value="0" aria-pressed="false">0%</button><button type="button" data-target="ltcg-rate" data-value="15" aria-pressed="true">15%</button><button type="button" data-target="ltcg-rate" data-value="20" aria-pressed="false">20%</button></div><input type="hidden" id="ltcg-rate" value="15"></div>
-<div class="form-field"><label for="ordinary-rate">Ordinary income tax rate (%)</label><span class="input-unit"><input class="field" id="ordinary-rate" type="number" min="0" max="100" step="1" value="22"><span class="unit-affix" aria-hidden="true">%</span></span><small class="field-helper">Used for short-term gains and depreciation recapture (capped at 25%).</small></div>
-<div class="form-field"><label for="state-rate">State tax rate on the gain (%)</label><span class="input-unit"><input class="field" id="state-rate" type="number" min="0" max="100" step="0.5" value="5"><span class="unit-affix" aria-hidden="true">%</span></span></div>
-<div class="form-field"><span class="seg-label" id="niit-label">Net investment income tax (NIIT)</span><div class="seg-control" role="group" aria-labelledby="niit-label"><button type="button" data-target="niit" data-value="yes" aria-pressed="true">Applies to me</button><button type="button" data-target="niit" data-value="no" aria-pressed="false">Does not apply</button></div><input type="hidden" id="niit" value="yes"><small class="field-helper">3.8% — generally applies when income exceeds $200,000 single / $250,000 married filing jointly.</small></div>
+<div class="form-field"><label for="ordinary-rate">Ordinary income tax rate</label><span class="input-unit"><input class="field" id="ordinary-rate" type="number" min="0" max="100" step="1" value="22"><span class="unit-affix" aria-hidden="true">%</span></span><small class="field-helper">Used for short-term gains and depreciation recapture (capped at 25%).</small></div>
+<div class="form-field"><label for="state-rate">State tax rate on the gain</label><span class="input-unit"><input class="field" id="state-rate" type="number" min="0" max="100" step="0.5" value="5"><span class="unit-affix" aria-hidden="true">%</span></span></div>
+<div class="form-field"><span class="seg-label" id="niit-label">Net investment income tax (NIIT)</span><div class="seg-control" role="group" aria-labelledby="niit-label"><button type="button" data-target="niit" data-value="yes" aria-pressed="true">Applies to me</button><button type="button" data-target="niit" data-value="no" aria-pressed="false">Does not apply</button></div><input type="hidden" id="niit" value="yes"><small class="field-helper">3.8%. It generally applies when income is above $200,000 single or $250,000 married filing jointly.</small></div>
 </div></div>
-</div></form>
+</div>
+
+</fieldset>
+</form>
 <p class="validation-note" id="validation-note" role="alert"></p>
 </div>
+
 <aside class="cgt-results" id="cgt-results" aria-live="polite">
 <div class="cgt-verdict">
-<p class="cgt-verdict-label">Total tax on the sale</p>
-<p class="cgt-verdict-value" id="total-tax" aria-live="polite">—</p>
+<p class="cgt-verdict-label">You keep after tax</p>
+<p class="cgt-verdict-value" id="net-proceeds" aria-live="polite">—</p>
+<p class="cgt-verdict-sub"><b id="total-tax">—</b> goes to tax. Net proceeds are before any mortgage payoff.</p>
 <p class="cgt-loss-note" id="loss-note" hidden>No tax is due on this estimate: the sale shows no taxable gain.</p>
-<p class="cgt-verdict-sub">Net proceeds before mortgage payoff: <b id="net-proceeds">—</b></p>
+<div class="sale-bar" role="img" aria-label="Sale price split into selling costs, tax and what you keep"><i class="seg-costs" id="bar-costs"></i><i class="seg-tax" id="bar-tax"></i><i class="seg-keep" id="bar-keep"></i></div>
+<ul class="cgt-legend">
+<li><b class="sw sw-costs"></b><span class="lbl">Selling costs</span><em id="lg-costs">—</em></li>
+<li><b class="sw sw-tax"></b><span class="lbl">Tax</span><em id="lg-tax">—</em></li>
+<li><b class="sw sw-keep"></b><span class="lbl">You keep</span><em id="lg-keep">—</em></li>
+<li class="t"><span class="lbl">Sale price</span><em id="lg-sale">—</em></li>
+</ul>
 </div>
 <p class="cgt-validation" id="cgt-validation" role="alert"></p>
 <p class="cgt-empty" id="result-empty" hidden>Enter your details to see your estimate.</p>
+
 <div id="result-body">
 <div class="cgt-tiles">
+<div class="cgt-tile"><span class="cgt-tile-label">Total gain</span><b class="cgt-tile-value" id="tile-gain">—</b></div>
 <div class="cgt-tile"><span class="cgt-tile-label">Taxable gain</span><b class="cgt-tile-value" id="tile-taxable">—</b></div>
 <div class="cgt-tile"><span class="cgt-tile-label">Effective tax rate</span><b class="cgt-tile-value" id="tile-effective">—</b></div>
-<div class="cgt-tile"><span class="cgt-tile-label">Net proceeds before mortgage payoff</span><b class="cgt-tile-value" id="tile-net">—</b></div>
 </div>
-<div hidden aria-hidden="true"><span id="tile-gain">—</span><span id="tile-exclusion">—</span><span id="tile-federal">—</span></div>
+<div hidden aria-hidden="true"><span id="tile-exclusion">—</span><span id="tile-federal">—</span><span id="tile-net">—</span></div>
+
+<div id="gain-split">
+<h3 class="cgt-group">How the gain is taxed</h3>
+<div class="gain-bar" role="img" aria-label="The gain split into excluded, depreciation recapture and remaining gain"><i class="seg-excl" id="gb-excl"></i><i class="seg-recap" id="gb-recap"></i><i class="seg-rest" id="gb-rest"></i></div>
+<ul class="cgt-legend">
+<li id="gb-excl-item"><b class="sw sw-excl"></b><span class="lbl">Excluded (primary residence)</span><em id="gb-excl-amt">—</em></li>
+<li id="gb-recap-item"><b class="sw sw-recap"></b><span class="lbl">Depreciation recapture <small id="gb-recap-rate"></small></span><em id="gb-recap-amt">—</em></li>
+<li id="gb-rest-item"><b class="sw sw-rest"></b><span class="lbl"><span id="gb-rest-label">Long-term gain</span> <small id="gb-rest-rate"></small></span><em id="gb-rest-amt">—</em></li>
+</ul>
+</div>
+
 <h3 class="cgt-group">Your gain</h3>
 <div class="cgt-breakdown">
-<div class="cgt-row" id="gain-realized-row"><span>Amount realized</span><b id="row-realized">—</b></div>
-<div class="cgt-row" id="gain-basis-row"><span>Adjusted basis</span><b id="row-basis">—</b></div>
-<div class="cgt-row" id="gain-taxable-row"><span>Taxable gain</span><b id="row-taxable">—</b></div>
+<div class="cgt-row" id="gain-realized-row"><span class="cgt-lbl"><span class="cgt-name">Amount realized</span></span><b id="row-realized">—</b></div>
+<div class="cgt-row" id="gain-basis-row"><span class="cgt-lbl"><span class="cgt-name">Adjusted basis</span></span><b id="row-basis">—</b></div>
+<div class="cgt-row" id="gain-taxable-row"><span class="cgt-lbl"><span class="cgt-name">Taxable gain</span></span><b id="row-taxable">—</b></div>
 </div>
+
 <h3 class="cgt-group">Your tax</h3>
 <div class="cgt-breakdown">
-<div class="cgt-row" id="row-recapture-tax"><span>Depreciation recapture tax</span><b id="row-recapture-tax-out">—</b></div>
-<div class="cgt-row"><span id="row-gain-tax-label">Long-term capital gains tax</span><b id="row-gain-tax">—</b></div>
-<div class="cgt-row" id="row-niit"><span>Net investment income tax (3.8%)</span><b id="row-niit-out">—</b></div>
-<div class="cgt-row" id="row-state"><span>State tax</span><b id="row-state-out">—</b></div>
-<div class="cgt-row cgt-row-total" id="row-total-tax-row"><span>Total tax</span><b id="row-total-tax">—</b></div>
+<div class="cgt-row" id="row-recapture-tax"><span class="cgt-lbl"><span class="cgt-name"><i class="dot dot-recap"></i><span>Depreciation recapture tax</span></span><small id="hint-recap"></small></span><b id="row-recapture-tax-out">—</b></div>
+<div class="cgt-row"><span class="cgt-lbl"><span class="cgt-name"><i class="dot dot-rest"></i><span id="row-gain-tax-label">Long-term capital gains tax</span></span><small id="hint-gain"></small></span><b id="row-gain-tax">—</b></div>
+<div class="cgt-row" id="row-niit"><span class="cgt-lbl"><span class="cgt-name"><i class="dot"></i><span>Net investment income tax</span></span><small id="hint-niit"></small></span><b id="row-niit-out">—</b></div>
+<div class="cgt-row" id="row-state"><span class="cgt-lbl"><span class="cgt-name"><i class="dot"></i><span>State tax</span></span><small id="hint-state"></small></span><b id="row-state-out">—</b></div>
+<div class="cgt-row cgt-row-total" id="row-total-tax-row"><span class="cgt-lbl"><span class="cgt-name">Total tax</span></span><b id="row-total-tax">—</b></div>
 </div>
 <p class="cgt-note" id="cgt-note"></p>
 <div class="cgt-copy-row"><button class="cgt-btn cgt-btn-primary" id="copy-results" type="button">Copy results</button></div>
-<p class="cgt-copy-note" id="copy-note"></p></div>
+<p class="cgt-copy-note" id="copy-note"></p>
+</div>
+
 <a class="cgt-realtor-link" href="../../realtoros/">Manage client follow-ups in RealtorOS</a>
-<p class="cgt-footnote">Estimates only. Not tax, legal or financial advice. Net proceeds are before any mortgage payoff.</p>
+<p class="cgt-footnote">Estimates only. Net proceeds are before any mortgage payoff.</p>
 </aside>
-</div><div class="wrap calculator-disclaimers"><p class="disclaimer">This calculator applies the rates you enter; it does not compute your tax bracket from your income. The exclusion assumes the 2-of-5-year ownership and use test and no prior exclusion in the last 2 years.</p>
-<p class="disclaimer">Estimates only. Not tax advice — verify the result with a tax professional.</p></div></section>
 
-<section class="section"><div class="wrap content">
+</div>
+<div class="wrap calculator-disclaimers"><p class="disclaimer">This calculator applies the rates you enter; it does not work out your tax bracket from your income. The exclusion assumes the 2-of-5-year ownership and use test and no prior exclusion in the last 2 years. Not tax advice: verify the result with a tax professional.</p></div>
+</section>
+
+<section class="section"><div class="wrap article">
+
+<div class="content article-main">
+
 <h2>Understanding the numbers</h2>
-<p><strong>Adjusted basis</strong> is what the property cost you for tax purposes: purchase price, plus capital improvements and buying costs, minus depreciation claimed. Amount realized (sale price minus selling costs) minus adjusted basis is the capital gain. Every documented dollar of improvements or buying costs raises basis and lowers the gain.</p>
-<p><strong>Depreciation recapture</strong> is the part of the gain caused by depreciation you claimed earlier. That slice is never covered by the primary-residence exclusion. It is taxed first, at your ordinary rate capped at 25%, before the rest of the gain is taxed. Held a year or less, the whole gain is taxed at ordinary rates instead.</p>
-<p><strong>The long-term capital gains rate</strong> applies to the remaining gain when you owned the property more than a year. Enter 0%, 15% or 20% here; which one applies depends on your income and filing status, which this calculator does not compute from your income.</p>
-<p><strong>The primary-residence exclusion</strong> can remove up to $250,000 of gain, or $500,000 filing jointly, but only for a primary residence meeting the 2-of-5-year ownership and use test and held more than a year. It applies only to the gain left after recapture, and no prior exclusion in the last 2 years is assumed.</p>
-<p><strong>The 3.8% net investment income tax (NIIT)</strong> is an extra tax that can apply to the taxable gain for higher earners. Here it is charged on the full taxable gain only when you say it applies; the calculator does not check your income against a threshold, so only turn it on if it applies to you.</p>
-</div></section>
+<div class="table-wrap">
+<table class="layers">
+<thead><tr><th scope="col">Term</th><th scope="col">What it is</th><th scope="col">How it’s taxed</th></tr></thead>
+<tbody>
+<tr><th scope="row">Adjusted basis</th><td data-label="What it is">Purchase price plus capital improvements and buying costs, minus depreciation claimed. Every documented dollar of improvements or buying costs raises basis and lowers the gain.</td><td data-label="How it’s taxed">Not taxed. It is subtracted from what you received.</td></tr>
+<tr><th scope="row">Capital gain</th><td data-label="What it is">Amount realized (sale price minus selling costs) minus adjusted basis.</td><td data-label="How it’s taxed">Split into the layers below.</td></tr>
+<tr><th scope="row">Depreciation recapture</th><td data-label="What it is">The part of the gain caused by depreciation you claimed earlier. The primary-residence exclusion never covers it.</td><td data-label="How it’s taxed">Your ordinary rate, capped at 25%, taxed first.</td></tr>
+<tr><th scope="row">Long-term gain</th><td data-label="What it is">The remaining gain when you owned the property more than a year.</td><td data-label="How it’s taxed">0%, 15% or 20%. You choose the rate; the calculator does not work it out from your income.</td></tr>
+<tr><th scope="row">Short-term gain</th><td data-label="What it is">The whole gain when you owned the property a year or less.</td><td data-label="How it’s taxed">Your ordinary rate.</td></tr>
+<tr><th scope="row">Net investment income tax (NIIT)</th><td data-label="What it is">An extra tax that can apply to higher earners. It is charged on the full taxable gain only when you say it applies.</td><td data-label="How it’s taxed">3.8%</td></tr>
+<tr><th scope="row">State tax</th><td data-label="What it is">Most states tax the gain too.</td><td data-label="How it’s taxed">The rate you enter.</td></tr>
+</tbody>
+</table>
+</div>
 
-<section class="section"><div class="wrap content">
-<h2>How the tax works</h2>
-<p>First the gain: sale price minus selling costs gives the amount realized; purchase price plus improvements plus buying costs minus depreciation gives the adjusted basis; the difference is the capital gain. For a primary residence that meets the 2-of-5-year ownership and use test, up to $250,000 of the gain ($500,000 married filing jointly) is excluded — but the part caused by depreciation is never excludable; it is recaptured first and taxed at your ordinary rate, capped at 25%. What remains is taxed at long-term rates (0%, 15% or 20%) if you owned the property more than a year, or at ordinary rates if you owned it a year or less. High earners may also owe the 3.8% net investment income tax on the taxable gain, and most states tax it too.</p>
-<h2>What moves the answer</h2>
-<p>Three things matter more than people expect: depreciation claimed in earlier years (it lowers your basis, so it raises the gain, and then gets taxed again as recapture), the exclusion (it can erase up to $500,000 of gain on a qualifying home sale, which is why the 2-year test is worth planning around), and the holding period (crossing the one-year mark can cut the rate on the whole gain from your ordinary rate to 15%). Selling costs and improvements are the quiet reducers — every documented dollar there is a dollar less gain.</p>
-<h2>Important note</h2>
-<p>This is an informational estimate, not tax advice. Real returns involve your full income picture, bracket stacking, state conformity rules, partial exclusions for qualifying moves, and nonqualified-use rules for homes that were rentals first. Verify the result with a tax professional before relying on it.</p>
-</div></section>
-
-<section class="section"><div class="wrap content">
-<h2>Capital gains tax on real estate calculator: quick answer</h2>
-<p><strong>Quick answer:</strong> A capital gains tax on real estate calculator estimates the tax on a property sale: the gain, any primary-residence exclusion, depreciation recapture, and net proceeds after tax. On this page’s investment example, a $650,000 sale gives a $233,000 gain, $59,654 total tax, and $551,346 net proceeds after tax.</p>
-<p>The tax on a sale is rarely just gain multiplied by one rate. Selling costs and basis change the gain, depreciation already claimed changes it again and is taxed as recapture, and exclusion, long-term rates, state tax and the net investment income tax can all apply to different parts of the same sale. This calculator separates those parts so each can be checked.</p>
-<h2>Worked example</h2>
-<p>With the values already filled in — a $650,000 sale, a $400,000 purchase price, $30,000 improvements, $8,000 buying costs, 6% selling costs, $60,000 depreciation claimed, an investment property held more than a year, single filing, a 15% long-term rate, a 22% ordinary rate, a 5% state rate and net investment income tax applying — the amount realized is $611,000, the adjusted basis is $378,000, and the gain is $233,000. Because this is an investment property with no years lived in as a main home, no exclusion applies. Depreciation recapture tax is $13,200, long-term gains tax is $25,950, federal tax is $39,150, net investment income tax is $8,854 and state tax is $11,650, giving total tax of $59,654 and net proceeds after tax of $551,346, an effective rate of 25.60% on the gain.</p>
-<h2>Key takeaways</h2>
-<ul>
-<li>Gain equals amount realized (sale price minus selling costs) minus adjusted basis (purchase price plus improvements plus buying costs minus depreciation).</li>
-<li>Depreciation lowers basis, so it raises the gain, and then it is taxed again as recapture at the ordinary rate, capped at 25%.</li>
-<li>For a qualifying primary residence, up to $250,000 of gain ($500,000 married filing jointly) can be excluded, subject to the 2-of-5-year ownership and use test — but the depreciation part is never excludable.</li>
-<li>Crossing the one-year holding mark can cut the rate on the remaining gain from the ordinary rate to a long-term rate, which is why holding period matters so much.</li>
+<h3 class="sub-h">The primary-residence exclusion</h3>
+<p>It can remove up to $250,000 of gain, or $500,000 filing jointly. This calculator applies it only when all three of these are true:</p>
+<ul class="takeaways">
+<li>The property is your primary residence and you lived in it as your main home for at least 2 of the last 5 years.</li>
+<li>You owned it for more than a year.</li>
+<li>You haven’t used the exclusion on another home in the last 2 years (this is assumed).</li>
 </ul>
+<p>The exclusion applies only to the gain left after depreciation recapture.</p>
+
+<h2>How the tax works</h2>
+<ol class="steps">
+<li><strong>Amount realized.</strong> Sale price minus selling costs.</li>
+<li><strong>Adjusted basis.</strong> Purchase price plus improvements plus buying costs, minus depreciation claimed.</li>
+<li><strong>Gain.</strong> Amount realized minus adjusted basis.</li>
+<li><strong>Exclusion.</strong> For a qualifying primary residence, up to $250,000 of the gain ($500,000 married filing jointly) is excluded. The part caused by depreciation is never excludable.</li>
+<li><strong>Recapture.</strong> The depreciation part is taxed first, at your ordinary rate capped at 25%.</li>
+<li><strong>The rest.</strong> What remains is taxed at long-term rates (0%, 15% or 20%) if you owned the property more than a year, or at ordinary rates if you owned it a year or less.</li>
+<li><strong>Add-ons.</strong> Higher earners may also owe the 3.8% net investment income tax on the taxable gain, and most states tax it too.</li>
+</ol>
+
+<h2>What moves the answer</h2>
+<p>Three things matter more than people expect. Depreciation claimed in earlier years lowers your basis, so it raises the gain, and is then taxed again as recapture. The exclusion can erase up to $500,000 of gain on a qualifying home sale, which is why the 2-year test is worth planning around. And the holding period matters: crossing the one-year mark can cut the rate on the remaining gain from your ordinary rate to 15%.</p>
+<p>Selling costs and improvements are the quiet reducers. Every documented dollar there is a dollar less gain.</p>
+
+<aside class="note-box">
+<strong>Important note</strong>
+<p>This is an informational estimate, not tax advice. Real returns involve your full income picture, bracket stacking, state conformity rules, partial exclusions for qualifying moves, and nonqualified-use rules for homes that were rentals first. Verify the result with a tax professional before relying on it.</p>
+</aside>
+
+<h2>Capital gains tax on real estate calculator: quick answer</h2>
+<div class="answer-box">
+<p><strong>Quick answer:</strong> A capital gains tax on real estate calculator estimates the tax on a property sale: the gain, any primary-residence exclusion, depreciation recapture, and net proceeds after tax. On this page’s investment example, a $650,000 sale gives a $233,000 gain, $59,654 total tax, and $551,346 net proceeds after tax.</p>
+</div>
+<p>The tax on a sale is rarely just gain multiplied by one rate. Selling costs and basis change the gain, depreciation already claimed changes it again and is taxed as recapture, and the exclusion, long-term rates, state tax and the net investment income tax can all apply to different parts of the same sale. This calculator separates those parts so each can be checked.</p>
+
+<h2>Worked example</h2>
+<div class="stmt-card">
+<dl class="stmt">
+<div><dt>Sale price</dt><dd>$650,000</dd></div>
+<div><dt>Selling costs (6%)</dt><dd>−$39,000</dd></div>
+<div class="sub"><dt>Amount realized</dt><dd>$611,000</dd></div>
+<div><dt>Purchase price</dt><dd>$400,000</dd></div>
+<div><dt>Capital improvements</dt><dd>+$30,000</dd></div>
+<div><dt>Buying costs</dt><dd>+$8,000</dd></div>
+<div><dt>Depreciation claimed</dt><dd>−$60,000</dd></div>
+<div class="sub"><dt>Adjusted basis</dt><dd>$378,000</dd></div>
+<div class="sub"><dt>Gain</dt><dd>$233,000</dd></div>
+</dl>
+<dl class="stmt">
+<div><dt>Depreciation recapture: 22% of $60,000</dt><dd>$13,200</dd></div>
+<div><dt>Long-term gain: 15% of $173,000</dt><dd>$25,950</dd></div>
+<div><dt>Net investment income tax: 3.8% of $233,000</dt><dd>$8,854</dd></div>
+<div><dt>State tax: 5% of $233,000</dt><dd>$11,650</dd></div>
+<div class="total"><dt>Total tax</dt><dd>$59,654</dd></div>
+<div class="keep"><dt>Net proceeds after tax</dt><dd>$551,346</dd></div>
+<div><dt>Effective rate (total tax ÷ gain)</dt><dd>25.60%</dd></div>
+</dl>
+</div>
+<p class="example-note">This is an investment property with no years lived in as a main home, so no exclusion applies. The inputs are a single filer, a 15% long-term rate, a 22% ordinary rate, a 5% state rate, and NIIT applying.</p>
+
+<h2>Key takeaways</h2>
+<ul class="takeaways">
+<li>Gain equals amount realized (sale price minus selling costs) minus adjusted basis (purchase price plus improvements plus buying costs, minus depreciation).</li>
+<li>Depreciation lowers basis, so it raises the gain, and then it is taxed again as recapture at the ordinary rate, capped at 25%.</li>
+<li>For a qualifying primary residence, up to $250,000 of gain ($500,000 married filing jointly) can be excluded. The depreciation part is never excludable.</li>
+<li>Crossing the one-year holding mark can cut the rate on the remaining gain from the ordinary rate to a long-term rate.</li>
+</ul>
+
 <h2>Frequently asked questions</h2>
-<h3>How is capital gains tax on real estate calculated?</h3>
-<p>First the gain: sale price minus selling costs, minus purchase price plus improvements plus buying costs minus depreciation. Then any exclusion, then recapture on the depreciation part, then long-term or ordinary rates on the rest, plus state tax and net investment income tax where they apply.</p>
-<h3>What is depreciation recapture?</h3>
-<p>Depreciation claimed in earlier years lowered your basis and raised the gain. That part of the gain is taxed again as recapture, at your ordinary rate capped at 25%, before the remaining gain is taxed at long-term rates.</p>
-<h3>When does the primary-residence exclusion apply?</h3>
-<p>For a primary residence that meets the 2-of-5-year ownership and use test, up to $250,000 of gain ($500,000 married filing jointly) can be excluded, with no prior exclusion in the last 2 years assumed. The depreciation part is never excludable.</p>
-<h3>What is the net investment income tax?</h3>
-<p>An additional 3.8% tax that can apply to the taxable gain for high earners. This calculator applies it only when you select that it applies to you; it does not compute your income or bracket from your income.</p>
-<h3>Why is the effective rate not equal to my long-term rate?</h3>
-<p>Because the total includes recapture at the ordinary rate, state tax and possibly net investment income tax, all on different parts of the gain. The effective rate in the example, 25.60%, is total tax divided by the gain.</p>
-<h3>Is this tax advice?</h3>
-<p>No. This is an informational estimate, not tax advice. Real returns involve your full income picture, bracket stacking, state rules, partial exclusions and nonqualified-use rules. Verify the result with a tax professional before relying on it.</p>
+<details class="faq"><summary>How is capital gains tax on real estate calculated?</summary><p>First the gain: sale price minus selling costs, minus purchase price plus improvements plus buying costs minus depreciation. Then any exclusion, then recapture on the depreciation part, then long-term or ordinary rates on the rest, plus state tax and net investment income tax where they apply.</p></details>
+<details class="faq"><summary>What is depreciation recapture?</summary><p>Depreciation claimed in earlier years lowered your basis and raised the gain. That part of the gain is taxed again as recapture, at your ordinary rate capped at 25%, before the remaining gain is taxed at long-term rates.</p></details>
+<details class="faq"><summary>When does the primary-residence exclusion apply?</summary><p>For a primary residence that meets the 2-of-5-year ownership and use test, up to $250,000 of gain ($500,000 married filing jointly) can be excluded, with no prior exclusion in the last 2 years assumed. The depreciation part is never excludable.</p></details>
+<details class="faq"><summary>What is the net investment income tax?</summary><p>An additional 3.8% tax that can apply to the taxable gain for higher earners. This calculator applies it only when you select that it applies to you; it does not work out your income or bracket.</p></details>
+<details class="faq"><summary>Why is the effective rate not equal to my long-term rate?</summary><p>Because the total includes recapture at the ordinary rate, state tax and possibly net investment income tax, all on different parts of the gain. The effective rate in the example, 25.60%, is total tax divided by the gain.</p></details>
+<details class="faq"><summary>Is this tax advice?</summary><p>No. This is an informational estimate, not tax advice. Real returns involve your full income picture, bracket stacking, state rules, partial exclusions and nonqualified-use rules. Verify the result with a tax professional before relying on it.</p></details>
+
 <h2>Limitations and next steps</h2>
-<p>US rules are described here and must not be presented as universal. This calculator applies the rates you enter; it does not compute your tax bracket from your income. Verify the result with a tax professional.</p>
+<p>US rules are described here and must not be presented as universal. This calculator applies the rates you enter; it does not work out your tax bracket from your income. Verify the result with a tax professional.</p>
 <p>Next steps: estimate the commission on the sale in the <a href="../commission-calculator/">Commission Calculator</a>, and project the whole hold that led to the sale in the <a href="../roi-calculator/">ROI Calculator</a>.</p>
+
+</div>
+
+<aside class="glance" aria-label="Rates at a glance">
+<h2>Rates at a glance</h2>
+<dl>
+<div><dt>Depreciation recapture</dt><dd>Ordinary rate, capped at 25%</dd></div>
+<div><dt>Long-term gain (owned over a year)</dt><dd>0%, 15% or 20%</dd></div>
+<div><dt>Short-term gain</dt><dd>Ordinary rate</dd></div>
+<div><dt>Net investment income tax</dt><dd>3.8%</dd></div>
+<div><dt>Home-sale exclusion</dt><dd>$250,000 single, $500,000 joint</dd></div>
+<div><dt>Ownership and use test</dt><dd>2 of the last 5 years</dd></div>
+</dl>
+<p class="glance-note">US federal rules as this calculator applies them. State tax is the rate you enter.</p>
+<a class="glance-link" href="#cgt-results">Back to the calculator</a>
+</aside>
+
 </div></section>
-<a class="cgt-bottom-bar" href="#cgt-results"><span>Total tax:</span><b id="bottom-tax">—</b></a>
+
+<a class="cgt-bottom-bar" href="#cgt-results"><span>You keep:</span><b id="bottom-keep">—</b></a>
 </main>
 <footer class="footer"><div class="wrap"><div class="footer-top"><div><a class="brand" href="../../" style="color:white;display:inline-flex;margin-bottom:18px"><span class="brand-mark" style="background:#254761">⌂</span><span class="brand-name"><span data-brand-name>Real Estate Tools</span><em style="color:#adc6c8">Tools · Software · Guides</em></span></a><p>Useful real estate tools for everyday decisions, with RealtorOS as the flagship CRM. Brand and company details will be finalized before public launch.</p></div><div><h2 class="footer-heading">Platform</h2><a href="../../tools/">All tools</a><a href="../../tools/commission-calculator/">Commission calculator</a><a href="../../tools/mortgage-calculator/">Mortgage calculator</a><a href="../../tools/home-affordability-calculator/">Home affordability calculator</a><a href="../../tools/rent-vs-buy-calculator/">Rent vs buy calculator</a><a href="../../tools/cap-rate-calculator/">Cap rate calculator</a><a href="../../tools/bridge-loan-calculator/">Bridge loan calculator</a><a href="../../tools/property-investment-calculator/">Property investment calculator</a><a href="../../tools/capital-gains-tax-calculator/">Capital gains tax calculator</a><a href="../../tools/roi-calculator/">ROI calculator</a><a href="../../tools/noi-calculator/">NOI calculator</a></div><div><h2 class="footer-heading">Product</h2><a href="../../realtoros/">RealtorOS CRM</a><a href="../../resources/">Resources</a><a href="../../about/">About</a><a href="../../contact/">Contact</a></div><div><h2 class="footer-heading">Before launch</h2><p>Connect support email, app login, pricing and approved legal policies.</p></div></div><div class="foot-bottom"><span>© 2026 <span data-brand-name>Real Estate Tools</span> · Working name, brand pending.</span><span>Static demonstration · No customer information collected</span></div></div></footer>
 <script src="../../assets/site-config.js" defer></script>

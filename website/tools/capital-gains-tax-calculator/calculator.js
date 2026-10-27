@@ -37,6 +37,9 @@
   function usd(n) {
     return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
+  function usd0(n) {
+    return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  }
   function negUsd(n) {
     return n < 0 ? '−' + usd(-n) : usd(n);
   }
@@ -46,18 +49,23 @@
   function valid(v, min, max) {
     return Number.isFinite(v) && v >= min && v <= max;
   }
+  // Share of a base as a 0-100 bar width.
+  function share(v, base) {
+    if (!(base > 0) || !(v > 0)) return 0;
+    return Math.max(0, Math.min(100, v / base * 100));
+  }
   var LABELS = { 'sale-price': 'Sale price', 'purchase-price': 'Purchase price',
     'improvements': 'Capital improvements', 'selling-rate': 'Selling costs',
     'depreciation': 'Depreciation claimed', 'years-lived': 'Years lived in as main home',
     'buying-costs': 'Buying costs', 'ordinary-rate': 'Ordinary income tax rate',
     'state-rate': 'State tax rate' };
   var OUTPUTS = ['total-tax', 'net-proceeds', 'tile-gain', 'tile-exclusion',
-    'tile-taxable', 'tile-federal', 'tile-effective', 'tile-net', 'bottom-tax', 'row-sale',
-    'row-selling', 'row-realized', 'row-purchase', 'row-improvements', 'row-buying',
-    'row-depreciation-out', 'row-basis', 'row-gain', 'row-exclusion-out',
-    'row-recapture-out', 'row-taxable', 'row-recapture-tax-out', 'row-gain-tax',
-    'row-niit-out', 'row-state-out', 'row-total-tax', 'row-net', 'lg-excluded',
-    'lg-kept', 'lg-tax'];
+    'tile-taxable', 'tile-federal', 'tile-effective', 'tile-net', 'bottom-keep',
+    'lg-costs', 'lg-tax', 'lg-keep', 'lg-sale', 'row-realized', 'row-basis',
+    'row-taxable', 'row-recapture-tax-out', 'row-gain-tax', 'row-niit-out',
+    'row-state-out', 'row-total-tax', 'gb-excl-amt', 'gb-recap-amt', 'gb-rest-amt'];
+  var BARS = ['bar-costs', 'bar-tax', 'bar-keep', 'gb-excl', 'gb-recap', 'gb-rest'];
+
   // Display only (no calculation change): keep the collapsed-group summaries
   // in sync, and show years-lived only for a primary residence and
   // depreciation only for an investment property. Hidden fields stay in the
@@ -78,6 +86,7 @@
     set('summary-situation', filingLabel + ' · ' + holdingLabel);
     set('summary-rates', 'LTCG ' + num('ltcg-rate') + '% · Ordinary ' + num('ordinary-rate') + '% · State ' + num('state-rate') + '% · NIIT ' + (str('niit') === 'yes' ? 'applies' : 'does not apply'));
   }
+
   function run() {
     syncDisplay();
     var sale = num('sale-price');
@@ -121,21 +130,20 @@
         if (!(c[1] >= lo && c[1] <= hi)) problems.push(LABELS[c[0]] + ' is out of range.');
       });
       var message = problems.length ? problems.join(' ') : 'Check the values: sale price above $0, rates 0–100%, years 0–50, amounts 0 or more, and no field left empty.';
-      set('total-tax', problems.length ? problems[0] : message);
-      OUTPUTS.forEach(function (id) { if (id !== 'total-tax') set(id, '—'); });
+      OUTPUTS.forEach(function (id) { set(id, '—'); });
       set('validation-note', message);
       set('cgt-validation', message);
-      set('sticky-value', '—');
       var lossBad = document.getElementById('loss-note');
       if (lossBad) lossBad.hidden = true;
       set('cgt-note', '');
       hideRow('result-body', true); hideRow('result-empty', false);
-      setWidth('bar-excluded', 0); setWidth('bar-kept', 0); setWidth('bar-tax', 0);
+      BARS.forEach(function (id) { setWidth(id, 0); });
       return;
     }
     set('validation-note', '');
     set('cgt-validation', '');
     hideRow('result-body', false); hideRow('result-empty', true);
+
     var isLong = holding === 'long';
     var selling = sale * sellPct / 100;
     var realized = sale - selling;
@@ -154,46 +162,61 @@
     var federal = recapTax + gainTax;
     var total = federal + niit + stateTax;
     var net = realized - total;
-    var kept = taxableBase - total;
-    set('total-tax', usd(total));
+
+    // Headline and sale-price split
     set('net-proceeds', usd(net));
+    set('total-tax', usd(total));
+    set('bottom-keep', usd(net));
+    set('lg-costs', usd(selling));
+    set('lg-tax', usd(total));
+    set('lg-keep', usd(net));
+    set('lg-sale', usd(sale));
+    setWidth('bar-costs', share(selling, sale));
+    setWidth('bar-tax', share(total, sale));
+    setWidth('bar-keep', share(net, sale));
+
+    // Tiles (some are hidden but kept for "Copy results")
     set('tile-gain', negUsd(gain));
     set('tile-exclusion', usd(exclusion));
     set('tile-taxable', usd(taxableBase));
     set('tile-federal', usd(federal));
     set('tile-effective', gain > 0 ? pct(total / gain * 100) : '—');
     set('tile-net', usd(net));
-    set('row-sale', usd(sale));
-    set('row-selling', selling === 0 ? usd(0) : '−' + usd(selling));
+
+    // How the gain is taxed: bar and legend
+    var recapRate = isLong ? Math.min(ordinary, 25) : ordinary;
+    var restRate = isLong ? ltcg : ordinary;
+    setWidth('gb-excl', share(exclusion, gain));
+    setWidth('gb-recap', share(recap, gain));
+    setWidth('gb-rest', share(remaining, gain));
+    set('gb-excl-amt', usd(exclusion));
+    set('gb-recap-amt', usd(recap));
+    set('gb-rest-amt', usd(remaining));
+    set('gb-recap-rate', recapRate + '% rate');
+    set('gb-rest-label', isLong ? 'Long-term gain' : 'Short-term gain');
+    set('gb-rest-rate', restRate + '% rate');
+    hideRow('gain-split', !(gain > 0));
+    hideRow('gb-excl-item', exclusion === 0);
+    hideRow('gb-recap-item', recap === 0);
+    hideRow('gb-rest-item', remaining === 0);
+
+    // Your gain
     set('row-realized', usd(realized));
-    set('row-purchase', usd(purchase));
-    set('row-improvements', usd(improv));
-    set('row-buying', usd(buying));
-    set('row-depreciation-out', depr === 0 ? usd(0) : '−' + usd(depr));
     set('row-basis', usd(basis));
-    set('row-gain', negUsd(gain));
-    set('row-exclusion-out', exclusion === 0 ? usd(0) : '−' + usd(exclusion));
-    set('row-recapture-out', usd(recap));
     set('row-taxable', usd(taxableBase));
+
+    // Your tax, with the rate and the amount it applies to
     set('row-recapture-tax-out', usd(recapTax));
     set('row-gain-tax-label', isLong ? 'Long-term capital gains tax' : 'Short-term gain (ordinary rates)');
     set('row-gain-tax', usd(gainTax));
     set('row-niit-out', usd(niit));
     set('row-state-out', usd(stateTax));
     set('row-total-tax', usd(total));
-    set('row-net', usd(net));
-    set('lg-excluded', usd(exclusion));
-    set('lg-kept', negUsd(kept));
-    set('lg-tax', usd(total));
-    var share = function (v) {
-      if (gain <= 0) return 0;
-      return Math.max(0, Math.min(100, v / gain * 100));
-    };
-    setWidth('bar-excluded', share(exclusion));
-    setWidth('bar-kept', share(kept));
-    setWidth('bar-tax', share(total));
-    set('sticky-value', usd(total));
-    set('bottom-tax', usd(total));
+    set('hint-recap', recapTax > 0 ? Math.min(ordinary, 25) + '% on ' + usd0(recap) : '');
+    set('hint-gain', gain > 0 ? (isLong ? ltcg + '% on ' + usd0(remaining) : ordinary + '% on ' + usd0(recap + remaining)) : '');
+    set('hint-niit', niit > 0 ? '3.8% on ' + usd0(taxableBase) : '');
+    set('hint-state', stateTax > 0 ? state + '% on ' + usd0(taxableBase) : '');
+
     // Display only: hide breakdown rows whose value is $0 (total tax never hides).
     hideRow('gain-realized-row', realized === 0);
     hideRow('gain-basis-row', basis === 0);
@@ -201,14 +224,14 @@
     hideRow('row-recapture-tax', recapTax === 0);
     hideRow('row-niit', niit === 0);
     hideRow('row-state', stateTax === 0);
+
     var lossNote = document.getElementById('loss-note');
     if (lossNote) lossNote.hidden = !(gain <= 0);
     set('cgt-note', (use === 'primary' && !(isLong && years >= 2))
       ? 'No primary-residence exclusion: the 2-year ownership and use test is not met.'
       : '');
-    // All breakdown rows always show, even at $0, so the panel never
-    // contradicts itself with a "not shown" note.
   }
+
   document.querySelectorAll('#capital-gains-tax-form input').forEach(function (input) {
     input.addEventListener('input', run);
   });
@@ -233,7 +256,7 @@
       }
     }
   });
-  // Segmented controls: each button sets its group's hidden value.
+  // Segmented controls and option cards: each button sets its group's hidden value.
   document.querySelectorAll('.seg-control button').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var target = btn.getAttribute ? btn.getAttribute('data-target') : '';
@@ -251,9 +274,8 @@
   });
   // NOTE: no thousand-separator rewriting here, on load or on blur. These
   // are type="number" fields, and a browser erases a comma-formatted value
-  // ("450,000" is not a valid floating-point number), which used to empty
-  // large defaults on first load and on blur. Typed values are left alone;
-  // num() already strips commas when reading, so pasted values still work.
+  // ("450,000" is not a valid floating-point number). Typed values are left
+  // alone; num() already strips commas when reading, so pasted values work.
   function copyResults(pairs, title) {
     var lines = [title];
     pairs.forEach(function (pair) {
