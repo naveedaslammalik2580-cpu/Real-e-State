@@ -1,168 +1,313 @@
-// NOI Calculator — net operating income for a rental property: effective
-// income minus operating expenses, before mortgage, depreciation and income
-// tax. The mortgage never appears in NOI. DOM-stub-safe: only
-// document.querySelector, querySelectorAll and getElementById, guarded style,
-// one delegated listener on the form. No thousand-separator rewriting: these
-// are type="number" fields and a browser erases comma-formatted values.
+
+/*
+ * NOI Calculator
+ * Net Operating Income = Effective Gross Income - Operating Expenses
+ *
+ * Mortgage payments, depreciation and income tax are excluded.
+ */
+
 (function () {
-  var form = document.querySelector('#noi-form');
+  'use strict';
+
+  const form = document.getElementById('noi-form');
   if (!form) return;
-  function num(id) {
-    var el = document.getElementById(id);
-    return el ? Number(String(el.value).replace(/,/g, '').trim()) : 0;
-  }
-  function set(id, value) {
-    var el = document.getElementById(id);
-    if (el) el.textContent = value;
-  }
-  function setWidth(id, pct) {
-    var el = document.getElementById(id);
-    if (el && el.style) el.style.width = pct + '%';
-  }
-  function hideRow(id, hide) {
-    var el = document.getElementById(id);
-    if (el) el.hidden = hide;
-  }
-  function usd(n) {
-    return Number.isFinite(n)
-      ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 }).format(n)
+
+  const $ = id => document.getElementById(id);
+
+  const defaults = {
+    'monthly-rent': 2200,
+    'vacancy-rate': 5,
+    'other-income': 0,
+    'property-tax': 4200,
+    'home-insurance': 1800,
+    'maintenance-cost': 1500,
+    'management-rate': 8,
+    'hoa-other': 0
+  };
+
+  const inputs = Object.keys(defaults);
+
+  const labels = {
+    'monthly-rent': 'Monthly rent',
+    'vacancy-rate': 'Vacancy rate',
+    'other-income': 'Other income',
+    'property-tax': 'Property tax',
+    'home-insurance': 'Property insurance',
+    'maintenance-cost': 'Maintenance and repairs',
+    'management-rate': 'Management fee',
+    'hoa-other': 'HOA and other costs'
+  };
+
+  const outputs = [
+    'noi-monthly',
+    'tile-monthly',
+    'tile-effective',
+    'tile-expenses',
+    'tile-ratio',
+    'row-gross-rent',
+    'row-vacancy-loss',
+    'row-other-income',
+    'row-effective',
+    'row-total-expenses',
+    'row-noi',
+    'lg-tax',
+    'lg-ins',
+    'lg-maintenance',
+    'lg-management',
+    'lg-hoa'
+  ];
+
+  const money = n =>
+    Number.isFinite(n)
+      ? new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'USD',
+          maximumFractionDigits: 2
+        }).format(n)
       : '—';
-  }
-  function negUsd(n) {
-    return n < 0 ? '−' + usd(-n) : usd(n);
-  }
-  function pct(n) {
-    return (n < 0 ? '−' : '') + Math.abs(n).toFixed(2) + '%';
-  }
-  function valid(n, a, b) {
-    return Number.isFinite(n) && n >= a && n <= b;
-  }
-  var OUTPUTS = ['noi-monthly', 'tile-monthly', 'tile-effective', 'tile-expenses',
-    'tile-ratio', 'row-gross-rent', 'row-vacancy-loss', 'row-other-income',
-    'row-effective', 'row-total-expenses', 'row-noi',
-    'lg-tax', 'lg-ins', 'lg-maintenance', 'lg-management', 'lg-hoa'];
-  function run() {
-    var rent = num('monthly-rent'), vacancy = num('vacancy-rate'),
-      other = num('other-income'), tax = num('property-tax'),
-      ins = num('home-insurance'), maint = num('maintenance-cost'),
-      mgmtPct = num('management-rate'), hoa = num('hoa-other');
-    // Named validation: the verdict shows the first problem, the validation
-    // boxes list them all. Empty fields are invalid, not zero.
-    var problems = [];
-    function checkField(id, name, lo, hi, rangeText) {
-      var el = document.getElementById(id);
-      if (!el || el.value === '') { problems.push(name + ' is empty.'); return; }
-      if (!valid(num(id), lo, hi)) problems.push(name + ' ' + rangeText);
+
+  const signed = n => n < 0 ? '−' + money(-n) : money(n);
+
+  const set = (id, text) => {
+    const el = $(id);
+    if (el) el.textContent = text;
+  };
+
+  const width = (id, n) => {
+    const el = $(id);
+    if (el) {
+      el.style.width = Math.max(0, Math.min(100, n)) + '%';
     }
-    checkField('monthly-rent', 'Monthly rent', 0, 1e12, 'must be 0 or more.');
-    checkField('vacancy-rate', 'Vacancy rate', 0, 100, 'must be between 0% and 100%.');
-    checkField('other-income', 'Other income', 0, 1e12, 'must be 0 or more.');
-    checkField('property-tax', 'Property tax', 0, 1e12, 'must be 0 or more.');
-    checkField('home-insurance', 'Home insurance', 0, 1e12, 'must be 0 or more.');
-    checkField('maintenance-cost', 'Maintenance & repairs', 0, 1e12, 'must be 0 or more.');
-    checkField('management-rate', 'Management fee', 0, 100, 'must be between 0% and 100%.');
-    checkField('hoa-other', 'HOA & other costs', 0, 1e12, 'must be 0 or more.');
-    if (problems.length) {
-      set('noi-annual', problems[0]);
-      OUTPUTS.forEach(function (id) { set(id, '—'); });
-      set('validation-note', problems.join(' '));
-      set('noi-validation', problems.join(' '));
+  };
+
+  function calculate() {
+    const values = {};
+    const errors = [];
+
+    inputs.forEach(id => {
+      const el = $(id);
+      const raw = el ? String(el.value).trim() : '';
+      const n = raw === '' ? NaN : Number(raw);
+
+      const hi =
+        id === 'vacancy-rate' || id === 'management-rate'
+          ? 100
+          : 1e12;
+
+      const invalid =
+        !Number.isFinite(n) || n < 0 || n > hi;
+
+      if (invalid) {
+        errors.push(
+          labels[id] +
+          (
+            raw === ''
+              ? ' is required.'
+              : ' must be between 0 and ' +
+                hi.toLocaleString('en-US') + '.'
+          )
+        );
+      }
+
+      values[id] = n;
+
+      if (el) {
+        el.closest('.input-unit')
+          ?.classList.toggle('invalid', invalid);
+      }
+    });
+
+    set('validation-note', errors.join(' '));
+    set('noi-validation', errors.join(' '));
+
+    $('result-body').hidden = errors.length > 0;
+    $('result-empty').hidden = errors.length === 0;
+
+    if (errors.length) {
+      set('noi-annual', '—');
       set('sticky-value', '—');
-      hideRow('result-body', true); hideRow('result-empty', false);
-      setWidth('bar-tax', 0); setWidth('bar-ins', 0); setWidth('bar-maintenance', 0);
-      setWidth('bar-management', 0); setWidth('bar-hoa', 0);
+
+      outputs.forEach(id => set(id, '—'));
+
+      [
+        'tax',
+        'ins',
+        'maintenance',
+        'management',
+        'hoa'
+      ].forEach(id => width('bar-' + id, 0));
+
       return;
     }
-    set('validation-note', '');
-    set('noi-validation', '');
-    hideRow('result-body', false); hideRow('result-empty', true);
-    var gross = rent * 12;
-    var vacancyLoss = gross * vacancy / 100;
-    var effective = gross - vacancyLoss + other;
-    var mgmt = effective * mgmtPct / 100;
-    var totalExp = tax + ins + maint + mgmt + hoa;
-    var noi = effective - totalExp;
-    var monthly = noi / 12;
-    var ratio = effective > 0 ? totalExp / effective * 100 : null;
-    set('noi-annual', negUsd(noi));
-    set('noi-monthly', negUsd(monthly));
-    set('tile-monthly', negUsd(monthly));
-    set('tile-effective', usd(effective));
-    set('tile-expenses', usd(totalExp));
-    set('tile-ratio', ratio === null ? '—' : pct(ratio));
-    set('row-gross-rent', usd(gross));
-    set('row-vacancy-loss', vacancyLoss === 0 ? usd(0) : '−' + usd(vacancyLoss));
-    set('row-other-income', usd(other));
-    set('row-effective', usd(effective));
-    set('row-total-expenses', usd(totalExp));
-    set('row-noi', negUsd(noi));
-    set('lg-tax', usd(tax));
-    set('lg-ins', usd(ins));
-    set('lg-maintenance', usd(maint));
-    set('lg-management', usd(mgmt));
-    set('lg-hoa', usd(hoa));
-    var share = function (v) {
-      if (totalExp <= 0) return 0;
-      return Math.max(0, Math.min(100, v / totalExp * 100));
+
+    // Income
+    const rent = values['monthly-rent'];
+    const vacancy = values['vacancy-rate'];
+    const other = values['other-income'];
+
+    // Operating expenses
+    const tax = values['property-tax'];
+    const ins = values['home-insurance'];
+    const maintenance = values['maintenance-cost'];
+    const hoa = values['hoa-other'];
+
+    // Annual gross rental income
+    const gross = rent * 12;
+
+    // Vacancy loss
+    const vacancyLoss = gross * vacancy / 100;
+
+    // Effective gross income
+    const effective = gross - vacancyLoss + other;
+
+    // Management costs
+    const management =
+      effective * values['management-rate'] / 100;
+
+    // Total annual operating expenses
+    const expenses =
+      tax + ins + maintenance + management + hoa;
+
+    // Net operating income
+    const noi = effective - expenses;
+
+    // Monthly net operating income
+    const monthly = noi / 12;
+
+    // Expense ratio
+    const ratio =
+      effective > 0
+        ? (expenses / effective * 100).toFixed(2) + '%'
+        : '—';
+
+    const map = {
+      'noi-annual': signed(noi),
+      'noi-monthly': signed(monthly),
+      'tile-monthly': signed(monthly),
+      'tile-effective': money(effective),
+      'tile-expenses': money(expenses),
+      'tile-ratio': ratio,
+      'row-gross-rent': money(gross),
+      'row-vacancy-loss': vacancyLoss
+        ? '−' + money(vacancyLoss)
+        : money(0),
+      'row-other-income': money(other),
+      'row-effective': money(effective),
+      'row-total-expenses': money(expenses),
+      'row-noi': signed(noi),
+      'lg-tax': money(tax),
+      'lg-ins': money(ins),
+      'lg-maintenance': money(maintenance),
+      'lg-management': money(management),
+      'lg-hoa': money(hoa),
+      'sticky-value': signed(noi)
     };
-    setWidth('bar-tax', share(tax));
-    setWidth('bar-ins', share(ins));
-    setWidth('bar-maintenance', share(maint));
-    setWidth('bar-management', share(mgmt));
-    setWidth('bar-hoa', share(hoa));
-    set('sticky-value', negUsd(noi));
+
+    Object.entries(map).forEach(([id, value]) => {
+      set(id, value);
+    });
+
+    // Update expense distribution
+    [
+      ['tax', tax],
+      ['ins', ins],
+      ['maintenance', maintenance],
+      ['management', management],
+      ['hoa', hoa]
+    ].forEach(([id, n]) => {
+      width(
+        'bar-' + id,
+        expenses > 0 ? n / expenses * 100 : 0
+      );
+    });
   }
-  document.querySelectorAll('#noi-form input').forEach(function (input) {
-    input.addEventListener('input', run);
+
+  // Prevent form submission
+  form.addEventListener('submit', e => {
+    e.preventDefault();
   });
-  // Slider sync by delegation on the form (keeps per-input listeners intact).
-  form.addEventListener('input', function (e) {
-    var t = e && e.target;
-    if (!t || !t.id) return;
-    if (t.type === 'range') {
-      var numEl = document.getElementById(t.id.replace(/-slider$/, ''));
-      if (numEl) numEl.value = t.value;
-      run();
-    } else if (t.type === 'number') {
-      var slider = document.getElementById(t.id + '-slider');
-      if (slider) {
-        var v = Number(String(t.value).replace(/,/g, ''));
-        if (Number.isFinite(v)) {
-          var mn = Number(slider.min), mx = Number(slider.max);
-          if (Number.isFinite(mn) && v < mn) v = mn;
-          if (Number.isFinite(mx) && v > mx) v = mx;
-          slider.value = String(v);
-        }
+
+  // Synchronize number inputs and sliders
+  form.addEventListener('input', e => {
+    const target = e.target;
+
+    if (target.type === 'range') {
+      const el = $(
+        target.id.replace(/-slider$/, '')
+      );
+
+      if (el) el.value = target.value;
+
+    } else if (target.type === 'number') {
+      const slider = $(target.id + '-slider');
+
+      if (slider && target.value !== '') {
+        slider.value = target.value;
       }
     }
+
+    calculate();
   });
-  function copyResults(pairs, title) {
-    var lines = [title];
-    pairs.forEach(function (pair) {
-      var el = document.getElementById(pair[1]);
-      if (el) lines.push(pair[0] + ': ' + el.textContent);
+
+  // Reset all fields to sample values
+  $('reset-inputs')?.addEventListener('click', () => {
+    inputs.forEach(id => {
+      $(id).value = defaults[id];
+
+      const slider = $(id + '-slider');
+
+      if (slider) {
+        slider.value = defaults[id];
+      }
     });
-    var text = lines.join('\n');
-    var done = function (ok) {
-      set('copy-note', ok ? 'Results copied.' : 'Copy is not available in this browser — use Print instead.');
-    };
+
+    set('copy-note', '');
+    calculate();
+  });
+
+  // Copy results to clipboard
+  $('copy-results')?.addEventListener('click', async () => {
+    if ($('result-body').hidden) {
+      set('copy-note', 'Enter valid figures before copying.');
+      return;
+    }
+
+    const fields = [
+      ['Annual NOI', 'noi-annual'],
+      ['Monthly NOI', 'noi-monthly'],
+      ['Effective income', 'tile-effective'],
+      ['Operating expenses', 'tile-expenses'],
+      ['Expense ratio', 'tile-ratio']
+    ];
+
+    const text = [
+      'NOI Calculator',
+      ...fields.map(([name, id]) => {
+        return name + ': ' + $(id).textContent;
+      })
+    ].join('\n');
+
     try {
-      if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
-        var p = navigator.clipboard.writeText(text);
-        if (p && p.then) p.then(function () { done(true); }, function () { done(false); });
-        else done(true);
-      } else done(false);
-    } catch (err) { done(false); }
-  }
-  var copyBtn = document.getElementById('copy-results');
-  if (copyBtn) copyBtn.addEventListener('click', function () {
-    copyResults([['Annual NOI', 'noi-annual'], ['Monthly NOI', 'noi-monthly'],
-      ['Effective income', 'tile-effective'], ['Total expenses', 'tile-expenses'],
-      ['Expense ratio', 'tile-ratio']], 'NOI Calculator');
+      await navigator.clipboard.writeText(text);
+
+      set(
+        'copy-note',
+        'Results copied to clipboard.'
+      );
+    } catch (err) {
+      set(
+        'copy-note',
+        'Copy is unavailable here. You can use Print / Save PDF instead.'
+      );
+    }
   });
-  var printBtn = document.getElementById('print-results');
-  if (printBtn) printBtn.addEventListener('click', function () {
-    if (typeof window !== 'undefined' && window.print) window.print();
+
+  // Print or save the report as PDF
+  $('print-results')?.addEventListener('click', () => {
+    window.print();
   });
-  run();
+
+  // Run initial calculation
+  calculate();
+
 })();
