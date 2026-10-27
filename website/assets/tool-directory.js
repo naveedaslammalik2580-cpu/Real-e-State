@@ -15,22 +15,22 @@
   const tools = window.realEstateTools.filter(tool => tool.status === 'published');
   // Presentation data only (registry stays the source of truth for
   // title, description, URL and order): display category, "You get" line,
-  // read time, and whether the tool carries the New badge.
+  // and whether the tool carries the New badge.
   const DISPLAY = {
-    'commission-calculator': { category: 'For agents', youGet: 'Net earnings · Split breakdown', minutes: '2 min', isNew: false },
-    'mortgage-calculator': { category: 'Buying', youGet: 'Monthly payment · Total interest', minutes: '2 min', isNew: false },
-    'home-affordability-calculator': { category: 'Buying', youGet: 'Max price · Payment breakdown', minutes: '2 min', isNew: false },
-    'rent-vs-buy-calculator': { category: 'Buying', youGet: 'Breakeven year · Total cost', minutes: '3 min', isNew: false },
-    'cap-rate-calculator': { category: 'Investing', youGet: 'Cap rate · NOI', minutes: '2 min', isNew: false },
-    'bridge-loan-calculator': { category: 'Selling', youGet: 'Max loan · Cash left after sale', minutes: '3 min', isNew: false },
-    'property-investment-calculator': { category: 'Investing', youGet: 'Cash flow · Cash-on-cash', minutes: '3 min', isNew: false },
-    'capital-gains-tax-calculator': { category: 'Tax', youGet: 'Tax due · Net proceeds', minutes: '3 min', isNew: true },
-    'roi-calculator': { category: 'Investing', youGet: 'Annualized ROI · Total return', minutes: '3 min', isNew: true },
-    'noi-calculator': { category: 'Investing', youGet: 'Annual NOI · Monthly NOI', minutes: '2 min', isNew: true }
+    'commission-calculator': { category: 'For agents', youGet: 'Net earnings · Split breakdown', isNew: false },
+    'mortgage-calculator': { category: 'Buying', youGet: 'Monthly payment · Total interest', isNew: false },
+    'home-affordability-calculator': { category: 'Buying', youGet: 'Max price · Payment breakdown', isNew: false },
+    'rent-vs-buy-calculator': { category: 'Buying', youGet: 'Breakeven year · Total cost', isNew: false },
+    'cap-rate-calculator': { category: 'Investing', youGet: 'Cap rate · NOI', isNew: false },
+    'bridge-loan-calculator': { category: 'Selling', youGet: 'Max loan · Cash left after sale', isNew: false },
+    'property-investment-calculator': { category: 'Investing', youGet: 'Cash flow · Cash-on-cash', isNew: false },
+    'capital-gains-tax-calculator': { category: 'Tax', youGet: 'Tax due · Net proceeds', isNew: true },
+    'roi-calculator': { category: 'Investing', youGet: 'Annualized ROI · Total return', isNew: true },
+    'noi-calculator': { category: 'Investing', youGet: 'Annual NOI · Monthly NOI', isNew: true }
   };
   const KNOWN_ORDER = ['Buying', 'Investing', 'Selling', 'Tax', 'For agents'];
   function displayCategory(tool) { return (DISPLAY[tool.slug] && DISPLAY[tool.slug].category) || tool.category; }
-  function display(tool) { return DISPLAY[tool.slug] || { category: tool.category, youGet: '', minutes: '', isNew: false }; }
+  function display(tool) { return DISPLAY[tool.slug] || { category: tool.category, youGet: '', isNew: false }; }
   let category = null;
   const buttons = [];
   function element(tag, className, text) {
@@ -53,7 +53,7 @@
     const get = element('div', 'get', 'You get: ');
     if (meta.youGet) get.append(element('b', '', meta.youGet));
     const foot = element('div', 'foot');
-    foot.append(element('span', 'open', 'Open tool \u2192'), element('span', 'time', meta.minutes));
+    foot.append(element('span', 'open', 'Open tool \u2192'));
     card.append(top, element('h3', '', tool.title), element('p', '', tool.description), get, foot);
     grid.append(card);
     return { tool, card, keywords: `${tool.title} ${tool.description} ${displayCategory(tool)} ${meta.youGet} ${tool.slug}`.toLowerCase() };

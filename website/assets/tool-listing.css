@@ -46,7 +46,6 @@
 .listing-card .get b { color: #0B1F33; }
 .listing-card .foot { margin-top: 12px; display: flex; justify-content: space-between; align-items: center; }
 .listing-card .open { color: #0F766E; font-weight: 700; font-size: 14px; text-decoration: underline; text-underline-offset: 3px; }
-.listing-card .time { font-size: 12.5px; color: #5E6C79; }
 
 /* Single navy banner below the grid. */
 .listing-banner { margin-top: 20px; background: #102131; color: #fff; border-radius: 18px; padding: 22px 26px; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
