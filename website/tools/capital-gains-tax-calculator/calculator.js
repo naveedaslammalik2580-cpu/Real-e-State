@@ -130,7 +130,8 @@
         if (!(c[1] >= lo && c[1] <= hi)) problems.push(LABELS[c[0]] + ' is out of range.');
       });
       var message = problems.length ? problems.join(' ') : 'Check the values: sale price above $0, rates 0–100%, years 0–50, amounts 0 or more, and no field left empty.';
-      OUTPUTS.forEach(function (id) { set(id, '—'); });
+      set('total-tax', problems.length ? problems[0] : message);
+      OUTPUTS.forEach(function (id) { if (id !== 'total-tax') set(id, '—'); });
       set('validation-note', message);
       set('cgt-validation', message);
       var lossBad = document.getElementById('loss-note');
