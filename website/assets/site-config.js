@@ -1,6 +1,6 @@
 // Working umbrella label, not a registered company identity.
 // Change this value to an approved brand when available. RealtorOS stays separate.
-window.siteConfig = Object.freeze({ brandName: 'Real Estate Tools' });
+window.siteConfig = Object.freeze({ brandName: 'Real Estate Tools', crmBaseUrl: 'http://localhost:5500' });
 (function () {
   const name = window.siteConfig.brandName.trim();
   document.querySelectorAll('[data-brand-name]').forEach(node => { node.textContent = name; });

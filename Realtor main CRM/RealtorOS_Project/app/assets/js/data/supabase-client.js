@@ -90,6 +90,7 @@ App.cloud = (function () {
               </div>
             </div>
             <p class="cloud-auth-switch"><span id="cloudAuthSwitchCopy"></span> <button id="cloudAuthSwitch" type="button"></button></p>
+            <p class="cloud-auth-switch"><a id="cloudBackToWebsite" href="#">Back to website</a></p>
           </form>
           <form id="cloudResetForm" hidden>
             <p class="cloud-auth-subheading">Reset your password</p>
@@ -305,7 +306,22 @@ App.cloud = (function () {
     oauthGoogleBtn.addEventListener("click", () => handleOAuth("google", oauthGoogleBtn));
     oauthFacebookBtn.addEventListener("click", () => handleOAuth("facebook", oauthFacebookBtn));
 
-    showMode(recoveryActive ? "update-password" : "sign-in", { force: true });
+    // The gate's way back to the public website. The target comes from
+    // App.config.websiteUrl (per-environment, not a secret); without a
+    // configured URL the link hides rather than pointing nowhere.
+    const backToWebsite = root.querySelector("#cloudBackToWebsite");
+    if (backToWebsite) {
+      if (App.config.websiteUrl) backToWebsite.href = App.config.websiteUrl;
+      else backToWebsite.hidden = true;
+    }
+
+    // A `mode` query parameter from the public website can ask for the
+    // Create-account form directly (?mode=create). Read once, here at
+    // gate construction; any other value - including no parameter -
+    // keeps the historical default, Sign in. A password-recovery return
+    // outranks it: that flow must land on Update Password.
+    const requestedMode = new URLSearchParams(window.location.search).get("mode");
+    showMode(recoveryActive ? "update-password" : (requestedMode === "create" ? "create" : "sign-in"), { force: true });
   }
   function hideGate() { const root = document.getElementById("cloudAuth"); if (root) root.hidden = true; }
 

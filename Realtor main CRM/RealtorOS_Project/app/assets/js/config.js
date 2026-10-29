@@ -16,5 +16,10 @@ App.config = {
   // the one thing that costs the permission for good.
   //
   // Generate the pair with: node tools/make-vapid-keys.mjs
-  vapidPublicKey: ""
+  vapidPublicKey: "",
+  // Where the public website lives, for the auth gate's "Back to
+  // website" link. Local development value; the production deployment
+  // sets this to https://www.<production-domain> when the CRM ships to
+  // https://app.<production-domain>. Not a secret.
+  websiteUrl: "http://localhost:5501"
 };

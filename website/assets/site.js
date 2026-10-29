@@ -19,3 +19,19 @@
     }
   }, { passive: true });
 })();
+
+/* RealtorOS links: anchors marked data-crm-link get their href from the
+   central site config, so the CRM origin is configured in exactly one
+   place (assets/site-config.js) instead of being hardcoded per anchor.
+   Without a configured base URL the anchors keep their in-page fallback
+   href, so nothing breaks if the config is ever removed. */
+(function () {
+  var base = window.siteConfig && window.siteConfig.crmBaseUrl;
+  if (!base) return;
+  base = String(base).replace(/\/+$/, '');
+  document.querySelectorAll('[data-crm-link]').forEach(function (a) {
+    var kind = a.getAttribute('data-crm-link');
+    if (kind === 'signup') a.href = base + '/index.html?mode=create';
+    else if (kind === 'login') a.href = base + '/index.html';
+  });
+})();
