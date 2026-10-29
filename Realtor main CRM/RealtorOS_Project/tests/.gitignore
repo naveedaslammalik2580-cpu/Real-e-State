@@ -1,5 +1,7 @@
 node_modules/
-package-lock.json
+# package-lock.json is committed on purpose: CI installs with `npm ci`
+# (cache-dependency-path: tests/package-lock.json in .github/workflows/tests.yml),
+# which cannot run without a tracked lockfile.
 
 # The migrated-database snapshot the SQL tests build for themselves
 # (tests/helpers/pg.mjs). Keyed by every migration name + content, so it

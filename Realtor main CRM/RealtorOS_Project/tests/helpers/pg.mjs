@@ -78,7 +78,18 @@ export async function loadPGlite() {
 }
 
 export function migrationFiles() {
-  return fs.readdirSync(MIGRATIONS_DIR).filter((f) => f.endsWith(".sql")).sort();
+  // APPLY_*.sql files are NOT migrations: they are SQL-Editor wrappers for
+  // manual application on the live project. Each one is BEGIN; + the exact
+  // payload of its timestamped migration counterpart + a bookkeeping
+  // INSERT INTO supabase_migrations.schema_migrations + COMMIT; (verified
+  // by diffing all 8 wrappers against their counterparts, 2026-10-29).
+  // Applying them here would double-apply the payload and then fail on
+  // the bookkeeping insert, because the offline prelude has no
+  // supabase_migrations schema. Excluding them loses no coverage: every
+  // payload statement still runs via the real migration file.
+  return fs.readdirSync(MIGRATIONS_DIR)
+    .filter((f) => f.endsWith(".sql") && !f.startsWith("APPLY_"))
+    .sort();
 }
 
 // A fresh database with the platform prelude and pgcrypto installed in the

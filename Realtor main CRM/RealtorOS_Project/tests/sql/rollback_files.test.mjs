@@ -118,7 +118,13 @@ const REVERT_FOR = {
 // Runs without a database: it reads two directories.
 test("every migration from T2a onward has a revert file", () => {
   const MIGRATIONS = path.join(here, "..", "..", "supabase", "migrations");
-  const migrations = fs.readdirSync(MIGRATIONS).filter((f) => f.endsWith(".sql")).sort();
+  // APPLY_*.sql are SQL-Editor wrappers around real migrations, not
+  // migrations themselves (same exclusion as tests/helpers/pg.mjs): each
+  // wrapper's payload is its timestamped counterpart, which IS mapped in
+  // REVERT_FOR below, so rollback coverage is still enforced for them.
+  const migrations = fs.readdirSync(MIGRATIONS)
+    .filter((f) => f.endsWith(".sql") && !f.startsWith("APPLY_"))
+    .sort();
   assert.ok(migrations.length >= 36, "found " + migrations.length + " migrations");
 
   const missing = [];
