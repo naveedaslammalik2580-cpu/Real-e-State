@@ -113,6 +113,7 @@ const REVERT_FOR = {
   "20261015150000_phase_2e_audience_tags.sql": "phase_2e_audience_tags_revert.sql",
   "20261015160000_phase_2f_audience_type_temp.sql": "phase_2f_audience_type_temp_revert.sql",
   "20261015170000_phase_3b_push.sql": "phase_3b_push_revert.sql",
+  "20261029120000_phase_c1_deterministic_workspace_selection.sql": "phase_c1_deterministic_workspace_selection_revert.sql",
 };
 
 // Runs without a database: it reads two directories.
