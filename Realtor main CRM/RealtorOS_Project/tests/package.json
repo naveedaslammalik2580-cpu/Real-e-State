@@ -1,0 +1,26 @@
+{
+  "name": "realtoros-offline-tests",
+  "private": true,
+  "type": "module",
+  "description": "Offline tests for RealtorOS Edge Functions, SQL migrations and frontend pages. Never contacts Supabase, Resend or any network service.",
+  "scripts": {
+    "test": "node --import ./helpers/register.mjs --test --test-concurrency=1 --test-timeout=120000 --test-reporter=spec \"**/*.test.mjs\"",
+    "test:quiet": "node --import ./helpers/register.mjs --test --test-concurrency=1 --test-timeout=120000 --test-reporter=./helpers/quiet-reporter.mjs \"**/*.test.mjs\"",
+    "test:sql": "node --import ./helpers/register.mjs --test --test-concurrency=1 --test-timeout=120000 --test-reporter=spec \"sql/*.test.mjs\"",
+    "test:edge": "node --import ./helpers/register.mjs --test --test-concurrency=1 --test-timeout=120000 --test-reporter=spec \"edge/*.test.mjs\"",
+    "test:frontend": "node --import ./helpers/register.mjs --test --test-concurrency=1 --test-timeout=120000 --test-reporter=spec \"frontend/*.test.mjs\"",
+    "test:security": "node --import ./helpers/register.mjs --test --test-concurrency=1 --test-timeout=120000 --test-reporter=spec \"security/*.test.mjs\"",
+    "test:file": "node --import ./helpers/register.mjs --test --test-concurrency=1 --test-timeout=120000 --test-reporter=spec",
+    "test:cache": "node ./helpers/build-cache.mjs",
+    "test:cache:clear": "node ./helpers/build-cache.mjs --clear"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.8",
+    "jsdom": "26.1.0",
+    "papaparse": "5.5.3",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
+  },
+  "engines": {
+    "node": ">=23.6"
+  }
+}

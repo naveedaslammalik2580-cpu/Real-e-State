@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="RealtorOS">
+  <rect width="512" height="512" rx="112.6" fill="#0B1F33"/>
+  <g fill="none" stroke="#34D399" stroke-width="38.4" stroke-linecap="square">
+    <path d="M 122.9 256.0 L 256.0 152.3 L 389.1 256.0"/>
+    <path d="M 145.9 266.2 L 145.9 389.1"/>
+    <path d="M 366.1 266.2 L 366.1 389.1"/>
+    <path d="M 145.9 389.1 L 217.6 389.1"/>
+    <path d="M 294.4 389.1 L 366.1 389.1"/>
+  </g>
+</svg>

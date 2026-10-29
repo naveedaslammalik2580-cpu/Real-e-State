@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- viewport-fit=cover lets the bottom tab bar sit under the home
+       indicator and pad itself with env(safe-area-inset-bottom). -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Realtor Pipeline & Commission OS — cloud-backed CRM and commission tracker for independent real estate agents.">
+  <title>Realtor Pipeline & Commission OS</title>
+  <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/dm-serif-display-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Phase 3A: installable. The theme colour is --sidebar-bg, so the
+       phone's status bar matches the app's own header. -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#0B1F33">
+  <meta name="color-scheme" content="light dark">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="RealtorOS">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon-180.png">
+  <link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+  <link rel="stylesheet" href="assets/css/realtoros.css">
+</head>
+<body>
+  <div id="root">
+    <div style="padding: 40px; text-align: center; color: var(--text-muted); font-family: var(--font-primary);">
+      Loading Realtor Pipeline &amp; Commission OS…
+    </div>
+  </div>
+
+  <!-- Phase 3 data layer (do not modify order) -->
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/core/utils.js"></script>
+  <script src="assets/js/core/lead-file.js"></script>
+  <script src="assets/js/core/commission.js"></script>
+  <script src="assets/js/core/follow-up.js"></script>
+  <script src="assets/js/core/response-stats.js"></script>
+  <script src="assets/js/core/starter-packs.js"></script>
+  <script src="assets/js/core/quick-add.js"></script>
+  <script src="assets/js/core/header-actions.js"></script>
+  <script src="assets/js/data/store.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/data/supabase-client.js"></script>
+  <script src="assets/js/data/workspace.js"></script>
+  <script src="assets/js/data/data-service.js"></script>
+  <script src="assets/js/core/customization.js"></script>
+  <script src="assets/js/core/pwa.js"></script>
+  <script src="assets/js/core/mobile-nav.js"></script>
+  <script src="assets/js/core/push.js"></script>
+  <script src="assets/js/ui/custom-fields-ui.js"></script>
+  <script src="assets/js/core/derived.js"></script>
+  <script src="assets/js/data/backup.js"></script>
+
+  <!-- Phase 4 UI layer -->
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/pages/contacts.js"></script>
+  <script src="assets/js/pages/lead-file-import.js"></script>
+  <script src="assets/js/pages/properties.js"></script>
+  <script src="assets/js/pages/buyer.js"></script>
+  <script src="assets/js/pages/seller.js"></script>
+
+  <!-- Phase 5 UI layer -->
+  <script src="assets/js/pages/deals.js"></script>
+  <script src="assets/js/pages/commission.js"></script>
+
+  <!-- Phase 6 UI layer -->
+  <script src="assets/js/pages/activities.js"></script>
+  <script src="assets/js/pages/tasks.js"></script>
+  <script src="assets/js/pages/calendar.js"></script>
+  <script src="assets/js/pages/referrals.js"></script>
+
+  <!-- Phase 7 UI layer -->
+  <script src="assets/js/pages/goals.js"></script>
+  <script src="assets/js/pages/finances.js"></script>
+  <script src="assets/js/pages/reports.js"></script>
+
+  <!-- Final release pages -->
+  <script src="assets/js/pages/release.js"></script>
+  <script src="assets/js/pages/google-sheets-settings.js"></script>
+  <script src="assets/js/pages/google-sheets-import-history.js"></script>
+  <script src="assets/js/pages/email-templates.js"></script>
+  <script src="assets/js/pages/automation.js"></script>
+  <script src="assets/js/pages/notifications.js"></script>
+  <script src="assets/js/pages/push-settings.js"></script>
+  <script src="assets/js/pages/onboarding.js"></script>
+  <script src="assets/js/pages/email-sending-settings.js"></script>
+  <script src="assets/js/pages/custom-fields-settings.js"></script>
+
+  <script src="assets/js/pages/team-management.js"></script>
+  <script src="assets/js/pages/team-permissions.js"></script>
+  <script src="assets/js/pages/team-join.js"></script>
+  <script src="assets/js/pages/team-dashboard.js"></script>
+
+  <script src="assets/js/pages/scheduler.js"></script>
+
+  <script src="assets/js/boot.js"></script>
+</body>
+</html>

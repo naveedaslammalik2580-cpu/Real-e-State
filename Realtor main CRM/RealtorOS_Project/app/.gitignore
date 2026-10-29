@@ -1,0 +1,28 @@
+# Dependencies (none required by this static app, kept defensively)
+node_modules/
+
+# Real environment files — never commit actual credentials.
+# .env.example is documentation only and IS tracked.
+.env
+.env.local
+.env.*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor/IDE caches
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs and temporary output
+*.log
+npm-debug.log*
+.tmp/
+tmp/
+
+# Archives accidentally dropped into the project
+*.zip

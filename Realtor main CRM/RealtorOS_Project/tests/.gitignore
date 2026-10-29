@@ -1,0 +1,7 @@
+node_modules/
+package-lock.json
+
+# The migrated-database snapshot the SQL tests build for themselves
+# (tests/helpers/pg.mjs). Keyed by every migration name + content, so it
+# rebuilds itself whenever a migration changes. Never committed.
+.cache/

@@ -1,0 +1,43 @@
+[functions.create-sheet-connection]
+verify_jwt = true
+
+# Google Apps Script has no Supabase user JWT. This endpoint performs custom
+# connector-token, timestamp, nonce, replay, rate-limit, and payload checks.
+[functions.ingest-sheet-leads]
+verify_jwt = false
+
+# Phase 4C: authenticated test-send. Requires a real Supabase user JWT —
+# the recipient is always the caller's own saved Reply-To address.
+[functions.send-test-email]
+verify_jwt = true
+
+# Phase 4C: Resend cannot supply a RealtorOS user JWT, so this endpoint is
+# public at the platform level and instead authenticates every request
+# itself via the Svix-compatible RESEND_WEBHOOK_SECRET signature.
+[functions.resend-webhook]
+verify_jwt = false
+
+# Phase 4D: authenticated rule activation/pause/resume/archive/manual-enroll/
+# retry-job management. Requires a real Supabase user JWT; every action is
+# scoped to the caller's own rules/contacts/jobs.
+[functions.manage-automation]
+verify_jwt = true
+
+# Phase 4D: machine-only automation worker. No Supabase user is involved
+# (it is invoked by a scheduled job, not a browser), so it is public at the
+# platform level and instead authenticates every request itself via a
+# timing-safe comparison against AUTOMATION_WORKER_SECRET.
+[functions.process-automation]
+verify_jwt = false
+
+# Phase 4E.2: public unsubscribe endpoint. The person clicking the link has
+# no RealtorOS account, so there is no user JWT. Every request is instead
+# authorized by a signed, expiring, single-purpose token
+# (UNSUBSCRIBE_SIGNING_SECRET). GET never unsubscribes.
+[functions.email-unsubscribe]
+verify_jwt = false
+
+# Phase 4E.4: one-time lead import from a file. Requires a real Supabase user
+# JWT; the owner is always the verified caller, never a body field.
+[functions.import-lead-file]
+verify_jwt = true

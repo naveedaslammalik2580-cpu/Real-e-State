@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Unsubscribe</title>
+<!--
+  Public unsubscribe page (Phase 4E.2). Used when UNSUBSCRIBE_PAGE_URL
+  points here, because Supabase's default functions domain serves HTML as
+  plain text. The signed token arrives in the #fragment, which browsers
+  never send to this page's host. The page does nothing until the person
+  presses the button (link scanners cannot unsubscribe anyone), then posts
+  the token to the email-unsubscribe function. No storage, no tracking, no
+  third-party resources; every message shown is fixed text.
+-->
+<style>
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: #f6f7f9; color: #1d232b; }
+  main { max-width: 30rem; margin: 12vh auto; padding: 2rem; background: #fff; border: 1px solid #e3e6ea; border-radius: 12px; }
+  h1 { font-size: 1.25rem; margin: 0 0 .75rem; }
+  p { line-height: 1.5; margin: 0 0 1rem; }
+  button { font: inherit; padding: .6rem 1.1rem; border-radius: 8px; border: 1px solid #1d4ed8; background: #1d4ed8; color: #fff; cursor: pointer; }
+  button[disabled] { opacity: .6; cursor: default; }
+  button:focus-visible { outline: 3px solid #93c5fd; outline-offset: 2px; }
+</style>
+</head>
+<body>
+<main>
+  <h1 id="title">Unsubscribe from these emails?</h1>
+  <p id="message">You will stop receiving follow-up emails from this sender.</p>
+  <button id="confirm" type="button">Unsubscribe</button>
+</main>
+<script src="assets/js/config.js"></script>
+<script>
+(function () {
+  "use strict";
+  var title = document.getElementById("title");
+  var message = document.getElementById("message");
+  var button = document.getElementById("confirm");
+
+  function show(t, m, keepButton) {
+    title.textContent = t;
+    message.textContent = m;
+    button.hidden = !keepButton;
+  }
+
+  var match = /(?:^#|&)t=([^&]+)/.exec(window.location.hash || "");
+  var token = match ? decodeURIComponent(match[1]) : "";
+  // Keep the token out of the address bar and browser history.
+  if (window.history && window.history.replaceState) {
+    window.history.replaceState(null, "", window.location.pathname);
+  }
+
+  var base = window.App && App.config && typeof App.config.url === "string" ? App.config.url.replace(/\/+$/, "") : "";
+  if (!token || token.length > 512 || !/^https:\/\//.test(base)) {
+    show("This unsubscribe link has expired", "To stop receiving these emails, reply to any of them with the word 'unsubscribe'.", false);
+    return;
+  }
+
+  button.addEventListener("click", function () {
+    button.disabled = true;
+    fetch(base + "/functions/v1/email-unsubscribe", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token: token }),
+      credentials: "omit",
+      referrerPolicy: "no-referrer"
+    }).then(function (res) {
+      if (res.ok) {
+        show("You are unsubscribed", "You will not receive any more follow-up emails from this sender.", false);
+      } else if (res.status === 503) {
+        button.disabled = false;
+        show("Something went wrong", "Please try again.", true);
+      } else {
+        show("This unsubscribe link has expired", "To stop receiving these emails, reply to any of them with the word 'unsubscribe'.", false);
+      }
+    }).catch(function () {
+      button.disabled = false;
+      show("Something went wrong", "Please check your connection and try again.", true);
+    });
+  });
+})();
+</script>
+</body>
+</html>
