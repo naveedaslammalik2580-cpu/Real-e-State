@@ -24,3 +24,8 @@
 .rent-bar-track { height: 12px; border-radius: 999px; overflow: hidden; background: var(--line); margin-top: 6px; }
 .rent-bar-track > div { height: 100%; }
 .afford-total-row { border-top: 1px solid var(--line); margin-top: 12px; padding-top: 12px; }
+
+/* P2 (D-3 + tablet hero tier): supporting sections 26/40 -> 20/32 -> 16/28; hero top 20px on tablet. */
+@media (min-width:761px) and (max-width:1000px){ .page-hero{padding-top:20px} }
+@media (max-width:1000px){ .section{padding:20px 0 32px} }
+@media (max-width:760px){ .section{padding:16px 0 28px} }

@@ -26,13 +26,14 @@
 
 /* Card grid: 3 columns desktop, 2 tablet, 1 mobile. Equal-height cards.
    ID-qualified so it beats the legacy 2-column #tool-grid rule in tools.css. */
-#tool-grid.tool-listing-grid { margin-top: 16px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-@media (max-width: 1024px) { #tool-grid.tool-listing-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 640px) { #tool-grid.tool-listing-grid { grid-template-columns: 1fr; } }
+#tool-grid.tool-listing-grid { margin-top: 16px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+@media (max-width: 1024px) { #tool-grid.tool-listing-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; } }
+@media (max-width: 640px) { #tool-grid.tool-listing-grid { grid-template-columns: 1fr; gap: 14px; } }
+
 #tool-grid .listing-card[hidden] {display:none;}
 
 /* Whole card is one link. */
-.listing-card { background: #fff; border: 1px solid #E2DED5; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; min-height: 252px; box-shadow: 0 8px 28px rgba(20, 32, 43, .06); color: inherit; text-decoration: none; }
+.listing-card { background: #fff; border: 1px solid #E2DED5; border-radius: 18px; padding: 24px; display: flex; flex-direction: column; min-height: 252px; box-shadow: 0 8px 28px rgba(20, 32, 43, .06); color: inherit; text-decoration: none; }
 .listing-card:hover { transform: translateY(-3px); border-color: #0F766E; box-shadow: 0 17px 35px rgba(20, 32, 43, .10); }
 .listing-card:focus-visible { outline: 3px solid #0F766E; outline-offset: 3px; }
 .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
@@ -53,3 +54,7 @@
 .listing-banner-sub { font-size: 13px; color: #C9D6E0; margin-top: 4px; }
 .listing-banner .btn { white-space: nowrap; }
 @media (max-width: 640px) { .listing-banner { flex-direction: column; align-items: flex-start; } }
+
+/* P2: directory card padding tiers (24/20/16). */
+@media (max-width: 1024px) { .listing-card { padding: 20px; } }
+@media (max-width: 640px) { .listing-card { padding: 16px; } }

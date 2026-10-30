@@ -30,7 +30,7 @@ body {
 /* HERO */
 
 .page-hero {
-  padding: 45px 0 25px;
+  padding: 24px 0 25px;
   background:
     radial-gradient(
       circle at 93% 5%,
@@ -159,7 +159,7 @@ body {
 }
 
 .input-panel {
-  padding: 29px 31px 23px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -933,7 +933,7 @@ body {
 
   .input-panel,
   .noi-results {
-    padding: 22px;
+    padding: 20px;
   }
 
   .noi-verdict {
@@ -953,7 +953,7 @@ body {
 
 @media (max-width: 760px) {
   .page-hero {
-    padding: 25px 0 25px;
+    padding: 16px 0 25px;
   }
 
   .hero-intro {
@@ -987,7 +987,7 @@ body {
 
   .input-panel,
   .noi-results {
-    padding: 22px;
+    padding: 20px;
   }
 
   .section.article-section {
@@ -1040,7 +1040,7 @@ body {
 @media (max-width: 430px) {
   .input-panel,
   .noi-results {
-    padding: 18px;
+    padding: 16px;
   }
 
   .form-grid {
@@ -1140,4 +1140,12 @@ body {
   .calculator-disclaimers {
     margin-top: 10px;
   }
+}
+
+/* P2: tablet hero tier (NOI sections keep their custom article layout). */
+@media (min-width:761px) and (max-width:1000px){ .page-hero{padding-top:20px} }
+
+/* P2 Batch 4: NOI unit-field font >= 16px on mobile (owner-approved: NOI included). */
+@media (max-width: 760px) {
+  .input-unit .field { font-size: 16px; }
 }

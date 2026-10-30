@@ -16,7 +16,7 @@
 .resources-page .learning-hero p {max-width:700px;font-size:1.0625rem;margin:0;}
 .resources-page .learning-jumps {display:flex;flex-wrap:wrap;gap:10px 24px;margin-top:20px;}
 .resources-page .learning-jumps a {display:inline-flex;align-items:center;min-height:44px;color:var(--teal);font-weight:600;text-decoration:underline;text-underline-offset:4px;}
-.resources-page .learning-section {padding:42px 0;}
+.resources-page .learning-section {padding:48px 0;}
 .resources-page .learning-heading {max-width:760px;margin-bottom:26px;}
 .resources-page .learning-heading h2 {font-size:clamp(1.8rem,3vw,2.5rem);margin-bottom:12px;}
 .resources-page .learning-heading p {margin:0;}
@@ -47,7 +47,7 @@
 .resources-page .learning-note h2 {font-size:1.7rem;margin-bottom:12px;}
 .resources-page .learning-note p {max-width:850px;margin-bottom:10px;}
 .resources-page .learning-note a {min-height:44px;display:inline-flex;align-items:center;}
-.resources-page .footer {padding:44px 0 24px;}
+.resources-page .footer {padding:40px 0 28px;}
 .resources-page .footer-top {grid-template-columns:minmax(0,1.6fr) repeat(3,minmax(0,1fr));gap:28px;}
 .resources-page .footer-top>div,.resources-page .footer-top>div:first-child,.resources-page .footer-top>div:last-child {min-width:0;grid-column:auto;}
 .resources-page .footer .brand {display:inline-flex;margin:0 0 18px;max-width:100%;white-space:normal;color:var(--white);}
@@ -66,7 +66,15 @@
 
 /* Resources (P1C): tighter guide section + calculator discovery strip. */
 .learning-section{padding-top:48px;padding-bottom:48px}
-.tools-strip{padding:44px 0}
+.tools-strip{padding:48px 0}
 .tool-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:22px;margin-top:16px}
 .tool-groups h3{font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;color:#5E6C79;margin:0 0 8px}
 .tool-groups a{display:block;padding:3px 0}
+
+/* P2 standardization: footer padding tiers, matching the shared spec. */
+@media(max-width:1000px){ .resources-page .footer{padding-top:36px;padding-bottom:24px} }
+@media(max-width:760px){ .resources-page .footer{padding-top:32px;padding-bottom:24px} }
+
+/* P2: resources section tiers. */
+@media(max-width:1000px){ .resources-page .learning-section{padding:36px 0} .tools-strip{padding:36px 0} }
+@media(max-width:760px){ .resources-page .learning-section{padding:28px 0} .tools-strip{padding:28px 0} }

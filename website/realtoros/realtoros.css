@@ -55,3 +55,8 @@
   .realtoros-page .product-shot { padding: 16px; }
   .realtoros-page .product-shot-space { padding: 18px; }
 }
+
+/* P2: standard section spacing for this page (was the shared 92px default). */
+.realtoros-page .section{padding:64px 0}
+@media(max-width:1000px){ .realtoros-page .section{padding:48px 0} }
+@media(max-width:760px){ .realtoros-page .section{padding:36px 0} }

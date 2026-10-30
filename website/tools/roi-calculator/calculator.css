@@ -17,7 +17,7 @@ body { background: #F6F5F0; color: #0B1F33; }
 .calculator-layout { align-items: start; gap: 24px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 
 /* Input panel: the site's own card treatment */
-.panel { background: #fff; border: 1px solid #E5E2DB; border-radius: 17px; box-shadow: 0 6px 22px rgba(26, 58, 70, .035); padding: 28px; }
+.panel { background: #fff; border: 1px solid #E5E2DB; border-radius: 17px; box-shadow: 0 6px 22px rgba(26, 58, 70, .035); padding: 24px; }
 .panel h2 { color: #0B1F33; }
 .form-field label { font-size: 14px; font-weight: 700; color: #0B1F33; }
 .form-field small, .field-helper { font-size: .82rem; color: #5E6C79; }
@@ -46,7 +46,7 @@ body { background: #F6F5F0; color: #0B1F33; }
 .disclaimer { color: #5E6C79; }
 
 /* Results: light area, navy verdict banner, paper metric tiles */
-.roi-results { background: #fff; color: #0B1F33; border: 1px solid #E5E2DB; border-radius: 17px; box-shadow: 0 6px 22px rgba(26, 58, 70, .035); padding: 28px; position: sticky; top: 105px; }
+.roi-results { background: #fff; color: #0B1F33; border: 1px solid #E5E2DB; border-radius: 17px; box-shadow: 0 6px 22px rgba(26, 58, 70, .035); padding: 24px; position: sticky; top: 105px; }
 .roi-verdict { background: #102131; color: #fff; border-radius: 15px; padding: 22px 24px; }
 .roi-verdict-label { color: #9FB3C4; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 8px; }
 .roi-verdict-value { font-family: 'Source Serif 4', Georgia, serif; font-size: clamp(2.4rem, 4vw, 3.2rem); font-weight: 600; line-height: 1.05; color: #fff; margin: 0; overflow-wrap: anywhere; }
@@ -117,3 +117,12 @@ body { background: #F6F5F0; color: #0B1F33; }
 .roi-table th:first-child, .roi-table td:first-child { text-align: left; }
 .roi-table td { text-align: right; padding: 9px 8px; border-top: 1px solid #E5E2DB; color: #0B1F33; white-space: nowrap; }
 .roi-table td:first-child { color: #5E6C79; }
+
+/* P2 (D-3 + tablet hero tier): supporting sections 26/40 -> 20/32 -> 16/28; hero top 20px on tablet. */
+@media (min-width:761px) and (max-width:1000px){ .page-hero{padding-top:20px} }
+@media (max-width:1000px){ .section{padding:20px 0 32px} }
+@media (max-width:760px){ .section{padding:16px 0 28px} }
+
+/* P2 Batch 4: panel padding tiers 24/20/16 (this page does not load tools.css). */
+@media (max-width: 1000px) { .panel, .roi-results { padding: 20px; } }
+@media (max-width: 760px) { .panel, .roi-results { padding: 16px; } }

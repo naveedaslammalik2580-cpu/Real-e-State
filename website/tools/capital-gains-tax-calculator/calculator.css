@@ -22,7 +22,7 @@ body { background: #F6F5F0; color: #0B1F33; }
 .disclaimer { color: #45525E; font-size: 14px; line-height: 1.5; margin: 0; }
 
 /* ---------- Input panel ---------- */
-.panel { background: #fff; border: 1px solid #E5E2DB; border-radius: 17px; box-shadow: 0 6px 22px rgba(26, 58, 70, .035); padding: 28px; }
+.panel { background: #fff; border: 1px solid #E5E2DB; border-radius: 17px; box-shadow: 0 6px 22px rgba(26, 58, 70, .035); padding: 24px; }
 .panel h2 { color: #0B1F33; }
 .muted { color: #45525E; }
 
@@ -34,7 +34,7 @@ body { background: #F6F5F0; color: #0B1F33; }
 .form-field { min-width: 0; }
 .form-field[hidden] { display: none; }
 .form-field-wide { grid-column: 1 / -1; }
-.form-field label { display: block; font-size: 14px; font-weight: 700; color: #0B1F33; margin-bottom: 6px; }
+.form-field label { display: block; font-size: 14px; font-weight: 700; color: #0B1F33; margin-bottom: 8px; }
 .form-field small, .field-helper { display: block; margin-top: 5px; font-size: 13px; line-height: 1.4; color: #45525E; }
 
 .field { min-height: 48px; border-radius: 11px; border-color: #d6e1e0; color: #0B1F33; background: #fff; font-variant-numeric: tabular-nums; }
@@ -85,7 +85,7 @@ body { background: #F6F5F0; color: #0B1F33; }
 .cgt-collapse > div[hidden] { display: none; }
 
 /* ---------- Results card (light; amber = tax, teal = what you keep) ---------- */
-.cgt-results { background: #fff; color: #0B1F33; border: 1px solid #E5E2DB; border-radius: 17px; box-shadow: 0 6px 22px rgba(26, 58, 70, .035); padding: 28px; position: sticky; top: 96px; }
+.cgt-results { background: #fff; color: #0B1F33; border: 1px solid #E5E2DB; border-radius: 17px; box-shadow: 0 6px 22px rgba(26, 58, 70, .035); padding: 24px; position: sticky; top: 96px; }
 .page-hero .cgt-results p { max-width: none; }
 
 .cgt-verdict { background: #F6F5F0; border: 1px solid #E5E2DB; border-radius: 15px; padding: 22px 24px; }
@@ -277,7 +277,7 @@ body { background: #F6F5F0; color: #0B1F33; }
 .table-wrap { max-width: 960px; }
 
 /* Optional: slightly tighter gap between sections */
-.section { padding: 20px 0 28px; }
+.section { padding: 26px 0 40px; }
 /* ===== Article + sticky side card ===== */
 .section .wrap.article {
   display: grid !important;
@@ -322,3 +322,11 @@ body { background: #F6F5F0; color: #0B1F33; }
   .section .wrap.article { grid-template-columns: 1fr !important; gap: 32px; }
   .section .wrap.article > .glance { position: static; }
 }
+/* P2 (D-3 + tablet hero tier): supporting sections 26/40 -> 20/32 -> 16/28; hero top 20px on tablet. */
+@media (min-width:761px) and (max-width:1000px){ .page-hero{padding-top:20px} }
+@media (max-width:1000px){ .section{padding:20px 0 32px} }
+@media (max-width:760px){ .section{padding:16px 0 28px} }
+
+/* P2 Batch 4: panel padding tiers 24/20/16 (this page does not load tools.css). */
+@media (max-width: 1000px) { .panel, .cgt-results { padding: 20px; } }
+@media (max-width: 760px) { .panel, .cgt-results { padding: 16px; } }
