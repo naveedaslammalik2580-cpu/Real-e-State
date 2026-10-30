@@ -1,0 +1,70 @@
+name: CRM tests
+
+# Root-level copy of the CRM project's own workflow
+# (Realtor main CRM/RealtorOS_Project/.github/workflows/tests.yml), with
+# every path corrected for the CRM living in a subdirectory of this
+# repository — GitHub Actions only discovers workflows at the repo root.
+# The suites are offline by design: tests/helpers/hooks.mjs refuses every
+# remote import except the Supabase client stub, and no test reaches
+# Supabase, Resend or any network service. This workflow needs no secrets,
+# and must never be given any.
+
+on:
+  push:
+    paths:
+      - 'Realtor main CRM/**'
+      - '.github/workflows/crm-tests.yml'
+  pull_request:
+    paths:
+      - 'Realtor main CRM/**'
+      - '.github/workflows/crm-tests.yml'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    # The SQL tests build a real Postgres (PGlite, in WebAssembly) and
+    # replay every migration into it. That is minutes, not seconds, and a
+    # job that is killed at the default six hours tells nobody anything —
+    # 40 means a hang is reported as a hang.
+    timeout-minutes: 40
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/* # tests/package.json requires node >= 23.6
+          cache: npm
+          cache-dependency-path: 'Realtor main CRM/RealtorOS_Project/tests/package-lock.json'
+
+      # The migrated-database snapshot. Rebuilding it is the slowest thing
+      # in the suite, and it only changes when a migration does — hence
+      # the key. tests/helpers/pg.mjs rebuilds it by itself on a miss, so
+      # a stale or absent cache costs time and nothing else.
+      - name: Cache the migrated database snapshot
+        uses: actions/cache@v4
+        with:
+          path: 'Realtor main CRM/RealtorOS_Project/tests/.cache'
+          key: pglite-${{ runner.os }}-${{ hashFiles('Realtor main CRM/RealtorOS_Project/supabase/migrations/**') }}
+          restore-keys: |
+            pglite-${{ runner.os }}-
+
+      - name: Install
+        working-directory: 'Realtor main CRM/RealtorOS_Project/tests'
+        run: npm ci
+
+      - name: Frontend suite
+        working-directory: 'Realtor main CRM/RealtorOS_Project/tests'
+        run: npm run test:frontend
+
+      - name: SQL suite
+        working-directory: 'Realtor main CRM/RealtorOS_Project/tests'
+        run: npm run test:sql
+
+      - name: Edge Functions suite
+        working-directory: 'Realtor main CRM/RealtorOS_Project/tests'
+        run: npm run test:edge
+
+      - name: Security suite
+        working-directory: 'Realtor main CRM/RealtorOS_Project/tests'
+        run: npm run test:security
