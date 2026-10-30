@@ -11,6 +11,7 @@
 (function () {
   var form = document.querySelector('#capital-gains-tax-form');
   if (!form) return;
+  form.addEventListener('submit', function (event) { event.preventDefault(); });
   function num(id) {
     var el = document.getElementById(id);
     return el ? Number(String(el.value).replace(/,/g, '').trim()) : 0;
