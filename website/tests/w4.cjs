@@ -18,7 +18,7 @@ for (const file of pages) {
   }
 }
 const contact = read('contact/index.html');
-assert(contact.includes('onsubmit="return false"'));
+assert(!contact.includes('onsubmit'));
 assert(contact.includes('id="prepare-enquiry" type="button" disabled'));
 assert(contact.includes('<noscript>'));
 for (const control of contact.matchAll(/<(?:input|select|textarea)\b[^>]*id="([^"]+)"[^>]*>/g)) {

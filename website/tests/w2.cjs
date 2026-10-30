@@ -33,16 +33,38 @@ class Element {
     }, remove: name => this.classList.toggle(name, false) };
   }
   append(...nodes) { this.children.push(...nodes); }
+  closest(selector) {
+    // The harness builds a flat element map with no ancestor tree, while in
+    // the real DOM each input sits inside a wrapper (the NOI calculator
+    // toggles the 'invalid' class on its '.input-unit' wrapper via
+    // closest()). Model that wrapper with a lazily created stand-in so
+    // repeated calls for the same selector return the same node, as in
+    // the DOM. Test-stub only; production code is unchanged.
+    if (!this._closestCache) this._closestCache = {};
+    if (!this._closestCache[selector]) this._closestCache[selector] = new Element();
+    return this._closestCache[selector];
+  }
   setAttribute(key, value) { this.attributes[key] = value; }
   addEventListener(name, fn) { this.listeners[name] = fn; }
-  fire(name, event = {}) { this.listeners[name](event); }
+  fire(name, event = {}) {
+    // In the DOM, dispatching an event with no listener is a no-op, the
+    // event's target is the element it was fired on, and events from an
+    // input bubble up to the form — the NOI calculator relies on that,
+    // listening for 'input' on the form (delegation) instead of on each
+    // input. Model all three behaviours. Test-stub only.
+    if (event.target === undefined) event.target = this;
+    this.listeners[name]?.(event);
+    if (this._bubbleTo && this._bubbleTo !== this) this._bubbleTo.listeners[name]?.(event);
+  }
 }
 function directory(data) {
   const ids = Object.fromEntries(['tool-grid', 'tool-search', 'tool-filters', 'no-results', 'tool-count'].map(id => [id, new Element()]));
-  vm.runInNewContext(read('assets/tool-directory.js'), {
+  const ctx = {
     window: { realEstateTools: data },
     document: { getElementById: id => ids[id], createElement: () => new Element() }
-  });
+  };
+  vm.runInNewContext(read('assets/tool-search.js'), ctx);
+  vm.runInNewContext(read('assets/tool-directory.js'), ctx);
   return {
     ids, visible: () => ids['tool-grid'].children.filter(card => !card.hidden),
     search(value) { ids['tool-search'].value = value; ids['tool-search'].fire('input'); },
@@ -54,6 +76,11 @@ assert.equal(d.visible().length, 10);
 assert.deepEqual(d.visible().map(c => c.href), ['commission-calculator/', 'mortgage-calculator/', 'home-affordability-calculator/', 'rent-vs-buy-calculator/', 'cap-rate-calculator/', 'bridge-loan-calculator/', 'property-investment-calculator/', 'capital-gains-tax-calculator/', 'roi-calculator/', 'noi-calculator/']);
 d.search('  MORTGAGE  '); assert.equal(d.visible().length, 1);
 d.search('transaction fees'); assert.equal(d.visible()[0].href, 'commission-calculator/');
+d.search('NOI'); assert.deepEqual(d.visible().map(c => c.href), ['cap-rate-calculator/', 'noi-calculator/']);
+d.search('cgt'); assert.deepEqual(d.visible().map(c => c.href), ['capital-gains-tax-calculator/']);
+d.search('net operating income'); assert.deepEqual(d.visible().map(c => c.href), ['cap-rate-calculator/', 'noi-calculator/']);
+d.search('vacancy'); assert.deepEqual(d.visible().map(c => c.href), ['cap-rate-calculator/', 'noi-calculator/']);
+d.search('afford'); assert.deepEqual(d.visible().map(c => c.href), ['home-affordability-calculator/']);
 d.search('not-a-tool'); assert.equal(d.visible().length, 0); assert.equal(d.ids['no-results'].style.display, 'block');
 d.search(''); assert.equal(d.visible().length, 10);
 assert.deepEqual(d.ids['tool-filters'].children.map(b => b.textContent), ['All tools · 10', 'Buying · 3', 'Investing · 4', 'Selling · 1', 'Tax · 1', 'For agents · 1']);
@@ -80,12 +107,20 @@ function calculator(name) {
   }
   const form = `${name}-form`;
   const inputs = [...html.matchAll(/<input[^>]*\bid="([^"]+)"[^>]*>/g)].map(m => elements[m[1]]);
+  // Inputs sit inside the form, so their events bubble to it in the DOM.
+  for (const input of inputs) input._bubbleTo = elements[form];
   // Each tool runs its own scoped script; the shared script keeps only the menu.
   const script = name === 'mortgage' ? read('tools/mortgage-calculator/calculator.js') : name === 'commission' ? read('tools/commission-calculator/calculator.js') : name === 'home-affordability' ? read('tools/home-affordability-calculator/calculator.js') : name === 'rent-vs-buy' ? read('tools/rent-vs-buy-calculator/calculator.js') : name === 'cap-rate' ? read('tools/cap-rate-calculator/calculator.js') : name === 'bridge-loan' ? read('tools/bridge-loan-calculator/calculator.js') : name === 'property-investment' ? read('tools/property-investment-calculator/calculator.js') : name === 'capital-gains-tax' ? read('tools/capital-gains-tax-calculator/calculator.js') : name === 'roi' ? read('tools/roi-calculator/calculator.js') : name === 'noi' ? read('tools/noi-calculator/calculator.js') : shared;
   vm.runInNewContext(script, { Intl, document: {
     querySelector: s => s === '#' + form ? elements[form] : null,
     querySelectorAll: s => s === '#' + form + ' input' ? inputs : [], getElementById: id => elements[id]
   } });
+  // Inline onsubmit handlers are banned (CSP script-src 'self'): submission
+  // prevention must come from the calculator's own JavaScript. Fire a
+  // submit and require the handler to call preventDefault.
+  const submitEvent = { prevented: false, preventDefault() { this.prevented = true; } };
+  elements[form].fire('submit', submitEvent);
+  assert(submitEvent.prevented, `${name}: form submission is not prevented by its script`);
   return { get: id => elements[id].textContent, html: id => elements[id].innerHTML, fire(id, event) { elements[id].fire(event); }, put(id, value) { elements[id].value = String(value); }, val: id => elements[id].value, set(id, value) { elements[id].value = String(value); elements[id].fire('input'); } };
 }
 const c = calculator('commission');
@@ -199,14 +234,23 @@ assert.equal(n.get('tile-ratio'), '37.90%');
 assert.equal(n.get('row-gross-rent'), '$26,400.00'); assert.equal(n.get('row-vacancy-loss'), '−$1,320.00');
 assert.equal(n.get('row-effective'), '$25,080.00'); assert.equal(n.get('row-total-expenses'), '$9,506.40');
 n.set('monthly-rent', 3000); assert.equal(n.get('noi-annual'), '$23,964.00'); assert.equal(n.get('noi-monthly'), '$1,997.00');
-n.set('monthly-rent', ''); assert.equal(n.get('noi-annual'), 'Monthly rent is empty.');
-assert.equal(n.get('noi-validation'), 'Monthly rent is empty.');
-n.set('monthly-rent', 2200); n.set('vacancy-rate', -1); assert.equal(n.get('noi-annual'), 'Vacancy rate must be between 0% and 100%.');
-n.set('monthly-rent', ''); assert.equal(n.get('noi-validation'), 'Monthly rent is empty. Vacancy rate must be between 0% and 100%.');
+n.set('monthly-rent', ''); assert.equal(n.get('noi-annual'), '—');
+assert.equal(n.get('noi-validation'), 'Monthly rent is required.');
+n.set('monthly-rent', 2200); n.set('vacancy-rate', -1); assert.equal(n.get('noi-annual'), '—');
+n.set('monthly-rent', ''); assert.equal(n.get('noi-validation'), 'Monthly rent is required. Vacancy rate must be between 0 and 100.');
+// The contact form's submission prevention lives entirely in contact.js
+// (its HTML carries no inline handler): load it against stubs and require
+// a submit to be prevented.
+const contactElements = {};
+for (const id of ['enquiry-form', 'prepare-enquiry', 'enquiry-draft', 'draft-output', 'enquiry-status']) contactElements[id] = new Element();
+vm.runInNewContext(read('assets/contact.js'), { document: { getElementById: id => contactElements[id] } });
+const contactSubmit = { prevented: false, preventDefault() { this.prevented = true; } };
+contactElements['enquiry-form'].fire('submit', contactSubmit);
+assert(contactSubmit.prevented, 'contact: form submission is not prevented by its script');
 const toggle = new Element(), nav = new Element(), events = {};
 nav.contains = () => true;
 toggle.focus = () => { toggle.focused = true; };
-vm.runInNewContext(shared, { document: {
+vm.runInNewContext(shared, { window: {}, document: {
   querySelector: s => s === '.menu-toggle' ? toggle : s === '.nav' ? nav : null,
   addEventListener: (name, fn) => events[name] = fn
 } });
@@ -214,6 +258,17 @@ toggle.fire('click'); assert.equal(toggle.attributes['aria-expanded'], 'true'); 
 events.keydown({ key: 'Escape' }); assert.equal(toggle.attributes['aria-expanded'], 'false'); assert(!nav.className.includes('is-open'));
 assert.equal(toggle.focused, true, 'Escape returns focus from the hidden menu to its toggle');
 function walk(dir) { return fs.readdirSync(dir, { withFileTypes: true }).flatMap(e => e.isDirectory() ? walk(path.join(dir, e.name)) : [path.join(dir, e.name)]); }
+// CSP readiness: no inline event-handler attributes, no javascript: URLs
+// and no inline <script> blocks in any page — all behaviour must live in
+// external scripts so a script-src 'self' policy can be adopted without
+// 'unsafe-inline'. (Build output is excluded; the packager checks it.)
+for (const file of walk(root).filter(f => f.endsWith('.html') && !f.split(path.sep).includes('dist-production'))) {
+  const content = fs.readFileSync(file, 'utf8');
+  const label = path.relative(root, file);
+  assert(!/<[^>]*\son[a-z]+\s*=/i.test(content), `inline event handler in ${label}`);
+  assert(!/href\s*=\s*["']\s*javascript:/i.test(content), `javascript: URL in ${label}`);
+  assert(!/<script(?![^>]*\bsrc=)/i.test(content), `inline <script> block in ${label}`);
+}
 let references = 0, pages = 0;
 for (const file of walk(root).filter(f => /\.(html|css|js)$/.test(f))) {
   const content = fs.readFileSync(file, 'utf8');

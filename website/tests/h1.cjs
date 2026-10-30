@@ -6,7 +6,8 @@ const ctx = { window: {} }; vm.runInNewContext(read('assets/tool-registry.js'), 
 const registry = ctx.window.realEstateTools;
 const published = registry.filter(t => t.status === 'published');
 const fallback = [...html.matchAll(/data-home-tool="([^"]+)" href="([^"]+)"/g)];
-// Homepage panel rule: only the first two published tools appear here.
+// Homepage panel: the static fallback and the unfiltered panel show only the
+// first two published tools; typing in the search covers all published tools.
 assert.deepEqual(fallback.map(m => [m[1], m[2]]), Array.from(published.slice(0, 2), t => [t.slug, 'tools/' + t.publicUrl]));
 class Element {
   constructor() { this.children = []; this.attributes = {}; this.value = ''; this.listeners = {}; }
@@ -19,7 +20,9 @@ class Element {
 function render(tools) {
   const grid = new Element();
   const ids = { 'home-search': new Element(), 'home-search-results': new Element(), 'home-search-status': new Element() };
-  vm.runInNewContext(read('assets/home.js'), { window: { realEstateTools: tools }, document: { getElementById: id => ids[id], createElement: () => new Element() } });
+  const ctx = { window: { realEstateTools: tools }, document: { getElementById: id => ids[id], createElement: () => new Element() } };
+  vm.runInNewContext(read('assets/tool-search.js'), ctx);
+  vm.runInNewContext(read('assets/home.js'), ctx);
   grid.ids = ids;
   return grid;
 }
@@ -40,7 +43,19 @@ assert(results.children[0].textContent.includes('No matching tools'));
 search.value = ''; search.listeners.input(); assert.equal(status.textContent, '2 tools found');
 assert.equal(render([]).ids['home-search-status'].textContent, '0 tools found');
 search.value = 'Finance & numbers'; search.listeners.input();
-assert.equal(status.textContent, '2 tools found');
+assert.equal(status.textContent, '10 tools found');
+search.value = 'NOI'; search.listeners.input();
+assert.deepEqual(results.children.map(c => c.href), ['tools/cap-rate-calculator/', 'tools/noi-calculator/']);
+search.value = 'cgt'; search.listeners.input();
+assert.deepEqual(results.children.map(c => c.href), ['tools/capital-gains-tax-calculator/']);
+search.value = 'net operating'; search.listeners.input();
+assert.deepEqual(results.children.map(c => c.href), ['tools/cap-rate-calculator/', 'tools/noi-calculator/']);
+search.value = 'vacancy'; search.listeners.input();
+assert.deepEqual(results.children.map(c => c.href), ['tools/cap-rate-calculator/', 'tools/noi-calculator/']);
+search.value = 'mort'; search.listeners.input();
+assert.deepEqual(results.children.map(c => c.href), ['tools/mortgage-calculator/']);
+search.value = 'how much house'; search.listeners.input();
+assert.deepEqual(results.children.map(c => c.href), ['tools/home-affordability-calculator/']);
 const section = html.match(/<section class="section home-how"[\s\S]*?<\/section>/)[0];
 assert(section.includes('From numbers to clarity in seconds.'));
 assert.equal((section.match(/<li>/g) || []).length, 3);

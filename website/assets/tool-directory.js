@@ -6,7 +6,7 @@
   const filters = document.getElementById('tool-filters');
   const message = document.getElementById('no-results');
   const summary = document.getElementById('tool-count');
-  if (!Array.isArray(window.realEstateTools)) {
+  if (!Array.isArray(window.realEstateTools) || typeof window.toolMatches !== 'function') {
     message.textContent = 'Tools could not be loaded. Please reload this page.';
     message.style.display = 'block';
     search.disabled = true;
@@ -56,13 +56,13 @@
     foot.append(element('span', 'open', 'Open tool \u2192'));
     card.append(top, element('h3', '', tool.title), element('p', '', tool.description), get, foot);
     grid.append(card);
-    return { tool, card, keywords: `${tool.title} ${tool.description} ${displayCategory(tool)} ${meta.youGet} ${tool.slug}`.toLowerCase() };
+    return { tool, card, extra: `${displayCategory(tool)} ${meta.youGet}` };
   });
   function update() {
-    const query = search.value.trim().toLowerCase();
+    const query = search.value.trim();
     let count = 0;
-    cards.forEach(({ tool, card, keywords }) => {
-      const visible = (category === null || displayCategory(tool) === category) && keywords.includes(query);
+    cards.forEach(({ tool, card, extra }) => {
+      const visible = (category === null || displayCategory(tool) === category) && (!query || window.toolMatches(tool, query, extra));
       card.hidden = !visible;
       if (visible) count++;
     });

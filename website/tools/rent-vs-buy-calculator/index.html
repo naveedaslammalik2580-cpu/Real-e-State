@@ -22,8 +22,8 @@
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="header"><div class="wrap head-inner">
 <a class="brand" href="../../" aria-label="Real Estate Tools, homepage"><span class="brand-mark" aria-hidden="true">⌂</span><span class="brand-name"><span data-brand-name>Real Estate Tools</span><em>Tools · Software · Guides</em></span></a>
-<nav class="nav" id="site-menu" aria-label="Main navigation"><a href="../../tools/" class="current" aria-current="page">All Tools</a><a href="../../realtoros/" class="">RealtorOS</a><a href="../../resources/" class="">Resources</a><a href="../../about/">About</a><a href="../../contact/" class="">Contact</a><a class="btn btn-primary mobile-nav-cta" href="../../realtoros/">Discover RealtorOS <span aria-hidden="true">↗</span></a></nav>
-<div class="nav-buttons"><a class="btn btn-primary btn-small" href="../../realtoros/">Discover RealtorOS <span aria-hidden="true">↗</span></a></div>
+<nav class="nav" id="site-menu" aria-label="Main navigation"><a href="../../tools/" class="current" aria-current="page">All Tools</a><a href="../../realtoros/" class="" data-crm-link="login">RealtorOS</a><a href="../../resources/" class="">Resources</a><a href="../../about/">About</a><a href="../../contact/" class="">Contact</a><a class="btn btn-primary mobile-nav-cta" href="../../realtoros/" data-crm-link="login">Sign in to RealtorOS <span aria-hidden="true">↗</span></a></nav>
+<div class="nav-buttons"><a class="btn btn-primary btn-small" href="../../realtoros/" data-crm-link="login">Sign in to RealtorOS <span aria-hidden="true">↗</span></a></div>
 <button class="menu-toggle" type="button" aria-controls="site-menu" aria-expanded="false" aria-label="Open navigation"><span aria-hidden="true">☰</span></button>
 </div></header>
 <main id="main"><div class="sticky-result" id="sticky-result"><span>Breakeven year</span><b id="sticky-value">—</b></div>
@@ -32,7 +32,7 @@
 <div class="panel">
 <h2 style="font-size:1.7rem">Enter your figures</h2>
 <p class="muted">Adjust the sample values below to calculate an estimate instantly.</p>
-<form id="rent-vs-buy-form" onsubmit="return false"><div class="form-grid">
+<form id="rent-vs-buy-form"><div class="form-grid">
 <div class="form-field"><label for="monthly-rent">Monthly rent (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="monthly-rent" type="number" min="0" max="1000000000000" step="10" value="1800"><span class="unit-affix" aria-hidden="true">/ month</span></span><input class="field-slider" id="monthly-rent-slider" type="range" min="0" max="10000" step="10" value="1800" aria-label="Monthly rent (USD) slider"></div>
 <div class="form-field"><label for="home-price">Home price (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="home-price" type="number" min="0" max="1000000000000" step="1000" value="350000"></span><input class="field-slider" id="home-price-slider" type="range" min="0" max="1000000" step="1000" value="350000" aria-label="Home price (USD) slider"></div>
 <div class="form-field"><label for="down-payment">Down payment (USD)</label><span class="input-unit"><span class="unit-affix" aria-hidden="true">$</span><input class="field" id="down-payment" type="number" min="0" max="1000000000000" step="1000" value="70000"></span></div><div class="form-field"><label for="down-percent-input">Down payment (%)</label><span class="input-unit"><input class="field" id="down-percent-input" type="number" min="0" max="100" step="0.1" value="20"><span class="unit-affix" aria-hidden="true">%</span></span><small class="field-helper">Share of the home price. Edit either value; the other follows.</small></div>

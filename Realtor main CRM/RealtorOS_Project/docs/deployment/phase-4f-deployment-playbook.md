@@ -3,25 +3,33 @@
 A runbook. Follow it top to bottom. Every section ends with a **STOP GATE** —
 do not continue past a gate that has not passed.
 
-**State of the live project** (verified directly on Supabase, updated for
-Phase 4H):
+**State of the live project** (updated 2026-10-30 — this block supersedes
+any status statement in the body of this playbook; the sections below
+preserve the original Phase 4F procedure, and where a step contradicts
+this block, this block governs):
 
-- **All 28 migrations through T3 are live**, the last being
-  `20261007130000_phase_t3_invitations_and_membership`.
-  The repository's migration filenames match the live version numbers.
-  **No migration remains to apply for Phase 4F** — but two later ones are
-  now pending, neither of which Phase 4F needs:
-  - `20261013120000_phase_t4_followups` (the T4 team follow-ups: member
-    permission overrides in the roster, and the team-mode guard trigger).
-    Rollback: `supabase/rollback/t4_followups_revert.sql`.
-  - `20261014120000_sheet_import_matches_manual_contacts` (H-1: a Google
-    Sheet import matches a contact entered by hand instead of duplicating
-    it). Rollback:
-    `supabase/rollback/sheet_import_manual_match_revert.sql`.
-- **Deployed Edge Functions:** `create-sheet-connection`,
-  `ingest-sheet-leads` and `import-lead-file`. Not deployed:
-  `send-test-email`, `resend-webhook`, `manage-automation`,
-  `process-automation` and `email-unsubscribe`.
+- **All 37 migrations are applied**, the last being
+  `20261029120000_phase_c1_deterministic_workspace_selection` (C-1,
+  applied 2026-10-30). The repository's migration filenames match the
+  live version numbers. **No migration is pending; do not re-apply any
+  of them.**
+- **Deployed Edge Functions (5):** `create-sheet-connection`,
+  `ingest-sheet-leads`, `import-lead-file`, `email-unsubscribe` and
+  `manage-automation`. **Not deployed (3):** `send-test-email`,
+  `resend-webhook` and `process-automation`.
+- **What "deployed" means here:** deployment status is owner-confirmed
+  in the Supabase Dashboard (function list checked 2026-10-30;
+  `email-unsubscribe` and `manage-automation` were deployed that day via
+  the Dashboard editor). Deployment is **not** proof of live functional
+  behaviour: signup/login were verified live by the owner on 2026-10-29,
+  and all eight functions' code passes the offline edge suite (200/200),
+  but the live behaviour of the two functions deployed on 2026-10-30 has
+  not yet been independently verified.
+- **Deferred until production-domain / launch preparation:** the Resend
+  email pipeline (`send-test-email`, `resend-webhook` — no Resend
+  account or verified sending domain exists yet), scheduled automation
+  (`process-automation` + `pg_cron`/`pg_net` + `setup-cron.sql`), and
+  push notifications (VAPID keys + the `config.js` public key).
 - **No automation data:** 0 rules, enrollments, jobs and outbound messages.
 - **`pg_cron` is not enabled.** No cron job exists, no rule is active, no
   email has ever been sent.
@@ -131,15 +139,15 @@ Every box ticked, and the repository commands give the expected output.
 
 ## Section 2 — Database Migration
 
-All 28 migrations through T3 are **already live**, the latest being
-`20261007130000_phase_t3_invitations_and_membership`. **No migration
-remains to apply for Phase 4F.** Do not re-apply any of them. This section
-only confirms the live state.
+All 37 migrations are **already live**, the latest being
+`20261029120000_phase_c1_deterministic_workspace_selection` (C-1,
+applied 2026-10-30). **No migration remains to apply.** Do not re-apply
+any of them. This section only confirms the live state.
 
-Two later migrations are pending — `20261013120000_phase_t4_followups` and
-`20261014120000_sheet_import_matches_manual_contacts` — and are listed in
-the state summary at the top of this playbook. Phase 4F does not depend on
-either, so this section ignores them.
+The inventory table below is the original Phase 4F-era record and lists
+the first 22 migrations. Migrations 23–37 (T2b2 through C-1, in
+`supabase/migrations/`) are likewise applied and are covered by the
+state summary at the top of this playbook.
 
 ### Migration inventory
 
@@ -156,7 +164,7 @@ either, so this section ignores them.
 | 19 | `20260929095530_phase_4e_4_file_lead_import.sql` | 4E.4 | already live |
 | 20 | `20260929150944_phase_4h_in_app_notifications.sql` | 4H | already live |
 | 21 | `20261001160608_phase_t2a_workspace_foundation.sql` | T2a | already live |
-| 22 | `20261005140817_phase_t2b1_permissions.sql` | T2b-1 | **already live — last applied** |
+| 22 | `20261005140817_phase_t2b1_permissions.sql` | T2b-1 | already live |
 
 Every file is named with its live version number, so
 `supabase migration list --project-ref <PROJECT_REF>` shows no local-only
@@ -454,12 +462,12 @@ redeployed**. Phase 4E.2 added `_shared/unsubscribe-token.ts` and
 |---|---|---|---|---|---|---|---|
 | 1 | `create-sheet-connection` | Issue a Google Sheets connector token | Supabase user JWT | `true` | Browser | none | live |
 | 2 | `ingest-sheet-leads` | Accept lead rows from Apps Script | Connector token + timestamp + nonce + replay/rate checks | `false` | Google Apps Script | none | live |
-| 3 | `manage-automation` | Rule activate/pause/resume/archive, manual enroll, retry, stop summary, mark replied/unsubscribed | Supabase user JWT | `true` | Browser | all five, **presence only** | **deploy** |
+| 3 | `manage-automation` | Rule activate/pause/resume/archive, manual enroll, retry, stop summary, mark replied/unsubscribed | Supabase user JWT | `true` | Browser | all five, **presence only** | **deployed** (2026-10-30, owner-confirmed) |
 | 4 | `send-test-email` | One authenticated test send to the caller's own reply-to | Supabase user JWT | `true` | Browser | `RESEND_API_KEY`, `RESEND_SENDING_DOMAIN` | **deploy** |
-| 5 | `email-unsubscribe` | Public unsubscribe link: GET confirms, POST / one-click unsubscribes | Signed expiring token | `false` | Email recipients, mail apps | `UNSUBSCRIBE_SIGNING_SECRET` | **deploy (new)** |
+| 5 | `email-unsubscribe` | Public unsubscribe link: GET confirms, POST / one-click unsubscribes | Signed expiring token | `false` | Email recipients, mail apps | `UNSUBSCRIBE_SIGNING_SECRET` | **deployed** (2026-10-30, owner-confirmed) |
 | 6 | `resend-webhook` | Delivery events, complaints, hard bounces, inbound replies | Svix signature | `false` | Resend | `RESEND_WEBHOOK_SECRET` (+ `RESEND_API_KEY`, `INBOUND_REPLY_DOMAIN` for replies) | **deploy** |
 | 7 | `process-automation` | The automation worker | `x-realtoros-worker-secret`, constant-time compare | `false` | pg_cron | `RESEND_API_KEY`, `RESEND_SENDING_DOMAIN`, `AUTOMATION_WORKER_SECRET`, `UNSUBSCRIBE_SIGNING_SECRET` (+ optional `UNSUBSCRIBE_PAGE_URL`, `INBOUND_REPLY_DOMAIN`) | **deploy** |
-| 8 | `import-lead-file` | One-time lead import from an Excel/CSV file (rows parsed in the browser) | Supabase user JWT | `true` | Browser | none (Supabase auto only) | **deploy (new)** — migration #19 is already live |
+| 8 | `import-lead-file` | One-time lead import from an Excel/CSV file (rows parsed in the browser) | Supabase user JWT | `true` | Browser | none (Supabase auto only) | **deployed** (owner-confirmed) — migration #19 is already live |
 
 ### `verify_jwt` is already configured
 

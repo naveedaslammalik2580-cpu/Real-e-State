@@ -19,3 +19,11 @@
 .supporting-page .resource-list .eyebrow { margin-bottom:12px; }
 @media(max-width:760px) { .supporting-page .support-layout { grid-template-columns:minmax(0,1fr); } }
 @media(max-width:520px) { .supporting-page .form-grid { grid-template-columns:minmax(0,1fr); } .supporting-page .btn { width:100%; } }
+
+/* About (P1C): tighter sections, RealtorOS feature chips, principles strip. */
+.supporting-page .section{padding:54px 0}
+.fit-list{display:flex;flex-wrap:wrap;gap:8px 10px;list-style:none;padding:0;margin:16px 0}
+.fit-list li{background:var(--mist,#EAF2EF);border:1px solid var(--border,#E2DED5);border-radius:999px;padding:5px 12px;font-size:.85rem}
+.principles{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:22px}
+.principles h3{margin:0 0 6px;font-size:1rem}
+.principles p{margin:0;color:var(--muted,#5E6C79);font-size:.9rem}
