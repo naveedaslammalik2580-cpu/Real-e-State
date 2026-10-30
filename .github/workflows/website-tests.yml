@@ -1,0 +1,60 @@
+
+name: website-tests
+
+on:
+  push:
+    paths:
+      - 'website/**'
+      - '.github/workflows/website-tests.yml'
+  pull_request:
+    paths:
+      - 'website/**'
+      - '.github/workflows/website-tests.yml'
+
+jobs:
+  suites:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: h1 - headings and page structure
+        run: node website/tests/h1.cjs
+
+      - name: resources - resource pages
+        run: node website/tests/resources.cjs
+
+      - name: w2 - calculators, directory, navigation, references
+        run: node website/tests/w2.cjs
+
+      - name: w4 - worked examples and formula disclosure
+        run: node website/tests/w4.cjs
+
+      - name: w5a - metadata, accessibility and shared navigation
+        run: node website/tests/w5a.cjs
+
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Build and verify the production package
+        run: node website/scripts/package-deploy.mjs
+
+      - name: Upload the production package
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-production
+          path: website/dist-production/
+          if-no-files-found: error
