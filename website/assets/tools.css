@@ -9,8 +9,8 @@ body { background: #F6F4EF; color: #14202B; }
 .page-hero { background: #F6F4EF; border-color: #E2DED5; }
 .page-hero h1 { font-family: 'Fraunces', 'Source Serif 4', Georgia, serif; color: #14202B; }
 .page-hero p { color: #4B5B6B; }
-.crumb { color: #4B5B6B; }
-.crumb a { color: #0F766E; }
+
+
 
 /* Cards and form panels */
 .panel { background: #fff; border: 1px solid #E2DED5; border-radius: 18px; box-shadow: 0 8px 28px rgba(20, 32, 43, .06); padding: 30px; }
@@ -109,7 +109,7 @@ body { background: #F6F4EF; color: #14202B; }
 /* Sticky result summary: mobile only */
 .sticky-result { display: none; }
 @media (max-width: 760px) {
-  .sticky-result { display: flex; justify-content: space-between; align-items: center; gap: 12px; position: sticky; top: 68px; z-index: 15; background: #0F2230; color: #fff; border-radius: 12px; padding: 12px 16px; margin: 0 0 16px; box-shadow: 0 8px 24px rgba(20, 32, 43, .25); }
+  .sticky-result { display: flex; justify-content: space-between; align-items: center; gap: 12px; position: sticky; top: 64px; z-index: 15; background: #0F2230; color: #fff; border-radius: 12px; padding: 12px 16px; margin: 0 0 16px; box-shadow: 0 8px 24px rgba(20, 32, 43, .25); }
   .sticky-result span { color: #C9D6E0; font-size: .82rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
   .sticky-result b { font-family: 'Fraunces', 'Source Serif 4', Georgia, serif; font-size: 1.3rem; white-space: nowrap; }
   .panel { padding: 24px; }
@@ -135,3 +135,8 @@ body { background: #F6F4EF; color: #14202B; }
 @media print {
   .header, .footer, .sticky-result, .copy-row { display: none !important; }
 }
+
+/* P2 Batch 4: calculator panel padding tiers 24/20/16 (form + result panels). */
+.calculator-layout .panel, .calculator-layout .result, .calculator-layout .cgt-results, .calculator-layout .inv-results { padding: 24px; }
+@media (max-width: 1000px) { .calculator-layout .panel, .calculator-layout .result, .calculator-layout .cgt-results, .calculator-layout .inv-results { padding: 20px; } }
+@media (max-width: 760px) { .calculator-layout .panel, .calculator-layout .result, .calculator-layout .cgt-results, .calculator-layout .inv-results { padding: 16px; } }

@@ -18,7 +18,7 @@ body { background: #F6F5F0; color: #0B1F33; }
 .calculator-layout > * { min-width: 0; }
 
 /* ---------- Input panel ---------- */
-.panel { background: #fff; border: 1px solid #E5E2DB; border-radius: 17px; box-shadow: 0 6px 22px rgba(26, 58, 70, .035); padding: 28px; }
+.panel { background: #fff; border: 1px solid #E5E2DB; border-radius: 17px; box-shadow: 0 6px 22px rgba(26, 58, 70, .035); padding: 24px; }
 .panel h2 { color: #0B1F33; }
 
 .form-group { border: 0; margin: 0 0 28px; padding: 0; min-width: 0; }
@@ -27,7 +27,7 @@ body { background: #F6F5F0; color: #0B1F33; }
 .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 14px; }
 .form-field { min-width: 0; }
 .form-field-wide { grid-column: 1 / -1; }
-.form-field label { display: block; font-size: 14px; font-weight: 700; color: #0B1F33; margin-bottom: 6px; }
+.form-field label { display: block; font-size: 14px; font-weight: 700; color: #0B1F33; margin-bottom: 8px; }
 .form-field small, .field-helper { display: block; margin-top: 5px; font-size: 13px; line-height: 1.4; color: #45525E; }
 
 .field { min-height: 48px; border-radius: 11px; border-color: #d6e1e0; color: #0B1F33; background: #fff; font-variant-numeric: tabular-nums; }
@@ -62,7 +62,7 @@ body { background: #F6F5F0; color: #0B1F33; }
 .disclaimer { color: #45525E; font-size: 14px; line-height: 1.5; margin: 18px 0 0; }
 
 /* ---------- Results card ---------- */
-.inv-results { background: #fff; color: #0B1F33; border: 1px solid #E5E2DB; border-radius: 17px; box-shadow: 0 6px 22px rgba(26, 58, 70, .035); padding: 28px; position: sticky; top: 96px; }
+.inv-results { background: #fff; color: #0B1F33; border: 1px solid #E5E2DB; border-radius: 17px; box-shadow: 0 6px 22px rgba(26, 58, 70, .035); padding: 24px; position: sticky; top: 96px; }
 
 .inv-verdict { background: #102131; color: #fff; border-radius: 15px; padding: 22px 24px; }
 .page-hero .inv-verdict-label { color: #9FB3C4; font-size: 14px; font-weight: 600; margin: 0 0 8px; }
@@ -225,3 +225,11 @@ body { background: #F6F5F0; color: #0B1F33; }
 @media print {
   .header, .footer, .inv-sticky, .inv-bottom-bar, .inv-copy-row { display: none !important; }
 }
+/* P2 (D-3 + tablet hero tier): supporting sections 26/40 -> 20/32 -> 16/28; hero top 20px on tablet. */
+@media (min-width:761px) and (max-width:1000px){ .page-hero{padding-top:20px} }
+@media (max-width:1000px){ .section{padding:20px 0 32px} }
+@media (max-width:760px){ .section{padding:16px 0 28px} }
+
+/* P2 Batch 4: panel padding tiers 24/20/16 (this page does not load tools.css). */
+@media (max-width: 1000px) { .panel, .inv-results { padding: 20px; } }
+@media (max-width: 760px) { .panel, .inv-results { padding: 16px; } }

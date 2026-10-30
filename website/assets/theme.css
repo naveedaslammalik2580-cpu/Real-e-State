@@ -44,7 +44,7 @@ h1,h2 {font-family:Georgia, 'Times New Roman',serif;letter-spacing:-.045em;font-
 h1 {line-height:1.055;}
 h2 {line-height:1.1;}
 h3 {letter-spacing:-.025em;}
-.header {height:80px;background:rgba(255,255,255,.97);border-color:var(--line);box-shadow:0 2px 20px rgba(16,33,49,.025);}
+.header {height:76px;background:rgba(255,255,255,.97);border-color:var(--line);box-shadow:0 2px 20px rgba(16,33,49,.025);}
 .head-inner {gap:30px;}
 .brand {color:var(--navy);font-size:.95rem;letter-spacing:-.035em;line-height:1.05;}
 .brand-mark {border-radius:11px;background:var(--navy);color:var(--gold);border:1px solid #243A4D;font-size:1.5rem;}
@@ -113,8 +113,8 @@ h3 {letter-spacing:-.025em;}
 .foot-bottom {border-color:#304758;color:#A7BBC3;}
 .page-hero {background:linear-gradient(165deg,#F5F4EF 0%,#FFFEFB 100%);border-color:var(--line);}
 .page-hero h1 {color:var(--navy);}
-.crumb {color:#63727C;}
-.crumb a {color:var(--teal);}
+
+
 .search-field,.field,.category-filter {border-color:#D9DBD5;color:var(--navy);}
 .category-filter.active {background:var(--navy);border-color:var(--navy);color:#fff;}
 .result {background:var(--navy);}
@@ -125,12 +125,13 @@ h3 {letter-spacing:-.025em;}
 .notice {background:#F5F5EE;border-color:#E0DDC8;color:#52615B;}
 /* Responsiveness: prevent horizontal overflow, keep controls reachable */
 @media(max-width:1050px){
+  .header {height:68px;}
   .nav {gap:20px;}
   .hero-grid {gap:34px;}
 }
 @media(max-width:760px){
-  .header {height:68px;}
-  .nav {top:68px;background:#fff;border-color:var(--line);}
+  .header {height:64px;}
+  .nav {top:64px;background:#fff;border-color:var(--line);}
   .nav a.current:after {display:none;}
   .nav a.current {background:#E8F2EE;}
   .nav .mobile-nav-cta {display:inline-flex;color:#fff!important;margin-top:9px;justify-content:center;}
@@ -175,3 +176,18 @@ h3 {letter-spacing:-.025em;}
 .brand-name em {font-weight:400;letter-spacing:.025em;}
 .header .btn,.footer .btn {font-weight:600;letter-spacing:0;}
 @media(min-width:761px) and (max-width:900px){.head-inner {gap:16px;}.nav {gap:14px;}.brand {font-size:.85rem;}}
+
+/* P2 standardization: card + footer responsive padding tiers (spec 24/20/16, footer 40/36/32 top, 28/24/24 bottom). */
+@media(max-width:1000px){ .panel{padding:20px} .footer{padding-top:36px;padding-bottom:24px} }
+@media(max-width:760px){ .panel{padding:16px} .footer{padding-top:32px;padding-bottom:24px} }
+
+/* P2 (D-1/D-2): content-page hero tablet tier + heading-to-description gap.
+   Calculator heroes keep their per-page rules (calculator.css loads later). */
+@media(max-width:1000px){ .page-hero{padding:36px 0 32px} }
+@media(max-width:760px){ .page-hero{padding:28px 0 28px} }
+.page-hero h1{margin-bottom:16px}
+@media(max-width:1000px){ .page-hero h1{margin-bottom:14px} }
+@media(max-width:760px){ .page-hero h1{margin-bottom:12px} }
+
+/* P2 Batch 4: mobile form typography — no iOS focus zoom (inputs >= 16px). */
+@media(max-width:760px){ .field, .search-field { font-size:16px; } }

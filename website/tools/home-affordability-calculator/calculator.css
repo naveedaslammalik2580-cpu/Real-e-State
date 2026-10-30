@@ -1,14 +1,14 @@
 /* Home affordability calculator — scoped styles. Shared layout tokens live in theme.css. */
 /* The calculator lives inside the first (hero) section, right under the title. */
-.page-hero { padding: 16px 0 24px; }
+.page-hero { padding: 24px 0 24px; }
 .page-hero h1 { font-size: clamp(2rem, 4vw, 2.5rem); line-height: 1.05; margin: 12px 0 10px; letter-spacing: 0.01em; }
 .page-hero .calculator-layout { margin-top: 4px; }
-.section { padding: 20px 0 32px; }
+.section { padding: 26px 0 40px; }
 .content h2 { margin-top: 28px; }
 .content h2:first-child { margin-top: 0; }
 /* Equal halves on desktop; own collapse (calculator.css loads after site.css). */
 .calculator-layout { align-items: start; gap: 24px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-@media (max-width: 760px) { .calculator-layout { grid-template-columns: 1fr; } }
+@media (max-width: 760px) { .page-hero { padding-top: 16px; } .calculator-layout { grid-template-columns: 1fr; } }
 /* Visible form groups (replacing the old collapsed Advanced section). */
 .form-group { border: 0; padding: 0; margin: 24px 0 0; min-width: 0; }
 .form-group:first-of-type { margin-top: 4px; }
@@ -70,3 +70,8 @@
 .section .content p { max-width: 720px; }
 /* Mobile sticky total keeps its top position; its value takes the teal accent. */
 @media (max-width: 760px) { .sticky-result b { color: #2DD4BF; } }
+
+/* P2 (D-3 + tablet hero tier): supporting sections 26/40 -> 20/32 -> 16/28; hero top 20px on tablet. */
+@media (min-width:761px) and (max-width:1000px){ .page-hero{padding-top:20px} }
+@media (max-width:1000px){ .section{padding:20px 0 32px} }
+@media (max-width:760px){ .section{padding:16px 0 28px} }

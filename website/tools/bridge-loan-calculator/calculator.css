@@ -11,3 +11,22 @@
 .calculator-layout { align-items: start; gap: 24px; }
 .result .result-row { padding: 6px 0; }
 .result > div:last-child { margin-top: 16px !important; }
+/* Panel text tones (commission/mortgage standard). These rules are qualified
+   with .result so they win over the shared .page-hero p rules, which otherwise
+   render these lines dark (#4B5B6B) at 17px on the navy panel — the bridge
+   calculator lives inside its page-hero section, so every panel <p> is
+   affected. Page-scoped only; no shared CSS touched. */
+.result .result-label { color: #AAB8C7; font-size: 12px; }
+.result .result-number { color: #fff; font-size: 48px; letter-spacing: 0.01em; margin: 12px 0 0; }
+.result .result-hero-sub { color: #C9D4DE; font-size: .95rem; }
+.result .result-group { color: #A9B8C6; }
+.result .result-row span { color: #C9D4DE; }
+.result .result-empty { color: #C9D4DE; font-size: 1rem; }
+.result .copy-note { color: #C9D4DE; font-size: .85rem; }
+.result .hidden-row-note { color: #C9D4DE; }
+.result .breakdown-legend { color: #C9D4DE; }
+
+/* P2 (D-3 + tablet hero tier): supporting sections 26/40 -> 20/32 -> 16/28; hero top 20px on tablet. */
+@media (min-width:761px) and (max-width:1000px){ .page-hero{padding-top:20px} }
+@media (max-width:1000px){ .section{padding:20px 0 32px} }
+@media (max-width:760px){ .section{padding:16px 0 28px} }

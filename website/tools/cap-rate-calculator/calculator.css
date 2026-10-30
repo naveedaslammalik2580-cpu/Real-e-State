@@ -72,3 +72,8 @@
   .result { position: static; }
   .panel, .result { padding: 16px; }
 }
+
+/* P2 (D-3 + tablet hero tier): supporting sections 26/40 -> 20/32 -> 16/28; hero top 20px on tablet. */
+@media (min-width:761px) and (max-width:1000px){ .page-hero{padding-top:20px} }
+@media (max-width:1000px){ .section{padding:20px 0 32px} }
+@media (max-width:760px){ .section{padding:16px 0 28px} }
