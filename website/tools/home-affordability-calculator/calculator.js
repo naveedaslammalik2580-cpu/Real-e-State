@@ -19,6 +19,7 @@
 (function () {
   var form = document.querySelector('#home-affordability-form');
   if (!form) return;
+  form.addEventListener('submit', function (event) { event.preventDefault(); });
 
   function usd(n) {
     return Number.isFinite(n)

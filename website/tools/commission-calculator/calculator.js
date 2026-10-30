@@ -9,6 +9,7 @@
 (function () {
   var form = document.querySelector('#commission-form');
   if (!form) return;
+  form.addEventListener('submit', function (event) { event.preventDefault(); });
 
   function usd(n) {
     return Number.isFinite(n)
