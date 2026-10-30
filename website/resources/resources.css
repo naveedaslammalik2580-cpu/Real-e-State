@@ -63,3 +63,10 @@
 @media(max-width:800px){.resources-page .learning-grid {grid-template-columns:minmax(0,1fr);}}
 @media(max-width:760px){.resources-page .wrap {width:min(calc(100% - 32px),var(--max));}.resources-page .learning-hero {padding:28px 0;}.resources-page .learning-section {padding:28px 0;}.resources-page .nav {gap:8px;max-height:calc(100dvh - 68px);overflow-y:auto;}.resources-page .menu-toggle {min-width:44px;min-height:44px;flex-shrink:0;}}
 @media(max-width:540px){.resources-page .learning-card {padding:20px;}.resources-page .learning-example {padding:16px;}.resources-page .learning-card>.btn {width:100%;}.resources-page .footer-top {grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 20px;}.resources-page .footer a:not(.brand) {min-height:44px;display:flex;align-items:center;}.resources-page .foot-bottom {flex-direction:column;}}
+
+/* Resources (P1C): tighter guide section + calculator discovery strip. */
+.learning-section{padding-top:48px;padding-bottom:48px}
+.tools-strip{padding:44px 0}
+.tool-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:22px;margin-top:16px}
+.tool-groups h3{font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;color:#5E6C79;margin:0 0 8px}
+.tool-groups a{display:block;padding:3px 0}

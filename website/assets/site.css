@@ -5,3 +5,19 @@
 @media(max-width:760px){.header{height:68px}.wrap{width:min(calc(100% - 32px),var(--max))}.menu-toggle{display:block}.nav{display:none;position:absolute;left:0;right:0;top:68px;background:white;border-bottom:1px solid var(--line);padding:16px 24px 24px;box-shadow:0 15px 25px #11233916;flex-direction:column;align-items:stretch;gap:8px}.nav.is-open{display:flex}.nav a{padding:12px;border-radius:9px}.nav a.current{background:#ecf7f2}.head-inner{gap:12px}.hero-grid{grid-template-columns:1fr;gap:36px;padding:60px 0}.hero h1{font-size:clamp(2.7rem,10vw,4.1rem)}.hero p{font-size:1rem}.visual{max-width:520px;margin:auto}.section{padding:60px 0}.grid3{grid-template-columns:1fr 1fr}.feature-grid,.split-detail{grid-template-columns:1fr;gap:30px}.steps{grid-template-columns:1fr}.section-header,.cta-inner{display:block}.section-header .btn{margin-top:14px}.cta-inner .btn{margin-top:22px}.footer-top{grid-template-columns:1fr 1fr;gap:26px}.footer-top>div:first-child{grid-column:1/-1}.footer-top>div:last-child{grid-column:auto}.page-hero{padding:58px 0 50px}.calculator-layout{grid-template-columns:1fr}.result{position:static}.form-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:520px){.grid3,.grid2{grid-template-columns:1fr}.hero-actions .btn{width:100%}.mini-tools{grid-template-columns:1fr 1fr}.footer-top{grid-template-columns:1fr 1fr}.footer-top>div:first-child{grid-column:1/-1}.form-grid{grid-template-columns:1fr}.cta-inner h2{font-size:2rem}.visual{transform:none}.section-header h2{font-size:2.2rem}.small-insight{grid-template-columns:repeat(3,1fr)}.brand{font-size:.99rem}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+
+/* Compact footer (P1C): less vertical padding everywhere; on the two pages
+   with the long Tools column (home, resources) the links flow into two
+   columns on wide screens instead of one tall stack. DOM order is
+   unchanged, so reading and tab order stay sequential. */
+.footer{padding:42px 0 26px}
+@media (min-width:901px){
+  .footer-tools{columns:2;column-gap:30px}
+  .footer-tools .footer-heading{column-span:all}
+  .footer-tools a{break-inside:avoid}
+}
+@media (max-width:760px){
+  .footer .footer-top>div.footer-tools{grid-column:1/-1;columns:2;column-gap:24px}
+  .footer-tools .footer-heading{column-span:all}
+  .footer-tools a{break-inside:avoid}
+}

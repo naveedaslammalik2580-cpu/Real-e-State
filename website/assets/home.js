@@ -3,10 +3,11 @@
   const search = document.getElementById('home-search');
   const results = document.getElementById('home-search-results');
   const status = document.getElementById('home-search-status');
-  if (!search || !results || !status || !Array.isArray(window.realEstateTools)) return;
+  if (!search || !results || !status || !Array.isArray(window.realEstateTools) || typeof window.toolMatches !== 'function') return;
   const published = window.realEstateTools.filter(tool => tool.status === 'published');
-  // Homepage panel rule: only the first two published tools appear here.
-  // Newer tools are listed on the Tools page, not in this panel.
+  // The unfiltered panel stays compact: it shows the first two published
+  // tools. As soon as the visitor types, the search covers every published
+  // tool (shared matching in assets/tool-search.js).
   const featured = published.slice(0, 2);
   function node(tag, className, text) {
     const el = document.createElement(tag);
@@ -15,8 +16,8 @@
     return el;
   }
   function update() {
-    const query = search.value.trim().toLowerCase();
-    const matches = featured.filter(tool => [tool.title, tool.description, tool.category, tool.slug].join(' ').toLowerCase().includes(query));
+    const query = search.value.trim();
+    const matches = query ? published.filter(tool => window.toolMatches(tool, query)) : featured;
     const links = matches.map(tool => {
       const link = node('a', 'home-quick-card');
       link.setAttribute('data-home-tool', tool.slug);
@@ -26,7 +27,7 @@
       link.append(icon, node('strong', '', tool.title), node('small', '', tool.description));
       return link;
     });
-    if (!links.length) links.push(node('p', 'home-search-empty', featured.length ? 'No matching tools. Try another search.' : 'No tools are published yet.'));
+    if (!links.length) links.push(node('p', 'home-search-empty', published.length ? 'No matching tools. Try another search.' : 'No tools are published yet.'));
     results.replaceChildren(...links);
     status.textContent = matches.length + (matches.length === 1 ? ' tool found' : ' tools found');
   }
