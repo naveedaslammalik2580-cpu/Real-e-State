@@ -10,8 +10,6 @@ body { background: #F6F4EF; color: #14202B; }
 .page-hero h1 { font-family: 'Fraunces', 'Source Serif 4', Georgia, serif; color: #14202B; }
 .page-hero p { color: #4B5B6B; }
 
-
-
 /* Cards and form panels */
 .panel { background: #fff; border: 1px solid #E2DED5; border-radius: 18px; box-shadow: 0 8px 28px rgba(20, 32, 43, .06); padding: 30px; }
 .panel h2 { color: #14202B; }

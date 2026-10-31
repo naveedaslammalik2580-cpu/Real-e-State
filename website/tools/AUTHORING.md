@@ -41,8 +41,6 @@ or calculator logic. Use a unique form such as `<slug>-form`.
 <main id="main">
   <section class="page-hero">
     <div class="wrap">
-      <div class="crumb"><a href="../../">Home</a> /
-        <a href="../">All tools</a> / [Tool title]</div>
       <span class="eyebrow">Real estate, simplified</span>
       <h1>[Tool title]</h1>
       <p>[Purpose and scope]</p>
