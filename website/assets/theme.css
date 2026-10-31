@@ -113,8 +113,6 @@ h3 {letter-spacing:-.025em;}
 .foot-bottom {border-color:#304758;color:#A7BBC3;}
 .page-hero {background:linear-gradient(165deg,#F5F4EF 0%,#FFFEFB 100%);border-color:var(--line);}
 .page-hero h1 {color:var(--navy);}
-
-
 .search-field,.field,.category-filter {border-color:#D9DBD5;color:var(--navy);}
 .category-filter.active {background:var(--navy);border-color:var(--navy);color:#fff;}
 .result {background:var(--navy);}

@@ -8,6 +8,7 @@ const pages = ['index.html', 'resources/index.html', 'contact/index.html', 'abou
 for (const file of pages) {
   const html = read(file);
   assert.equal((html.match(/<h1\b/g) || []).length, 1, file);
+  assert(!/<div class="crumb"|breadcrumb|BreadcrumbList|itemListElement/i.test(html), `${file}: breadcrumb navigation removed`);
   assert(html.includes('name="viewport"'), file);
   assert(html.includes('assets/site-config.js'), file);
   for (const tag of ['header', 'footer']) assert(new RegExp(`<${tag}[\\s\\S]*?href="[^"]*about/"[\\s\\S]*?</${tag}>`).test(html), file);
@@ -16,6 +17,7 @@ for (const file of pages) {
   for (const ref of html.matchAll(/(?:aria-describedby|aria-labelledby|aria-controls|for)="([^"]+)"/g)) {
     for (const id of ref[1].split(' ')) assert(ids.includes(id), `${file}: ${id}`);
   }
+  assert(!/\.crumb\b|breadcrumb|BreadcrumbList|itemListElement/i.test(read('assets/site.css') + read('assets/theme.css') + read('assets/tools.css')), 'Breadcrumb styles and structured data removed');
 }
 const contact = read('contact/index.html');
 assert(!contact.includes('onsubmit'));
