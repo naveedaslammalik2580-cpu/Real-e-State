@@ -115,3 +115,36 @@
   .resources-page .learning-card{padding:16px}
   .resources-page .guide-nav{flex-wrap:wrap}
 }
+
+/* Resources visual refinement v2 (approved): pill hero navigation, class-based
+   category spans, two-column terms, labelled worked examples, merged guide
+   footer band, horizontal final-guidance band. Content unchanged. */
+.resources-page .learning-jumps {gap:10px;}
+.resources-page .learning-jumps a {background:var(--white);border:1px solid #BFD8D2;border-radius:999px;padding:8px 16px;text-decoration:none;}
+.resources-page .learning-jumps a:hover {border-color:var(--teal);background:var(--mist);}
+.resources-page .tool-groups .tool-group {grid-column:span 2;}
+.resources-page .tool-groups .tool-group--wide {grid-column:span 3;}
+.resources-page .learning-terms > div {display:grid;grid-template-columns:168px 1fr;gap:2px 18px;}
+.resources-page .learning-terms dd {margin-top:0;}
+.resources-page .example-label {display:block;font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;font-weight:800;color:var(--teal);margin:0 0 4px;}
+.resources-page .learning-example li::marker {color:var(--teal);font-weight:700;}
+.resources-page .learning-example li > span:not(.example-label) {color:#51606E;font-size:.93rem;}
+.resources-page .learning-example li.example-result {background:var(--white);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0 2px -22px;list-style:none;}
+.resources-page .learning-example li.example-result::marker {content:"";}
+.resources-page .learning-example li.example-result strong {font-size:1.3rem;}
+.resources-page .learning-caption {border-top:1px dashed #B9CDC5;padding-top:10px;}
+.resources-page .guide-nav-links {display:flex;align-items:center;gap:14px;}
+.resources-page .learning-note {margin-top:20px;padding:22px 24px;display:grid;grid-template-columns:280px 1fr;column-gap:28px;align-items:start;}
+.resources-page .learning-note h2 {font-size:24px;margin:0;}
+.resources-page .learning-note p, .resources-page .learning-note a {grid-column:2;}
+.resources-page .learning-note a {justify-self:start;}
+@media(max-width:1000px){
+  .resources-page .tool-groups .tool-group, .resources-page .tool-groups .tool-group--wide {grid-column:auto;}
+  .resources-page .learning-note {display:block;padding:20px;}
+  .resources-page .learning-note h2 {margin-bottom:10px;}
+}
+@media(max-width:760px){
+  .resources-page .learning-terms > div {display:block;}
+  .resources-page .learning-terms dd {margin-top:3px;}
+  .resources-page .guide-nav-links {flex-wrap:wrap;}
+}
