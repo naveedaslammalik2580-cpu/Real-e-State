@@ -1,0 +1,74 @@
+/* About page only. Reuses the shared palette, type, buttons and section tiers;
+   loaded after supporting.css, which stays unmodified. */
+
+/* Hero: page-scoped heading size within the approved 48-52 / 40 / 34-38 targets.
+   Padding rides the shared .page-hero tiers (48/40, 36/32, 28/28). */
+.about-page .page-hero h1 { font-size:50px; line-height:1.12; }
+.about-page .hero-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:26px; }
+
+/* Section headings: 32 / 29 / 27 within the approved 30-34 / 28-30 / 26-28 targets. */
+.about-page .support-heading { font-size:32px; }
+
+/* Offering cards */
+.about-page .offer-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:24px; }
+.about-page .offer-card { background:var(--white); border:1px solid var(--line); border-radius:16px; padding:28px; display:flex; flex-direction:column; }
+.about-page .offer-tag { font-size:.72rem; letter-spacing:.13em; text-transform:uppercase; font-weight:800; color:var(--teal); margin-bottom:10px; }
+.about-page .offer-card h3 { font-family:var(--font-display); font-weight:600; letter-spacing:-.02em; font-size:26px; line-height:1.2; color:var(--navy); margin:0 0 12px; }
+.about-page .offer-card p { color:#44586A; margin:0 0 16px; }
+.about-page .about-chips { display:flex; flex-wrap:wrap; gap:8px 10px; list-style:none; padding:0; margin:0 0 20px; }
+.about-page .about-chips li { background:var(--mist); border:1px solid var(--line); border-radius:999px; padding:5px 12px; font-size:.85rem; }
+.about-page .offer-foot { margin-top:auto; }
+.about-page .offer-note { color:var(--muted); font-size:.88rem; margin:10px 0 0; }
+
+/* Two products, different purposes */
+.about-page .about-alt { background:#FBFAF6; border-block:1px solid var(--line); }
+.about-page .about-lede { max-width:720px; margin:0 0 24px; }
+.about-page .compare { display:grid; grid-template-columns:1fr 1fr; background:var(--white); border:1px solid var(--line); border-radius:16px; overflow:hidden; }
+.about-page .compare-col { padding:28px; }
+.about-page .compare-col + .compare-col { border-left:1px solid var(--line); }
+.about-page .compare-col h3 { font-size:1.05rem; margin:0 0 12px; color:var(--navy); }
+.about-page .compare-num { color:var(--teal); font-weight:800; margin-right:8px; }
+.about-page .compare-col ul { margin:0; padding-left:20px; color:#44586A; }
+.about-page .compare-col li { margin:8px 0; }
+.about-page .compare-col li::marker { color:var(--teal); }
+.about-page .about-note-bar { background:var(--mist); border:1px solid var(--line); border-radius:12px; padding:14px 18px; margin:20px 0 0; color:#33505F; font-size:.95rem; }
+
+/* Our approach: principles with subtle separators instead of cards. */
+.about-page .about-principles { grid-template-columns:repeat(4,1fr); gap:0; margin-top:24px; }
+.about-page .about-principles > div { padding:4px 22px; }
+.about-page .about-principles > div:first-child { padding-left:0; }
+.about-page .about-principles > div + div { border-left:1px solid var(--line); }
+
+/* Closing */
+.about-page .about-closing-sec { padding-top:0; }
+.about-page .about-closing { background:var(--navy); border-radius:20px; padding:40px; }
+.about-page .about-closing h2 { font-family:var(--font-display); font-weight:600; letter-spacing:-.02em; font-size:32px; line-height:1.15; color:#fff; margin:0 0 10px; }
+.about-page .about-closing p { color:#B9C8D2; max-width:640px; margin:0; }
+.about-page .about-closing .hero-actions { margin-top:24px; }
+.about-page .about-closing .btn-outline { background:transparent; border-color:#8FB3AC; color:#fff; }
+
+@media (max-width:1000px) {
+  .about-page .page-hero h1 { font-size:40px; }
+  .about-page .support-heading { font-size:29px; }
+  .about-page .about-closing h2 { font-size:29px; }
+  .about-page .offer-grid { gap:20px; }
+  .about-page .offer-card, .about-page .compare-col { padding:24px; }
+  .about-page .about-principles { grid-template-columns:repeat(2,1fr); }
+  .about-page .about-principles > div { padding:16px 22px; }
+  .about-page .about-principles > div:nth-child(odd) { border-left:none; padding-left:0; }
+  .about-page .about-principles > div:nth-child(n+3) { border-top:1px solid var(--line); }
+}
+@media (max-width:760px) {
+  .about-page .page-hero h1 { font-size:36px; }
+  .about-page .support-heading { font-size:27px; }
+  .about-page .offer-grid { grid-template-columns:1fr; gap:16px; }
+  .about-page .offer-card, .about-page .compare-col { padding:20px; }
+  .about-page .offer-card h3 { font-size:24px; }
+  .about-page .compare { grid-template-columns:1fr; }
+  .about-page .compare-col + .compare-col { border-left:none; border-top:1px solid var(--line); }
+  .about-page .about-principles { grid-template-columns:1fr; }
+  .about-page .about-principles > div { padding:14px 0; }
+  .about-page .about-principles > div + div { border-left:none; border-top:1px solid var(--line); }
+  .about-page .about-closing { padding:26px 20px; }
+  .about-page .about-closing h2 { font-size:27px; }
+}
