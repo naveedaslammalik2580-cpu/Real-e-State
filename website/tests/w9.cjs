@@ -42,15 +42,17 @@ for (const slug of SLUGS) {
     check(`${slug} has a shared .result-number hero`, html.includes('class="result-number"'));
   }
   const faqCount = (html.match(/<details\b[^>]*class="faq"/g) || []).length;
-  check(`${slug} has ${slug === 'mortgage-calculator' ? 11 : slug === 'commission-calculator' ? 10 : 6} FAQ accordions (got ${faqCount})`,
-    faqCount === (slug === 'mortgage-calculator' ? 11 : slug === 'commission-calculator' ? 10 : 6));
+  check(`${slug} has ${slug === 'mortgage-calculator' ? 6 : slug === 'commission-calculator' ? 10 : 6} FAQ accordions (got ${faqCount})`,
+    faqCount === (slug === 'mortgage-calculator' ? 6 : slug === 'commission-calculator' ? 10 : 6));
   check(`${slug} has the approved related cards`, count(html, 'class="related-card"') === (slug === 'commission-calculator' ? 4 : 3));
-  check(`${slug} has a how-to note`, html.includes('How to use:'));
+  check(`${slug} has a how-to note`, html.includes('How to use:') || (slug === 'mortgage-calculator' && html.includes('<h2>How to Use the Mortgage Calculator</h2>')));
 }
-for (const slug of ['mortgage-calculator', 'commission-calculator',
+for (const slug of ['commission-calculator',
   'home-affordability-calculator', 'rent-vs-buy-calculator',
   'cap-rate-calculator', 'bridge-loan-calculator', 'roi-calculator',
   'noi-calculator']) {
+  // mortgage-calculator left this list on 2026-11-24: the owner's final
+  // content for the page carries no formula box.
   check(`${slug} has a formula box`, read(`tools/${slug}/index.html`).includes('class="formula-box"'));
 }
 

@@ -96,11 +96,28 @@
 <p class="disclaimer">Estimates only. Not a loan offer or financial advice.</p>
 <p class="disclaimer">FHA estimates include the 1.75% upfront mortgage insurance premium financed into the loan and annual MIP under HUD Mortgagee Letter 2023-05. ARM figures are a projection using your assumed rate after the fixed period, with standard adjustment caps — not a prediction. State averages are sample figures (see Sources), not live rates or quotes.</p></div></section>
 <section class="section"><div class="wrap content">
-<div class="note"><strong>How to use:</strong> Enter the home price, down payment, rate and term, then add yearly tax and insurance and any HOA or PMI. The total monthly payment, loan totals and payoff date update as you type.</div>
-<h2>Loan balance over time</h2>
-<p>The teal line is the remaining loan balance, falling to $0, and the gold line is the interest paid so far, rising to the total interest for the term.</p>
-<div class="chart-wrap"><svg id="balance-chart" viewBox="0 0 600 260" role="img" aria-label="Chart of remaining loan balance and cumulative interest over the loan term"></svg>
-<div class="chart-legend"><span><span class="swatch seg-teal"></span> Remaining balance <b id="chart-balance-end">—</b></span><span><span class="swatch seg-gold"></span> Interest paid so far <b id="chart-interest-end">—</b></span></div></div>
+<h2>Mortgage Calculator: Understand Your Monthly Payment and Loan Costs</h2>
+<p>Estimate your monthly mortgage payment, including principal, interest, property taxes, homeowners insurance, PMI and HOA fees. Compare loan terms, explore your amortization schedule and see how extra payments could reduce your total interest and help you pay off your mortgage sooner.</p>
+<h2>How to Use the Mortgage Calculator</h2>
+<p>Enter the home's purchase price, down payment, annual interest rate and loan term. Then add your estimated property taxes, homeowners insurance, HOA fees and PMI, if applicable.</p>
+<p>The calculator updates your estimated monthly payment and total loan costs as you change the inputs.</p>
+<p>You can also:</p>
+<ul>
+<li><strong>Compare mortgage terms:</strong> See how 15-, 20- and 30-year loans affect monthly payments and total interest.</li>
+<li><strong>Explore extra payments:</strong> Estimate how additional monthly or one-time principal payments could shorten your loan term.</li>
+<li><strong>View the amortization schedule:</strong> Track principal, interest and your remaining loan balance over time.</li>
+<li><strong>Download your schedule:</strong> Export the payment breakdown as a CSV file for further analysis.</li>
+</ul>
+<h2>How Mortgage Payments Work</h2>
+<p>A monthly mortgage payment can include four main components, commonly called PITI: principal, interest, property taxes and homeowners insurance. Depending on your loan and property, you may also pay private mortgage insurance (PMI) and homeowners association (HOA) fees.</p>
+<ul>
+<li><strong>Principal:</strong> The portion of your payment that reduces the outstanding loan balance.</li>
+<li><strong>Interest:</strong> The cost of borrowing money from your lender.</li>
+<li><strong>Property taxes:</strong> Taxes assessed by local government.</li>
+<li><strong>Homeowners insurance:</strong> Coverage for eligible property-related losses.</li>
+<li><strong>PMI and HOA:</strong> Additional expenses that may apply depending on your mortgage and property.</li>
+</ul>
+<p>Understanding each component helps you estimate the full monthly cost of owning a home rather than focusing only on the loan repayment.</p>
 <details class="mortgage-details">
 <summary>View amortization schedule</summary>
 <div class="mortgage-schedule-tools">
@@ -114,31 +131,6 @@
 <tbody id="mortgage-schedule-body"></tbody>
 </table></div>
 </details>
-<h2>How the mortgage payment is calculated</h2>
-<div class="formula-box">
-<p>Principal and interest use the standard fixed-rate formula: M = P × r(1 + r)<sup>n</sup> ÷ ((1 + r)<sup>n</sup> − 1), where P is the loan amount, r is the monthly interest rate (annual rate ÷ 12), and n is the number of monthly payments. At 0% interest, the payment is simply P ÷ n. Property tax and home insurance are each divided by 12, HOA dues are added monthly, and PMI is added only while it applies. Extra monthly and one-time payments go straight to principal, which shortens the loan and reduces total interest.</p>
-</div>
-<p><strong>FHA loans.</strong> Selecting FHA adds the 1.75% upfront mortgage insurance premium (MIP) to the loan amount and charges annual MIP monthly: 0.50%–0.55% of the loan per year on base loans up to $726,200 (0.70%–0.75% above that), lasting 11 years when the loan-to-value ratio is 90% or less and the life of the loan above that, per HUD Mortgagee Letter 2023-05. FHA loans require at least 3.5% down with a credit score of 580 or higher.</p>
-<p><strong>Adjustable-rate loans.</strong> For a 5-year or 7-year ARM, the rate holds for the fixed period, then adjusts once a year toward the assumed rate you set — moving at most 2% at the first adjustment and 1% at later ones, never above your starting rate plus 5% and never below 1%. The payment is recalculated at each adjustment on the remaining balance, and the schedule, chart and totals all use that projection.</p>
-<p><strong>Location.</strong> Choosing a state fills the rate, property tax and home insurance fields with that state's published averages (see Sources). Every figure stays editable, and if you change the home price after choosing a state, the tax updates with it until you type your own tax figure.</p>
-<h2>Worked example</h2>
-<p>These are the values already filled in when the page loads. The 6.5% rate is a sample default, not a current market rate or a quote.</p>
-<div class="table-scroll"><table class="mortgage-schedule">
-<thead><tr><th>Input</th><th>Value</th></tr></thead>
-<tbody>
-<tr><td>Home price</td><td>$400,000</td></tr>
-<tr><td>Down payment</td><td>$80,000 (20%)</td></tr>
-<tr><td>Loan amount</td><td>$320,000</td></tr>
-<tr><td>Annual interest rate</td><td>6.5% (fixed)</td></tr>
-<tr><td>Loan term</td><td>30 years (360 payments)</td></tr>
-<tr><td>Principal and interest</td><td>$2,022.62 per month</td></tr>
-<tr><td>Property tax</td><td>$400 per month</td></tr>
-<tr><td>Home insurance</td><td>$150 per month</td></tr>
-<tr><td>HOA dues and PMI</td><td>$0 per month</td></tr>
-<tr><td>Total monthly payment</td><td>$2,572.62</td></tr>
-<tr><td>Total interest over term</td><td>$408,142.36</td></tr>
-</tbody></table></div>
-<p>Totals are calculated from unrounded values and rounded only for display, so multiplying a displayed monthly payment by a displayed number of months may not exactly equal a displayed total.</p>
 <h2>Compare loan terms</h2>
 <p>Same home price, down payment and rate — only the term changes. Your current term is highlighted. The figures below are principal and interest only; tax, insurance, HOA and PMI, where they apply, sit on top of them.</p>
 <div class="table-scroll"><table class="mortgage-schedule">
@@ -146,40 +138,62 @@
 <tbody id="term-compare-body"></tbody>
 </table></div>
 <p>The trade-off is simple: a shorter term costs more each month but far less interest overall, while a longer term lowers the monthly payment and raises total interest. Choose the term you can sustain, not just the one that looks cheapest in a single month.</p>
-<h2>Extra payments</h2>
-<p>Extra principal reduces the balance that future interest is charged on, so the loan can finish early. On the default loan, adding $200 a month with no other change finishes the loan in 281 months instead of 360, saves $105,428.67 in interest, and finishes 6 years 7 months sooner. Check with your servicer how extra payments are applied — some need an explicit “apply to principal” instruction.</p>
-<h2>PMI</h2>
-<p>This calculator uses a simplified PMI rule: if the down payment is below 20%, it charges PMI at your entered annual rate on the loan amount, divided by 12, and stops once the balance is no longer above 80% of the home price. For example, a $400,000 home with 10% down gives a $360,000 loan, $2,275.44 principal and interest, $150.00 PMI a month, and a $2,975.44 total with the default tax and insurance; PMI runs for about 95 months on those inputs. That is an estimate of the simplified rule, not a promise about a real loan. For many U.S. conventional loans with borrower-paid PMI, the Consumer Financial Protection Bureau (CFPB) describes a different set of rights: you may request cancellation in writing at a scheduled 80% of the home's original value, subject to being current and other conditions, and the servicer must generally terminate PMI automatically at a scheduled 78% if you are current. FHA and VA loans and lender-paid mortgage insurance follow different rules.</p>
-<h2>Common mistakes</h2><ul><li><strong>Comparing loans by the interest rate alone.</strong> The same rate on different terms, taxes or insurance produces very different totals. Compare the full monthly payment and the total interest over the time you realistically expect to keep the loan.</li><li><strong>Quoting the principal-and-interest figure as "the payment".</strong> Property tax, homeowners insurance, HOA dues and PMI are real monthly costs. A quote that leaves them out is not comparable with one that includes them.</li><li><strong>Assuming PMI lasts the whole loan.</strong> PMI is normally removable once the balance reaches 80% of the home’s value, and terminates automatically at 78% on most loans — the PMI section above explains both routes.</li><li><strong>Testing only today’s rate.</strong> Run the same home at a rate half a point higher and lower. If the higher payment would strain the budget, the home — not the rate — is the risk.</li></ul>
+<h2>How Mortgage Amortization Works</h2>
+<p>Mortgage amortization is the process of repaying a loan through scheduled payments over time. With a typical fixed-rate mortgage, early payments allocate a larger portion toward interest. As the outstanding balance decreases, more of each payment goes toward principal.</p>
+<p>Your amortization schedule shows how much interest and principal you pay during each period, your remaining loan balance and when the loan is expected to be paid off.</p>
+<p>Use the schedule above to see how your mortgage balance changes throughout the loan term and how much interest accumulates over time.</p>
+<h2>Understanding Your Mortgage Costs</h2>
+<p>Three important factors influence your mortgage payment: down payment, interest rate and loan term.</p>
+<h3>Down payment</h3>
+<p>Your down payment is the amount you contribute toward the home's purchase price before financing the remaining balance. A larger down payment reduces the amount you borrow and may help you avoid PMI on eligible conventional loans. However, using all your savings upfront can leave less money for closing costs, maintenance and emergencies.</p>
+<h3>Interest rate</h3>
+<p>Your mortgage interest rate determines how much you pay to borrow money. A higher interest rate generally increases your monthly principal-and-interest payment and the total interest paid over the loan term. Compare different rates to understand how even a small change can affect your borrowing costs.</p>
+<h3>Loan term</h3>
+<p>The loan term determines how long you have to repay your mortgage. A 15-year mortgage generally has higher monthly payments but lower total interest than a comparable 30-year mortgage. A longer term spreads repayment over more months, reducing the required monthly payment while increasing the total borrowing cost.</p>
+<h2>How Extra Mortgage Payments Save Interest</h2>
+<p>Additional payments applied directly to your mortgage principal reduce the outstanding balance. Since future interest is calculated using the remaining balance, paying extra can reduce total interest and shorten your repayment period.</p>
+<p>You can test additional monthly or one-time payments to estimate potential savings and an earlier payoff date.</p>
+<p>For example, adding $200 per month to the default loan in this calculator is projected to pay it off in 281 months instead of 360, saving approximately $105,428.67 in interest. This assumes the additional payments are applied directly to principal and the other loan assumptions remain unchanged.</p>
+<p>Confirm with your mortgage servicer how extra payments are applied. Some lenders require an explicit instruction to apply additional funds toward principal.</p>
+<h2>Choosing the Right Mortgage</h2>
+<p>Mortgage programs differ in their interest-rate structures, eligibility requirements and insurance costs.</p>
+<ul>
+<li><strong>Fixed-rate mortgage:</strong> Keeps the interest rate unchanged throughout the agreed loan term, providing predictable principal-and-interest payments.</li>
+<li><strong>FHA mortgage:</strong> A government-insured loan with specific eligibility, down payment and mortgage insurance requirements.</li>
+<li><strong>Adjustable-rate mortgage (ARM):</strong> Starts with an initial fixed-rate period, after which the interest rate can change according to the loan agreement.</li>
+</ul>
+<p>Compare the payment structure, mortgage insurance, eligibility requirements and potential long-term costs before choosing a loan. A lower initial payment does not necessarily mean a lower overall borrowing cost.</p>
+<h2>Understanding Private Mortgage Insurance (PMI)</h2>
+<p>Private mortgage insurance is commonly required on conventional mortgages when the down payment is below 20%, although requirements vary by loan and lender.</p>
+<p>This calculator uses a simplified estimate based on your entered annual PMI rate. It calculates PMI on the loan amount and stops the estimated charge when the remaining balance reaches 80% of the home's purchase price.</p>
+<p>Actual PMI cancellation depends on your mortgage agreement and applicable rules. For many conventional loans with borrower-paid PMI, you may request cancellation at 80% of the home's original value, subject to conditions. Automatic termination generally applies at the scheduled 78% threshold when the borrower is current. FHA and other government-backed loans follow different mortgage insurance rules.</p>
+<h2>Common Mortgage Mistakes to Avoid</h2>
+<ul>
+<li><strong>Ignoring additional housing costs:</strong> Principal and interest are not the only expenses. Include property taxes, homeowners insurance, PMI and HOA fees when estimating affordability.</li>
+<li><strong>Choosing a loan based only on the monthly payment:</strong> A lower payment over a longer term can result in substantially more interest over the life of the mortgage.</li>
+<li><strong>Overlooking the down payment's impact:</strong> Your down payment affects the amount borrowed, monthly payment and potential mortgage insurance requirements.</li>
+<li><strong>Assuming extra payments automatically reduce interest:</strong> Additional payments need to be applied to principal to reduce the outstanding balance and future interest.</li>
+<li><strong>Relying on a single interest-rate assumption:</strong> Compare different rates to understand whether your budget can handle changes in borrowing costs.</li>
+</ul>
 <h2>Frequently Asked Questions About Mortgages</h2>
-<details class="faq"><summary>How Can a Mortgage Calculator Help You?</summary>
-<p>A mortgage calculator helps you understand the financial commitment involved in purchasing a home. Instead of looking only at the property's asking price, you can estimate the monthly cost of borrowing and see how different loan details affect your budget. Try changing the down payment, interest rate, or repayment period. Comparing these figures can help you understand which loan arrangement may be more manageable before speaking with a lender.</p></details>
-<details class="faq"><summary>What Is a Mortgage?</summary>
-<p>A mortgage is a loan used to purchase or refinance real estate. A lender provides the funds, and the borrower agrees to repay the loan with interest over a specified period. The property acts as security for the loan. Mortgage payments are usually made monthly. If the borrower does not meet the loan obligations, the lender may have legal rights to begin foreclosure proceedings.</p></details>
-<details class="faq"><summary>How Are Mortgage Payments Calculated?</summary>
-<p>A typical mortgage payment includes four main parts, commonly called PITI: principal reduces the outstanding loan balance; interest is the cost charged by the lender for borrowing money; property taxes are assessed by local authorities; and homeowners insurance helps protect the home against covered damage and other insured risks. Depending on your loan and property, the total housing expense may also include private mortgage insurance (PMI), homeowners association (HOA) fees, or other costs. These expenses are not always collected as part of the lender's monthly payment.</p></details>
-<details class="faq"><summary>How Much Down Payment Do You Need?</summary>
-<p>Your down payment is the amount you contribute toward the home's purchase price before financing the remaining balance. A larger upfront contribution generally means borrowing less, which can reduce your monthly principal-and-interest payment. A 20% down payment may help borrowers avoid PMI on many conventional loans, but it is not a universal requirement. Some eligible buyers may qualify for FHA, VA, or USDA financing with different down payment rules. Remember to reserve money for closing costs and other expenses rather than using all your savings for the down payment.</p></details>
-<details class="faq"><summary>How Do Mortgage Lenders Decide How Much You Can Afford?</summary>
-<p>Lenders assess several parts of your financial situation before deciding whether to approve a mortgage and how much you may borrow. Income helps lenders assess whether you can manage the proposed monthly payments. Existing debt from credit cards, vehicle loans, student loans, and other recurring obligations affects how much money remains available for housing. Debt-to-income ratio (DTI) compares monthly debt payments with gross monthly income. Lenders use it alongside other financial information, and acceptable limits depend on the loan program and borrower profile. Your credit history and savings can also influence loan eligibility, interest rates, and terms.</p></details>
-<details class="faq"><summary>What Are the Main Types of Mortgages?</summary>
-<p>Mortgage programs offer different repayment structures and eligibility requirements. A fixed-rate mortgage keeps the interest rate unchanged throughout the loan term. An adjustable-rate mortgage (ARM) may change after an initial period. FHA financing is government-insured and has specific down payment and mortgage insurance requirements. VA mortgages serve qualifying veterans, service members, and certain surviving spouses. USDA mortgages serve eligible properties and borrowers who meet location and income requirements. Compare eligibility rules, fees, insurance costs, and long-term expenses before selecting a mortgage.</p></details>
-<details class="faq"><summary>How Does a 15-Year Mortgage Compare With a 30-Year Mortgage?</summary>
-<p>A 15-year mortgage has fewer scheduled payments, so borrowers generally pay less total interest when comparing otherwise similar loans. However, the monthly payment is usually higher. A 30-year mortgage spreads repayment over a longer period, which can make the required monthly payment lower, but the borrower may pay substantially more interest over the full term. Use the calculator to compare both options using the same loan amount and interest rate.</p></details>
-<details class="faq"><summary>How Can You Lower Your Mortgage Payments?</summary>
-<p>Compare offers from multiple lenders to find competitive rates and fees. Consider a larger down payment if it does not leave you without adequate savings. Choose a home with a purchase price that fits your monthly budget. Compare shorter and longer loan terms. Evaluate discount points carefully, since paying upfront may reduce your rate but may take time to recover through savings. Review refinancing options if market rates or your financial circumstances change.</p></details>
-<details class="faq"><summary>How Can Mortgage Pre-Approval Help You Buy a Home?</summary>
-<p>Mortgage pre-approval gives you an initial assessment of how much a lender may be willing to finance after reviewing your financial information. It can help you establish a realistic property budget and demonstrate to sellers that you have taken steps toward arranging financing. Pre-approval differs from pre-qualification, which may rely on information you provide without the same level of document verification. Neither guarantees final approval. Lenders still need to complete underwriting and review the property.</p></details>
-<details class="faq"><summary>How Long Does Mortgage Pre-Approval Last?</summary>
-<p>A pre-approval letter usually has an expiration date set by the lender. Its validity period varies, so check the letter rather than assuming it remains active for a fixed number of months. If it expires before you find a property, the lender may ask for updated income, asset, and credit information.</p></details>
-<details class="faq"><summary>What Does the State Selector Change?</summary>
-<p>It fills three fields with published state averages: the interest rate (a snapshot of average 30-year fixed rates), the property tax (your home price multiplied by the state's effective tax rate from the Tax Foundation), and the home insurance premium (the NAIC's average for the state). They are starting estimates, not quotes — edit any of them, and choose "National average" to return to the sample defaults.</p></details>
-
-<h2>Common Mortgage Terms</h2>
-<div class="mortgage-term-grid">
-<dl class="mortgage-term-list"><dt>Amortization</dt><dd>The process of repaying a loan through scheduled payments over time.</dd><dt>Biweekly payments</dt><dd>A payment arrangement in which half of the monthly amount is paid every two weeks. Confirm the arrangement and fees with your servicer.</dd><dt>Down payment</dt><dd>The portion of the home's price paid upfront by the buyer.</dd><dt>Escrow</dt><dd>An arrangement in which funds are held and distributed for an agreed purpose. Mortgage escrow accounts may be used to pay taxes and insurance.</dd><dt>Extra payment</dt><dd>An additional amount paid toward a mortgage, often to reduce principal.</dd><dt>Home sale proceeds</dt><dd>The money remaining from a property sale after paying the mortgage balance, liens, and applicable selling expenses.</dd><dt>Loan amount</dt><dd>The principal borrowed from a lender.</dd><dt>Loan-to-value ratio (LTV)</dt><dd>The loan amount expressed as a percentage of the property's value or purchase price, depending on the lender's calculation.</dd><dt>Mortgage rate</dt><dd>The interest rate charged on the borrowed amount.</dd><dt>Mortgage refinance</dt><dd>Replacing an existing mortgage with a new loan, potentially to change the rate, term, or payment structure.</dd><dt>Mortgage term</dt><dd>The scheduled period for repaying the loan, such as 15 or 30 years.</dd><dt>Lump-sum payment</dt><dd>A one-time additional payment made toward the mortgage balance.</dd><dt>Gross income</dt><dd>Income before taxes and other payroll deductions.</dd></dl>
-</div>
-
+<details class="faq"><summary>How Much Down Payment Do You Need to Buy a House?</summary>
+<p>The required down payment depends on the mortgage program and your eligibility. Some conventional loans allow down payments below 20%, while eligible FHA borrowers may qualify with 3.5% down. VA and USDA loans also offer qualifying borrowers options with no down payment. Remember to budget for closing costs and other upfront expenses.</p>
+</details>
+<details class="faq"><summary>How Does Your Credit Score Affect a Mortgage?</summary>
+<p>Your credit score can influence mortgage eligibility, interest rates and loan terms. A stronger credit profile may help you qualify for more competitive financing, while a lower score can limit available options or increase borrowing costs. Lenders also consider income, existing debt, savings and other financial information.</p>
+</details>
+<details class="faq"><summary>What Is Included in a Monthly Mortgage Payment?</summary>
+<p>A mortgage payment may include principal, interest, property taxes and homeowners insurance. These components are commonly called PITI. Depending on your mortgage and property, you may also pay PMI, HOA fees and other housing expenses.</p>
+</details>
+<details class="faq"><summary>When Can PMI Be Removed From a Mortgage?</summary>
+<p>For many conventional loans with borrower-paid PMI, you can request cancellation when your scheduled loan balance reaches 80% of the home's original value, subject to applicable conditions. Automatic termination generally occurs at 78% of the original value when payments are current. Other mortgage programs have different insurance rules.</p>
+</details>
+<details class="faq"><summary>Is a 15-Year Mortgage Better Than a 30-Year Mortgage?</summary>
+<p>A 15-year mortgage generally has higher monthly payments but lower total interest than a comparable 30-year loan. A 30-year mortgage spreads payments over a longer period, making monthly payments more manageable but increasing total borrowing costs. The better option depends on your budget and financial priorities.</p>
+</details>
+<details class="faq"><summary>How Can You Reduce Your Total Mortgage Interest?</summary>
+<p>You can potentially reduce total mortgage interest by making a larger down payment, choosing a shorter loan term, securing a lower interest rate or making additional principal payments. Compare these options carefully and consider how much cash you need to keep available for other expenses.</p>
+</details>
 <h2>Important Calculator Information</h2>
 <p>This calculator provides estimates for planning purposes and does not represent a mortgage offer, approval, or lender quote. Actual payments and borrowing costs depend on your loan agreement, property taxes, insurance, mortgage insurance rules, fees, and other circumstances. Confirm all figures with your lender before making a financial decision.</p>
 <h3>Sources</h3>
