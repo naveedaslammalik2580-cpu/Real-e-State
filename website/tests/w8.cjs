@@ -100,7 +100,11 @@ for(const file of pages) {
     const item=menu.match(new RegExp(`<a class="tools-menu-link" data-menu-tool="${tool.slug}"[\\s\\S]*?</a>`))?.[0]||'';
     check(`${file} ${tool.slug} URL`,item.includes(`href="${prefix}tools/${tool.publicUrl}"`));
     check(`${file} ${tool.slug} name`,item.includes(`class="tools-menu-name">${escape(tool.title)}</span>`));
-    check(`${file} ${tool.slug} description`,item.includes(`class="tools-menu-description">${escape(tool.description)}</span>`));
+    // Menu items show the calculator name only — the registry description was
+    // removed from the mega menu on the owner's instruction (2026-11-24) to
+    // keep the menu compact. Descriptions remain in the registry for other
+    // surfaces (homepage cards, /tools/).
+    check(`${file} ${tool.slug} no description in menu`,!item.includes('tools-menu-description'));
     check(`${file} ${tool.slug} decorative approved icon`,item.includes(`class="tools-menu-icon" aria-hidden="true">${escape(tool.icon)}</span>`));
     equal(`${file} ${tool.slug} unique link`,(menu.match(new RegExp(`data-menu-tool="${tool.slug}"`,'g'))||[]).length,1);
     check(`${file} ${tool.slug} target exists`,fs.existsSync(path.join(root,'tools',tool.publicUrl,'index.html')));
@@ -135,7 +139,7 @@ for(const token of ["--font-body:'Inter'","--font-display:'Source Serif 4'",'--p
 for(const rule of [
  '.header .tools-menu-toggle { display: inline-flex;', 'min-height: 44px;',
  '.header .tools-mega-menu[hidden], .tools-menu-overlay[hidden] { display: none !important; }',
- 'width: min(1200px, calc(100vw - 48px))', 'grid-template-columns: repeat(3, minmax(0, 1fr))',
+ 'width: min(980px, calc(100vw - 48px))', 'grid-template-columns: repeat(3, minmax(0, 1fr))',
  '.tools-menu-overlay { position: fixed; inset: 0; z-index: 19;',
  '.header .nav .tools-menu .tools-menu-link:focus-visible', '.header .tools-menu-toggle[aria-expanded="true"]',
  '@media (max-width: 760px)', '.header .tools-mega-menu { position: static; width: 100%;',
