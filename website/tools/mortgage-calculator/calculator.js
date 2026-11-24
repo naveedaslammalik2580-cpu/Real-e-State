@@ -220,6 +220,8 @@
       set('mortgage-error', 'Check the highlighted values: down payment cannot exceed the price, rate must be 0–100%, and term must be 1–50 years.');
       set('lg-tax', '—'); set('lg-ins', '—'); set('lg-hoa', '—'); set('lg-pmi', '—');
       set('sticky-value', '—');
+      set('cc-down', '—'); set('cc-costs', '—'); set('cc-total', '—');
+      set('summary-total', '—'); set('summary-cash', '—');
       setHtml('balance-chart', '');
       set('chart-balance-end', '—'); set('chart-interest-end', '—');
       hideRow('result-body', true); hideRow('result-empty', false);
@@ -388,6 +390,16 @@
       setWidth('bd-pi', 0); setWidth('bd-tax', 0); setWidth('bd-ins', 0);
       setWidth('bd-hoa', 0); setWidth('bd-pmi', 0);
     }
+
+    // Cash to close: down payment plus closing costs estimated at 3% of the
+    // price (the Down Payment Calculator's default assumption, labelled in
+    // the card). Also feeds the slim summary bar shown while scrolling.
+    var cashCosts = price * 0.03;
+    set('cc-down', usd(down));
+    set('cc-costs', usd(cashCosts));
+    set('cc-total', usd(down + cashCosts));
+    set('summary-total', usd(total));
+    set('summary-cash', usd(down + cashCosts));
 
     // Side-by-side term comparison at the same price, down payment and rate.
     var termsHtml = '';
@@ -753,6 +765,30 @@
     syncSliders();
     run();
   });
+
+  // Slim summary bar (desktop): once the calculator has scrolled out of
+  // view, pin the monthly payment and cash-to-close under the site header
+  // so the result stays visible through the form and the article. Guarded
+  // for the w2 stub, which has no window or IntersectionObserver.
+  if (typeof window !== 'undefined' && typeof document.querySelector === 'function') {
+    var summaryBar = document.getElementById('calc-summary-bar');
+    var calcLayout = document.querySelector('.mortgage-calc-layout');
+    if (summaryBar && calcLayout) {
+      var setBar = function (visible) {
+        summaryBar.classList.toggle('visible', visible);
+        summaryBar.setAttribute('aria-hidden', visible ? 'false' : 'true');
+      };
+      if (typeof IntersectionObserver === 'function') {
+        new IntersectionObserver(function (entries) {
+          setBar(!entries[0].isIntersecting);
+        }, { rootMargin: '-90px 0px 0px 0px' }).observe(calcLayout);
+      } else if (window.addEventListener) {
+        window.addEventListener('scroll', function () {
+          setBar(calcLayout.getBoundingClientRect().bottom < 90);
+        }, { passive: true });
+      }
+    }
+  }
 
   readUrlParameters();
   applyLoanType();

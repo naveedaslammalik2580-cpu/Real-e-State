@@ -77,16 +77,16 @@
         "title": "Cap Rate Calculator | Every Real Estate Calculator",
         "viewport": "width=device-width,initial-scale=1",
         "theme-color": "#102131",
-        "description": "Estimate a rental property's cap rate from monthly rent, vacancy and operating expenses — with net operating income, price sensitivity and implied value.",
+        "description": "Estimate a rental property's cap rate from monthly rent, vacancy and operating expenses \u2014 with net operating income, price sensitivity and implied value.",
         "og:type": "website",
         "og:title": "Cap Rate Calculator | Every Real Estate Calculator",
-        "og:description": "Estimate a rental property's cap rate from monthly rent, vacancy and operating expenses — with net operating income, price sensitivity and implied value.",
+        "og:description": "Estimate a rental property's cap rate from monthly rent, vacancy and operating expenses \u2014 with net operating income, price sensitivity and implied value.",
         "og:url": "https://everyrealestatecalculator.com/tools/cap-rate-calculator/",
         "og:image": "https://everyrealestatecalculator.com/assets/home-architecture.jpg",
         "twitter:image": "https://everyrealestatecalculator.com/assets/home-architecture.jpg",
         "twitter:card": "summary",
         "twitter:title": "Cap Rate Calculator | Every Real Estate Calculator",
-        "twitter:description": "Estimate a rental property's cap rate from monthly rent, vacancy and operating expenses — with net operating income, price sensitivity and implied value.",
+        "twitter:description": "Estimate a rental property's cap rate from monthly rent, vacancy and operating expenses \u2014 with net operating income, price sensitivity and implied value.",
         "canonical": "https://everyrealestatecalculator.com/tools/cap-rate-calculator/"
       },
       "inputs": {
@@ -430,23 +430,23 @@
           "max": "100"
         }
       },
-      "engineHash": "12480d4937f70f25af90ab039b19163aa08adf054394ac54553bde2b5a3e8bfa"
+      "engineHash": "707326c7b4eb1fe1cf643cdfe0a91b7e7cb57a753f8afe539c43b6b741775caf"
     },
     "noi-calculator": {
       "metadata": {
         "title": "NOI Calculator | Every Real Estate Calculator",
         "viewport": "width=device-width,initial-scale=1",
         "theme-color": "#102131",
-        "description": "Calculate net operating income (NOI) for a rental property from rent, vacancy and operating expenses — the formula, a worked example, and why the mortgage stays out.",
+        "description": "Calculate net operating income (NOI) for a rental property from rent, vacancy and operating expenses \u2014 the formula, a worked example, and why the mortgage stays out.",
         "og:type": "website",
         "og:title": "NOI Calculator | Every Real Estate Calculator",
-        "og:description": "Calculate net operating income (NOI) for a rental property from rent, vacancy and operating expenses — the formula, a worked example, and why the mortgage stays out.",
+        "og:description": "Calculate net operating income (NOI) for a rental property from rent, vacancy and operating expenses \u2014 the formula, a worked example, and why the mortgage stays out.",
         "og:url": "https://everyrealestatecalculator.com/tools/noi-calculator/",
         "og:image": "https://everyrealestatecalculator.com/assets/home-architecture.jpg",
         "twitter:image": "https://everyrealestatecalculator.com/assets/home-architecture.jpg",
         "twitter:card": "summary",
         "twitter:title": "NOI Calculator | Every Real Estate Calculator",
-        "twitter:description": "Calculate net operating income (NOI) for a rental property from rent, vacancy and operating expenses — the formula, a worked example, and why the mortgage stays out.",
+        "twitter:description": "Calculate net operating income (NOI) for a rental property from rent, vacancy and operating expenses \u2014 the formula, a worked example, and why the mortgage stays out.",
         "canonical": "https://everyrealestatecalculator.com/tools/noi-calculator/"
       },
       "inputs": {

@@ -320,3 +320,25 @@
 /* Full-width article text (2026-11-24): tools.css caps content paragraphs and lists at 74ch, which left the lines ending mid-column on this page. The owner's final content runs the full aligned column width instead; FAQ answers follow the same rule. */
 .calc-page .content > p, .calc-page .content > ul { max-width: none; }
 .calc-page .faq p { max-width: none; }
+/* Result polish (2026-11-24): navy joins the breakdown palette (tax segment + legend swatch) so the bar runs in one brand family — teal P&I, navy tax, gold insurance, grey HOA, amber PMI. The pale seg-blue inherited from the old navy card is no longer used on this page. */
+.mortgage-calc-layout .seg-navy { background: var(--navy); }
+/* Cash-to-close total row reads as the group's headline figure. */
+.mortgage-calc-layout .mortgage-cash-total { border-top: 1px solid var(--line); margin-top: 2px; padding-top: 10px; }
+.mortgage-calc-layout .mortgage-cash-total b { font-size: 1.12rem; color: var(--navy); }
+.mortgage-calc-layout .mortgage-cash-total span { font-weight: 700; color: var(--navy); }
+/* Slim summary bar: fixed under the site header on desktop only (mobile already has the bottom sticky bar), revealed by calculator.js once the calculator scrolls out of view. */
+.calc-summary-bar { display: none; }
+@media (min-width: 961px) {
+  .calc-summary-bar { display: block; position: fixed; top: 76px; left: 0; right: 0; z-index: 15; background: #fff; border-bottom: 1px solid var(--line); box-shadow: 0 6px 18px rgba(16, 33, 49, .06); transform: translateY(-110%); transition: transform .25s ease; }
+  .calc-summary-bar.visible { transform: none; }
+  .summary-bar-inner { display: flex; align-items: center; gap: 30px; height: 52px; }
+  .summary-bar-item { font-size: .92rem; color: #4B5B6B; }
+  .summary-bar-item b { color: var(--navy); font-size: 1.06rem; margin-left: 6px; }
+  .summary-bar-note { margin-left: auto; font-size: .82rem; color: #7A8794; }
+}
+/* Content typography (2026-11-24): the shared content styles render this page's article in muted grey (#4B5B6B body, lighter still for lists), which reads dull on the cream background. Deepen the ink, open the size and leading, and let bold lead-ins carry the navy. Scoped to this page only. */
+.calc-page .content > p { color: #2A3947; font-size: 17px; line-height: 1.75; }
+.calc-page .content > ul { color: #2A3947; font-size: 17px; line-height: 1.75; }
+.calc-page .content strong { color: var(--navy); }
+.calc-page .content > h3 { color: var(--navy); font-size: 20px; }
+.calc-page .faq p { color: #2A3947; font-size: 16px; line-height: 1.7; }

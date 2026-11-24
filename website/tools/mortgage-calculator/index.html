@@ -45,6 +45,7 @@
 </div></header>
 <div class="tools-menu-overlay" id="tools-menu-overlay" hidden aria-hidden="true"></div>
 <main id="main" class="calc-page"><div class="sticky-result" id="sticky-result"><span>Total monthly payment</span><b id="sticky-value">—</b></div>
+<div class="calc-summary-bar" id="calc-summary-bar" aria-hidden="true"><div class="wrap summary-bar-inner"><span class="summary-bar-item">Monthly payment <b id="summary-total">—</b></span><span class="summary-bar-item">Cash needed at close <b id="summary-cash">—</b></span><span class="summary-bar-note">Estimates update as you type</span></div></div>
 <section class="page-hero"><div class="wrap"><h1>Mortgage Payment Calculator</h1></div>
 <div class="wrap calculator-layout mortgage-calc-layout">
 <div class="panel">
@@ -69,13 +70,17 @@
 <p class="result-hero-sub">Principal &amp; interest <b id="monthly-payment">—</b> per month</p>
 <p class="result-empty" id="result-empty" hidden>Enter your details to see your estimate.</p>
         <div id="result-body"><h3 class="result-group">Monthly payment</h3>
-<div class="breakdown-track" aria-hidden="true"><div id="bd-pi" class="seg-blue"></div><div id="bd-tax" class="seg-teal"></div><div id="bd-ins" class="seg-gold"></div><div id="bd-hoa" class="seg-gray"></div><div id="bd-pmi" class="seg-coral"></div></div>
+<div class="breakdown-track" aria-hidden="true"><div id="bd-pi" class="seg-teal"></div><div id="bd-tax" class="seg-navy"></div><div id="bd-ins" class="seg-gold"></div><div id="bd-hoa" class="seg-gray"></div><div id="bd-pmi" class="seg-coral"></div></div>
 <ul class="breakdown-legend">
-<li><span class="swatch seg-teal"></span>Property tax <b id="lg-tax">—</b></li>
+<li><span class="swatch seg-navy"></span>Property tax <b id="lg-tax">—</b></li>
 <li><span class="swatch seg-gold"></span>Home insurance <b id="lg-ins">—</b></li>
 <li><span class="swatch seg-gray"></span>HOA dues <b id="lg-hoa">—</b></li>
 <li><span class="swatch seg-coral"></span><span id="pmi-label">PMI</span> <b id="lg-pmi">—</b></li>
 </ul>
+<h3 class="result-group">Cash to close</h3>
+<div class="result-row"><span>Down payment</span><b id="cc-down">—</b></div>
+<div class="result-row"><span>Estimated closing costs (3% of price)</span><b id="cc-costs">—</b></div>
+<div class="result-row mortgage-cash-total"><span>Cash needed at close</span><b id="cc-total">—</b></div>
 <h3 class="result-group">Loan totals</h3>
 <div class="result-row"><span>Loan amount</span><b id="loan-amount">—</b></div>
 <div class="result-row" id="row-upfront-mip" hidden><span>Upfront MIP (financed)</span><b id="upfront-mip">—</b></div>
