@@ -15,6 +15,8 @@
 .footer-tools-cols{display:grid;grid-template-columns:1fr 1fr;gap:0 28px}
 .footer-tools ul{list-style:none;margin:0;padding:0}
 .footer .brand-mark{background:#fff;border-radius:9px;padding:4px}
+/* Footer brand lockup: the shared .footer a{display:block} rule stacks the logo above the site name, glued together. Lay it out as a row like the header — tile left, name and tagline beside it — with real separation. */
+.footer a.brand{display:flex;align-items:center;gap:12px;margin:0 0 16px;white-space:normal}
 @media (max-width:760px){
   .footer .footer-top>div.footer-tools{grid-column:1/-1}
 }
