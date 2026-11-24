@@ -33,3 +33,52 @@
   .form-grid, .def-grid { grid-template-columns: 1fr; }
   .def-grid { gap: 22px; }
 }
+
+/* Mortgage-template redesign (2026-11-24): this page adopts the Mortgage
+   Calculator's light-card system — white result card, navy ink, one brand
+   palette for the breakdown bar, compact hero, richer article type. The
+   calculator engine and markup are unchanged. */
+.calc-page .page-hero { padding: 10px 0 16px; }
+.calc-page .page-hero h1 { margin: 0 0 4px; }
+.calculator-layout .result { background: #fff; color: #243442; border: 1px solid var(--line); border-radius: 20px; box-shadow: 0 16px 40px rgba(16, 33, 49, .09); padding: 16px 22px 14px; }
+.calculator-layout .result .result-number { color: var(--navy); font-family: var(--font-display); }
+.calculator-layout .result .result-label, .calculator-layout .result small { color: #5E6C79; }
+.calculator-layout .result .result-group { color: var(--teal-dark); border-top-color: var(--line); }
+.calculator-layout .result-row { border-top-color: var(--line); }
+.calculator-layout .result-row span { color: #475569; }
+.calculator-layout .result-row b { color: var(--navy); }
+.calculator-layout .result .muted, .calculator-layout .result .copy-note { color: #5E6C79; }
+.calculator-layout .result .result-hero-sub { color: #475569; }
+.calculator-layout .result .result-hero-sub b { color: var(--navy); }
+.calculator-layout .result .result-empty { color: #5E6C79; }
+.calculator-layout .result .result-assumption { color: #475569; }
+.calculator-layout .result .disclaimer { color: #5E6C79; }
+.calculator-layout .result .hidden-row-note { color: #5E6C79; }
+.calculator-layout .result .result-formula { color: #475569; }
+.calculator-layout .result-tile { background: #F7F5EF; border-color: var(--line); }
+.calculator-layout .result-tile > span { color: #5E6C79; }
+.calculator-layout .result-tile > b { color: var(--navy); }
+.calculator-layout .result-tile > small { color: #5E6C79; }
+.calculator-layout .result table td { color: #243442; }
+.calculator-layout .result table th { color: var(--navy); }
+.calculator-layout .breakdown-track { background: #EDEBE4; height: 10px; }
+.calculator-layout .breakdown-legend { background: #F7F5EF; color: #475569; }
+.calculator-layout .breakdown-legend b { color: var(--navy); }
+.calculator-layout .seg-blue { background: var(--teal); }
+.calculator-layout .seg-teal { background: var(--navy); }
+.calculator-layout .seg-gold { background: var(--gold); }
+.calculator-layout .seg-gray { background: #CBD5E1; }
+.calculator-layout .seg-coral { background: #D97706; }
+.calculator-layout .rent-bar-row span { color: #475569; }
+.calculator-layout .rent-bar-row b { color: var(--navy); }
+.calculator-layout .result .tool-btn-primary { background: var(--teal); border-color: var(--teal); color: #fff; }
+.calculator-layout .result .tool-btn-primary:hover { background: var(--teal-dark); border-color: var(--teal-dark); }
+.calculator-layout .result .btn-outline, .calculator-layout .result .tool-btn-outline { background: #fff; border-color: #CEDADA; color: var(--navy); }
+.calculator-layout .result .btn-outline:hover, .calculator-layout .result .tool-btn-outline:hover { background: #F7F5EF; border-color: #CEDADA; color: var(--navy); }
+@media (max-width: 760px) { .calculator-layout .result { padding: 16px; } }
+.calc-page .content > p { color: #2A3947; font-size: 17px; line-height: 1.75; }
+.calc-page .content > ul { color: #2A3947; font-size: 17px; line-height: 1.75; }
+.calc-page .content > p, .calc-page .content > ul { max-width: none; }
+.calc-page .content strong { color: var(--navy); }
+.calc-page .content > h3 { color: var(--navy); font-size: 20px; }
+.calc-page .faq p { color: #2A3947; font-size: 16px; line-height: 1.7; max-width: none; }
