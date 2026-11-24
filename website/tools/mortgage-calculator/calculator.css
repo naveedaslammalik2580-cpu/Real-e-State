@@ -294,3 +294,22 @@
 /* Compact hero (2026-11-24): no intro paragraph under the H1 — pull the form up close to the navbar so the first screen shows as much of the form as possible. */
 .calc-page .page-hero { padding: 10px 0 16px; }
 .calc-page .page-hero h1 { margin: 0 0 4px; }
+/* Form tightening + alignment (2026-11-24): slimmer group spacing so more of the form fits the first screen; legend values aligned to one edge; $ / % affixes sit inside a single input box (no inner border, no divider segment). Control heights stay at the 44px touch minimum. */
+.mortgage-calc-layout .panel > .muted { margin-bottom: 8px; }
+.mortgage-calc-layout .form-group { margin-top: 16px; }
+.mortgage-calc-layout .form-group legend { margin-bottom: 8px; padding-bottom: 6px; }
+.mortgage-calc-layout .form-grid { gap: 10px 16px; }
+.mortgage-calc-layout .field-slider { margin-top: 2px; }
+.mortgage-calc-layout .result-group { margin-top: 12px; padding-top: 8px; }
+.mortgage-calc-layout .breakdown-legend { font-size: .85rem; padding: 8px; gap: 4px 6px; }
+.mortgage-calc-layout .breakdown-legend li { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.mortgage-calc-layout .breakdown-legend span.swatch { margin-right: 0; flex: 0 0 auto; }
+.mortgage-calc-layout .breakdown-legend b { margin-left: auto; padding-left: 6px; white-space: nowrap; }
+.mortgage-calc-layout .input-unit .field { border: 0; }
+.mortgage-calc-layout .input-unit .field:focus { outline: none; }
+.mortgage-calc-layout .unit-affix:first-child { width: auto; border-right: 0; padding: 0 0 0 12px; justify-content: flex-start; }
+.mortgage-calc-layout .unit-affix:last-child { width: auto; border-left: 0; padding: 0 12px 0 0; justify-content: flex-end; }
+/* Narrow desktop: the two-column legend cannot fit "Home insurance $150.00" per cell — stack it full-width so the values stay inside the card. */
+@media (min-width: 961px) and (max-width: 1279px) {
+  .mortgage-calc-layout .breakdown-legend { grid-template-columns: 1fr; }
+}
