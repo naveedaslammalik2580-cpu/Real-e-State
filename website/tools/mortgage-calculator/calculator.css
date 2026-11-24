@@ -291,3 +291,6 @@
 .mortgage-details summary:focus-visible { outline: 2px solid #0F766E; outline-offset: 3px; border-radius: 4px; }
 .mortgage-details[open] summary { margin-bottom: 4px; }
 .mortgage-calc-layout .seg-control button[disabled] { opacity: .45; cursor: not-allowed; }
+/* Compact hero (2026-11-24): no intro paragraph under the H1 — pull the form up close to the navbar so the first screen shows as much of the form as possible. */
+.calc-page .page-hero { padding: 10px 0 16px; }
+.calc-page .page-hero h1 { margin: 0 0 4px; }
