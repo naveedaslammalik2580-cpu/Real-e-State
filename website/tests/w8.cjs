@@ -11,25 +11,26 @@ function equal(name, actual, expected) { assert.deepEqual(actual, expected, name
 const frozen = {
   "pages": {
     // Homepage baseline includes the approved Google Search Console verification tag.
-    "index.html": "4d19e31ed1e2511bc9b48328382a1d505892cc9ab4dc19cc6bfb28816a70d1f8",
+    "index.html": "642e5a8d62057eb21e4be234c0cf041dd4fcb5cc966199214743e57cecec6e2e",
     // About baseline refreshed for the editorial refinement; shared header stays frozen.
     // All page baselines refreshed 2026-11-16: footer Platform column gained the Privacy Policy link on every page.
     // All page baselines refreshed 2026-11-17: footer Platform column gained the Terms of Use link on every page.
-    "about/index.html": "b1e7503b58662362fb67a62f9fa25c8313c7d11773081550c4d81d4042d722dd",
-    "contact/index.html": "76542afd489e4aefce6b780e8a8fe4e9522db794b80f9ac9ea93d6654adecdae",
-    "resources/index.html": "bb4973df7120c5e83667b1d0728a5d0533532b5629f914a8e089ac5965dea0f5",
-    "real-estate-crm/index.html": "ea0275ab95ff6ba3f292be4053effc91b20c8d8e9a7a510ed02f02a2dfd4c8e9",
-    "tools/index.html": "9fc0210295d7ef6d827a3f801d8428a6841debcc1af965ca2b17ee2d0a0dbfec",
-    "tools/bridge-loan-calculator/index.html": "b5abb26b812f2ba65bd504d527701ce9c86af9ed0613d3c0824403aca41b98d2",
-    "tools/cap-rate-calculator/index.html": "71048ee2c56ec55c83e4412c9ad18afd894ffcf6a36c57c548bfedc09407da75",
-    "tools/capital-gains-tax-calculator/index.html": "2ba2fefc289c7a65e4fd38ca8eeeb69ab5096bd67c3bf8ee6bae2b740b58f00d",
-    "tools/commission-calculator/index.html": "5769f33e4312bcc8632a877f7b223b20147e719c4c64cd64b908ba7858c20467",
-    "tools/home-affordability-calculator/index.html": "80979887f58f3c177648fa5b3666698cdd23f8cf81963eff8389be06017794cd",
-    "tools/mortgage-calculator/index.html": "23b7f68fecfe5a0dbbef2376ff118711a7071e072337bf3275ae53c19e82db86",
-    "tools/noi-calculator/index.html": "c5dd3a28b15eec2e532ceb32542368b0fa8cac6bf685fda688abd67468bdc68c",
-    "tools/property-investment-calculator/index.html": "cf5249c7b78d15283e9fdc407d7a240c36d307d42262c512f11681978aa61549",
-    "tools/rent-vs-buy-calculator/index.html": "8acf12111a51c7a583f4216a323e59cbe60155c4c9e8a4708f5abe11b7d5340e",
-    "tools/roi-calculator/index.html": "2ba44c63ecb7c3ddb6f4531c6d8b92f86dc147aadde1a107b940dbd5251e626c"
+    // All page baselines refreshed 2026-11-24: footer Tools list rebuilt (mega-menu order, Title Case, two fixed lists), footer headings h2 -> p, "Access availability" renamed "Early access".
+    "about/index.html": "ffef6e4910eb5b9c13a086778883eb86f57f0193591fe1a90b252ff84d073f03",
+    "contact/index.html": "1098545d84f939c840d74ff8cd01a67249e531dd67f426f762a51d468fc6a57d",
+    "resources/index.html": "bbf3d25de64da294d63a8e3cac590a245d6c0acadae077c31fe16fe873e75a44",
+    "real-estate-crm/index.html": "1a7acadaa293caaf6924dc942a7616a1d9a74bd2aa833ae5851f352ec2469d04",
+    "tools/index.html": "3f9573a9f034216bc55f78dd495c79af39c68628a8f290c184826e085e434f46",
+    "tools/bridge-loan-calculator/index.html": "3260fd6cf7dd493f168081c69463239a894d9b31f808072aa06bb2eaea4a6754",
+    "tools/cap-rate-calculator/index.html": "83a227b6c5974e0979c65126a9083ef2046b792398dd82718f796ffe97f06d73",
+    "tools/capital-gains-tax-calculator/index.html": "456ff1a259b1465a4ba7061587361fcee06066bd7c6a1a6474163fccce0bbcf8",
+    "tools/commission-calculator/index.html": "eb448ecd79e17cda7914183e5cd4a6383da6b391447d8e271b368738bcadf2a3",
+    "tools/home-affordability-calculator/index.html": "90552635800d16998941855b2af0b944d58697d0a0e714b745485ebc34f1e21e",
+    "tools/mortgage-calculator/index.html": "5fa99e95b5bc0e8fd7eaee8e926c8967dbff57dfa06a2c171678d554157df846",
+    "tools/noi-calculator/index.html": "79cbf1439ac80dbacc50b861d31051727b24853759ad3a9908d248bbb12e8ce5",
+    "tools/property-investment-calculator/index.html": "112f936c8f5db1f3160eacbbe8bf3e53615079cac788a4db49be0de7a22e142f",
+    "tools/rent-vs-buy-calculator/index.html": "41d49293c3a2720aefa4eed3e0def8d9ff122680947023d63dab198254e18212",
+    "tools/roi-calculator/index.html": "ccce515a66907ddf3540bccfc54e2f9f0e0ea875d0506e43bb8a37b1a397784d"
   },
   "headers": {
     "index.html": "8ff8b5602307f1645666134a5b006e4ed3850ed7c983a54259088a2e68ea77e4",
