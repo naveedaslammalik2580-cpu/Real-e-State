@@ -48,3 +48,12 @@
 .calc-page .content strong { color: var(--navy); }
 .calc-page .content > h3 { color: var(--navy); font-size: 20px; }
 .calc-page .faq p { color: #2A3947; font-size: 16px; line-height: 1.7; max-width: none; }
+
+/* Hero + width alignment (2026-11-24): match the Mortgage page — no divider
+   line under the heading, the intro paragraph hidden so the form sits right
+   under the H1 near the navbar, and every wrap on the page shares the
+   calculator's 1120px column so the heading, form, result and article all
+   align with clear space at the sides. */
+.calc-page .page-hero { border-bottom: 0; }
+.calc-page .page-hero > .wrap > p { display: none; }
+@media (min-width: 961px) { .calc-page .wrap { width: min(calc(100% - 96px), 1120px); } }
