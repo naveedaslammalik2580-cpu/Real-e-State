@@ -317,3 +317,6 @@
 @media (min-width: 961px) {
   .calc-page .wrap { width: min(calc(100% - 96px), 1120px); }
 }
+/* Full-width article text (2026-11-24): tools.css caps content paragraphs and lists at 74ch, which left the lines ending mid-column on this page. The owner's final content runs the full aligned column width instead; FAQ answers follow the same rule. */
+.calc-page .content > p, .calc-page .content > ul { max-width: none; }
+.calc-page .faq p { max-width: none; }
