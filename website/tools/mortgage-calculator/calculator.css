@@ -313,3 +313,7 @@
 @media (min-width: 961px) and (max-width: 1279px) {
   .mortgage-calc-layout .breakdown-legend { grid-template-columns: 1fr; }
 }
+/* Content width alignment (2026-11-24): the calculator layout is capped at 1120px while the page's other wraps (hero, disclaimers, editorial content) run 1200px — 40px wider on each side. At the same breakpoint the calculator's cap applies, bring every wrap on this page to the same width so all edges align. Header/footer wraps are outside main and stay untouched. */
+@media (min-width: 961px) {
+  .calc-page .wrap { width: min(calc(100% - 96px), 1120px); }
+}
