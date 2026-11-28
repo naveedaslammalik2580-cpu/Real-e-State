@@ -74,12 +74,12 @@ check('crm screenshots present', rc.includes('crm-leads-contacts.webp') && rc.in
 const about = read('about/index.html');
 check('about verified CRM scope', about.includes('organize contacts, deals, appointments and follow-ups') && !about.includes('Follow-up Plans'));
 check('about methodology', ['formulas, inputs and assumptions', 'Worked examples', 'understand and check their results', 'Every estimate has limitations', 'not as a replacement for professional financial, legal or tax advice'].every(text => about.includes(text)));
-// 10. Privacy and terms pages are published; sitemap exactly 30 URLs (18 site
-// pages + the six standalone Resources guides + tools and pages added since).
+// 10. Privacy and terms pages are published; sitemap exactly 23 URLs (18 site
+// pages + the five standalone Resources guides).
 check('privacy page published in website tree', fs.existsSync(path.join(ROOT, 'privacy-policy', 'index.html')));
 check('terms page published in website tree', fs.existsSync(path.join(ROOT, 'terms', 'index.html')));
 const sm = read('sitemap.xml');
-check('sitemap still 30 URLs', (sm.match(/<loc>/g) || []).length === 30); // +1: down-payment-calculator (2026-11-22), +1: rental-yield-calculator (2026-11-24), +1: commercial-real-estate-calculator (2026-11-24), +1: irr-calculator (2026-11-24), +1: depreciation-calculator (2026-11-25), +1: wholesale-calculator (2026-11-25), +1: 70-percent-rule guide (2026-11-28)
+check('sitemap still 29 URLs', (sm.match(/<loc>/g) || []).length === 29); // +1: down-payment-calculator (2026-11-22), +1: rental-yield-calculator (2026-11-24), +1: commercial-real-estate-calculator (2026-11-24), +1: irr-calculator (2026-11-24), +1: depreciation-calculator (2026-11-25), +1: wholesale-calculator (2026-11-25)
 console.log(`W7: ${passed} passed, ${failures.length} failed`);
 for (const f of failures) console.log('  FAIL:', f);
 process.exit(failures.length ? 1 : 0);
