@@ -26,7 +26,7 @@ const frozen = {
     // All page baselines refreshed 2026-11-24: footer Tools list rebuilt (mega-menu order, Title Case, two fixed lists), footer headings h2 -> p, "Access availability" renamed "Early access".
     "about/index.html": "682a38368b2d22ca5b48d6c5250a0a49ffe7540ade5f2d40426af69158d91f59",
     "contact/index.html": "60ee5ad4aed5d332778e7945a2da0f32e2199ce9807b5a630e9e10512f2d7438",
-    "resources/index.html": "925c0e54de920f74625ea438ebdd0dbb236869ce92e7473fd70083baacbc4c48",
+    "resources/index.html": "5cea3c5f5cc7c060b3e4724f909dfcbc0e40c45b1fdc3960af4cab58b754742d",
     "real-estate-crm/index.html": "d805c6ab3cca1c496a0c90facb2622ea4f33653ff79a17e14c7541be69fc6ce1",
     "tools/index.html": "a71ed5ca019af7f25d9df95c4b7f5e0242706b4a97cb10302c4f5d5983d3a4d2",
     "tools/bridge-loan-calculator/index.html": "1469e8f4dea7d0f0412eb46e0923125242a35dc2a21f22fda1a38e914ffc036d",

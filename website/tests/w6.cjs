@@ -8,7 +8,7 @@ const assert = require('node:assert/strict');
 const root = (() => { const dist = path.resolve(__dirname, '..', 'dist'); if (!fs.existsSync(path.join(dist, 'index.html'))) { console.error('website/dist not found. Run "npm --prefix website run build" first (tests run against the Astro build output).'); process.exit(1); } return dist; })();
 function walk(dir) { return fs.readdirSync(dir, { withFileTypes: true }).flatMap(e => e.isDirectory() ? walk(path.join(dir, e.name)) : [path.join(dir, e.name)]); }
 const pages = walk(root).filter(f => f.endsWith('.html') && !f.split(path.sep).includes('dist-production'));
-assert.equal(pages.length, 29, 'expected 29 website pages'); // 29th page: tools/wholesale-calculator (2026-11-25)
+assert.equal(pages.length, 30, 'expected 30 website pages'); // 30th page: resources/70-percent-rule (2026-11-28)
 const BANNED = ['Working name, brand pending', 'Before launch', 'will be finalized before public launch', 'Connect support email, app login, pricing and approved legal policies'];
 for (const file of pages) {
   const html = fs.readFileSync(file, 'utf8');

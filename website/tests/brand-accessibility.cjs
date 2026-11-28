@@ -5,7 +5,7 @@ const root=(() => { const dist = path.resolve(__dirname, '..', 'dist'); if (!fs.
 function pages(dir){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()&&!['tests','reference','dist-production'].includes(e.name)?pages(path.join(dir,e.name)):e.isFile()&&e.name==='index.html'?[path.join(dir,e.name)]:[]);}
 let checks=0;function check(value,message){assert(value,message);checks++;}
 const label='Every Real Estate Calculator Tools · Software · Guides, homepage';
-const files=pages(root);check(files.length===29,'All twenty-nine public pages checked'); // 29th page: tools/wholesale-calculator (2026-11-25)
+const files=pages(root);check(files.length===30,'All thirty public pages checked'); // 30th page: resources/70-percent-rule (2026-11-28)
 for(const file of files){
  const html=fs.readFileSync(file,'utf8');
  const links=Array.from(html.matchAll(/<a\b[^>]*class="brand"[^>]*>[\s\S]*?<\/a>/g),m=>m[0]);
