@@ -180,7 +180,7 @@ App.pages.contacts = (function () {
       }
       const badge = document.getElementById("cFiltersCount");
       const filterBtn = document.getElementById("cFiltersBtn");
-      const n = (!pastOnly && listFilters.stage ? 1 : 0) + (listFilters.source ? 1 : 0) + (listFilters.temp ? 1 : 0) + (listFilters.owner ? 1 : 0);
+      const n = (!pastOnly && listFilters.stage ? 1 : 0) + (listFilters.source ? 1 : 0) + (listFilters.temp ? 1 : 0);
       if (badge) {
         App.i18n.setText(badge, App.i18n.value(() => (n ? String(n) : "")));
         badge.hidden = n === 0;
